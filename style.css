@@ -466,7 +466,7 @@ html {
 
 /* 4 - Magnet attraction from right */
 .logo-4 {
-  animation: magnetAttract 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.5s forwards;
+  animation: magnetAttract 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
 }
 
 @keyframes magnetAttract {
@@ -1694,6 +1694,15 @@ span {
   box-shadow: 0 0 20px #0077b5, 0 0 40px #0077b5;
 }
 
+.icon:nth-child(5) {
+  color: var(--color-text-primary);
+}
+
+.pinterest:hover {
+  background: #E60023;
+  box-shadow: 0 0 20px #E60023, 0 0 40px #E60023;
+}
+
 /* Contact Section Responsive */
 @media screen and (max-width: 768px) {
   .contact-section {
@@ -1735,6 +1744,10 @@ span {
     flex-wrap: wrap;
     gap: var(--spacing-lg);
     margin-top: var(--spacing-lg);
+  }
+  
+  .pinterest {
+    display: none;
   }
 
   .contact-image {
