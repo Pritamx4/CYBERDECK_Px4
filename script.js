@@ -510,17 +510,6 @@ function toggleBottomTab() {
       }, 500);
       hasShownOnce = true;
     }
-    
-    // Start auto-hide timer after opening
-    setTimeout(() => {
-      if (isBottomTabOpen) {
-        hideTimeout = setTimeout(() => {
-          if (isBottomTabOpen) {
-            toggleBottomTab();
-          }
-        }, 10000);
-      }
-    }, 600);
   } else {
     tab.classList.remove('open');
   }
@@ -544,7 +533,7 @@ function initBottomTabEvents() {
           if (isBottomTabOpen) {
             toggleBottomTab();
           }
-        }, 10000);
+        }, 3000); // Reduced to 3 seconds after mouse leaves
       }
     });
   }
@@ -631,6 +620,7 @@ async function fetchGitHubStats() {
     // Fetch user repos count
     const userResponse = await fetch(`https://api.github.com/users/${username}`);
     if (userResponse.ok) {
+      
       const userData = await userResponse.json();
       githubStats.repos = userData.public_repos || 0;
     }
