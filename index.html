@@ -39,6 +39,8 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- Devicon for tech skill icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css" />
     <!-- EmailJS Library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <!-- GSAP Library -->
@@ -69,8 +71,6 @@
       <span class="toast-message"></span>
     </div>
     
-    <!-- Particle Burst Canvas -->
-    <canvas id="particleCanvas" class="particle-canvas"></canvas>
 
     <!-- Navbar -->
     <nav class="navbar" role="navigation" aria-label="Main navigation">
@@ -108,176 +108,313 @@
         </div>
         <p class="subtitle">NEURAL INTERFACE | DIGITAL PLAYGROUND</p>
       </section>
-      <!-- About Section with 3D Cubes -->
+      <!-- About Section - NEURAL_GRID -->
       <section id="section-about" class="snap-section about-section">
-        <h2 class="about-title">NEURAL_GRID</h2>
-        <div class="cube-container">
-          <!-- Glassmorphism Cube -->
-          <div class="cube glass">
-            <div class="face face1">Glassmorphism</div>
-            <div class="face face2">Blurred BG</div>
-            <div class="face face3">Translucent</div>
-            <div class="face face4">Soft Borders</div>
-            <div class="face face5">Frosted Look</div>
-            <div class="face face6">Modern Glow</div>
+        <div class="about-header">
+          <span class="about-header-tag">STATUS: NEURAL_LINK_STABLE</span>
+          <h2 class="about-title glow-heading">NEURAL_GRID</h2>
+          <div class="about-header-line"></div>
+        </div>
+        <div class="about-content">
+          <!-- Left: Operator Profile Card -->
+          <div class="operator-card">
+            <div class="operator-card-accent"></div>
+            <span class="operator-tag">[ OPERATOR_PROFILE ]</span>
+            <h3 class="operator-name">PRITAM</h3>
+            <p class="operator-role">Frontend Developer & UI Architect</p>
+            <p class="operator-bio">
+              Architecting high-performance digital ecosystems with a focus on 
+              immersive UX and hardware-level precision. Bridging the void between 
+              brutalist structures and fluid interactivity.
+            </p>
+            <div class="operator-stats">
+              <div class="stat-block">
+                <span class="stat-label">EXP_DURATION</span>
+                <span class="stat-value">3+</span>
+                <span class="stat-unit">YEARS</span>
+              </div>
+              <div class="stat-block">
+                <span class="stat-label">DATA_DEPLOYED</span>
+                <span class="stat-value">20+</span>
+                <span class="stat-unit">PROJ</span>
+              </div>
+              <div class="stat-block">
+                <span class="stat-label">TOOL_STACK</span>
+                <span class="stat-value">10+</span>
+                <span class="stat-unit">SKILLS</span>
+              </div>
+            </div>
+            <!-- Corner brackets decoration -->
+            <div class="corner-bracket corner-tl"></div>
+            <div class="corner-bracket corner-br"></div>
           </div>
-
-          <!-- Neumorphism Cube -->
-          <div class="cube neu">
-            <div class="face face1">Neumorphism</div>
-            <div class="face face2">Soft Shadow</div>
-            <div class="face face3">3D Pressed</div>
-            <div class="face face4">Minimalist</div>
-            <div class="face face5">UI Depth</div>
-            <div class="face face6">Soft Light</div>
+          <!-- Right: Neural Data Flow Visualization -->
+          <div class="neural-visualizer">
+            <!-- Connection lines (SVG) -->
+            <svg class="neural-connections" viewBox="0 0 400 400">
+              <!-- Lines from nodes to center -->
+              <line class="data-line" x1="200" y1="50" x2="200" y2="200" />
+              <line class="data-line" x1="350" y1="110" x2="200" y2="200" />
+              <line class="data-line" x1="350" y1="290" x2="200" y2="200" />
+              <line class="data-line" x1="200" y1="350" x2="200" y2="200" />
+              <line class="data-line" x1="50" y1="290" x2="200" y2="200" />
+              <line class="data-line" x1="50" y1="110" x2="200" y2="200" />
+              <!-- Data particles on lines -->
+              <circle class="data-particle dp1" r="3"><animateMotion dur="2s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
+              <circle class="data-particle dp2" r="3"><animateMotion dur="2.5s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
+              <circle class="data-particle dp3" r="3"><animateMotion dur="1.8s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
+              <circle class="data-particle dp4" r="3"><animateMotion dur="2.2s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
+              <circle class="data-particle dp5" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
+              <circle class="data-particle dp6" r="3"><animateMotion dur="2.1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
+              <!-- Second wave particles (offset) -->
+              <circle class="data-particle dp1" r="2"><animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
+              <circle class="data-particle dp2" r="2"><animateMotion dur="2.5s" begin="1.2s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
+              <circle class="data-particle dp3" r="2"><animateMotion dur="1.8s" begin="0.9s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
+              <circle class="data-particle dp4" r="2"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
+              <circle class="data-particle dp5" r="2"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
+              <circle class="data-particle dp6" r="2"><animateMotion dur="2.1s" begin="1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
+            </svg>
+            <!-- Central Core -->
+            <div class="neural-core">
+              <div class="core-hexagon">
+                <span class="core-label">PX4</span>
+              </div>
+              <div class="core-ring core-ring-1"></div>
+              <div class="core-ring core-ring-2"></div>
+              <div class="core-ring core-ring-3"></div>
+            </div>
+            <!-- Orbiting Nodes -->
+            <div class="neural-node node-1">
+              <div class="node-dot"></div>
+              <span class="node-label">HTML/CSS</span>
+            </div>
+            <div class="neural-node node-2">
+              <div class="node-dot"></div>
+              <span class="node-label">JAVASCRIPT</span>
+            </div>
+            <div class="neural-node node-3">
+              <div class="node-dot"></div>
+              <span class="node-label">REACT</span>
+            </div>
+            <div class="neural-node node-4">
+              <div class="node-dot"></div>
+              <span class="node-label">NODE.JS</span>
+            </div>
+            <div class="neural-node node-5">
+              <div class="node-dot"></div>
+              <span class="node-label">THREE.JS</span>
+            </div>
+            <div class="neural-node node-6">
+              <div class="node-dot"></div>
+              <span class="node-label">DESIGN</span>
+            </div>
           </div>
-
-          <!-- Gradient UI Cube -->
-          <div class="cube gradient">
-            <div class="face face1">Gradient UI</div>
-            <div class="face face2">Multi-Color</div>
-            <div class="face face3">Dynamic</div>
-            <div class="face face4">Bold</div>
-            <div class="face face5">Energy</div>
-            <div class="face face6">Vibrancy</div>
-          </div>
+        </div>
+        <!-- Data Ticker -->
+        <div class="data-ticker">
+          <span>SYS_READY | PX4_ARCHITECT_MODE</span>
+          <span>SYNC_LEVEL: ACTIVE</span>
         </div>
       </section>
 
       <!-- Skills Section -->
       <section id="section-skills" class="snap-section skills-section">
-        <h2 class="section-title glow-heading">SKILL_MATRIX</h2>
+        <div class="skills-header">
+          <span class="skills-header-tag">SYSTEM_CAPABILITIES_REPORT</span>
+          <h2 class="section-title glow-heading">SKILL_MATRIX</h2>
+          <div class="skills-header-line"></div>
+        </div>
         <div class="skills-grid">
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-html5"></i>
+          <div class="skill-card" data-module="MODULE_01">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-html5-plain"></i>
+              </div>
+              <span class="module-id">MODULE_01</span>
             </div>
             <h3>HTML5</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="95"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="95"></div>
+              </div>
+              <span class="skill-percentage">95%</span>
             </div>
-            <span class="skill-percentage">95%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-css3-alt"></i>
+
+          <div class="skill-card" data-module="MODULE_02">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-css3-plain"></i>
+              </div>
+              <span class="module-id">MODULE_02</span>
             </div>
             <h3>CSS3</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="90"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="90"></div>
+              </div>
+              <span class="skill-percentage">90%</span>
             </div>
-            <span class="skill-percentage">90%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-js"></i>
+
+          <div class="skill-card" data-module="MODULE_03">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-javascript-plain"></i>
+              </div>
+              <span class="module-id">MODULE_03</span>
             </div>
             <h3>JavaScript</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="85"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
             </div>
-            <span class="skill-percentage">85%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-solid fa-wind"></i>
+
+          <div class="skill-card" data-module="MODULE_04">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-tailwindcss-original"></i>
+              </div>
+              <span class="module-id">MODULE_04</span>
             </div>
             <h3>Tailwind CSS</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="88"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="88"></div>
+              </div>
+              <span class="skill-percentage">88%</span>
             </div>
-            <span class="skill-percentage">88%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-node"></i>
+
+          <div class="skill-card" data-module="MODULE_05">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-nodejs-plain"></i>
+              </div>
+              <span class="module-id">MODULE_05</span>
             </div>
             <h3>Node.js</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="80"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="80"></div>
+              </div>
+              <span class="skill-percentage">80%</span>
             </div>
-            <span class="skill-percentage">80%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-git-alt"></i>
+
+          <div class="skill-card" data-module="MODULE_06">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-git-plain"></i>
+              </div>
+              <span class="module-id">MODULE_06</span>
             </div>
             <h3>Git</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="85"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
             </div>
-            <span class="skill-percentage">85%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-github"></i>
+
+          <div class="skill-card" data-module="MODULE_07">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-github-original"></i>
+              </div>
+              <span class="module-id">MODULE_07</span>
             </div>
             <h3>GitHub</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="85"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
             </div>
-            <span class="skill-percentage">85%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-solid fa-bolt"></i>
+
+          <div class="skill-card" data-module="MODULE_08">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-vitejs-plain"></i>
+              </div>
+              <span class="module-id">MODULE_08</span>
             </div>
             <h3>Vite</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="100"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="100"></div>
+              </div>
+              <span class="skill-percentage">100%</span>
             </div>
-            <span class="skill-percentage">100%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-react"></i>
+
+          <div class="skill-card" data-module="MODULE_09">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-react-original"></i>
+              </div>
+              <span class="module-id">MODULE_09</span>
             </div>
             <h3>React</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="60"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="60"></div>
+              </div>
+              <span class="skill-percentage">60%</span>
             </div>
-            <span class="skill-percentage">60%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-solid fa-n"></i>
+
+          <div class="skill-card" data-module="MODULE_10">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-nextjs-plain"></i>
+              </div>
+              <span class="module-id">MODULE_10</span>
             </div>
             <h3>Next.js</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="50"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="50"></div>
+              </div>
+              <span class="skill-percentage">50%</span>
             </div>
-            <span class="skill-percentage">50%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-solid fa-cube"></i>
+
+          <div class="skill-card" data-module="MODULE_11">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-threejs-original"></i>
+              </div>
+              <span class="module-id">MODULE_11</span>
             </div>
             <h3>Three.js</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="45"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="45"></div>
+              </div>
+              <span class="skill-percentage">45%</span>
             </div>
-            <span class="skill-percentage">45%</span>
           </div>
-          
-          <div class="skill-card">
-            <div class="skill-icon">
-              <i class="fa-brands fa-java"></i>
+
+          <div class="skill-card" data-module="MODULE_12">
+            <div class="skill-card-header">
+              <div class="skill-icon">
+                <i class="devicon-java-plain"></i>
+              </div>
+              <span class="module-id">MODULE_12</span>
             </div>
             <h3>Java</h3>
-            <div class="skill-bar">
-              <div class="skill-progress" data-progress="55"></div>
+            <div class="skill-bar-container">
+              <div class="skill-bar">
+                <div class="skill-progress" data-progress="55"></div>
+              </div>
+              <span class="skill-percentage">55%</span>
             </div>
-            <span class="skill-percentage">55%</span>
           </div>
         </div>
       </section>
