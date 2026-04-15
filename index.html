@@ -47,6 +47,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <!-- GSAP ScrollTrigger Plugin -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scrolling -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   </head>
   <body>
     <!-- Loading Screen -->
@@ -96,7 +98,7 @@
     </nav>
     <!-- Main Section with Background Image -->
     <main class="scroll-container" tabindex="0">
-      <section id="section-home" class="snap-section hero-section">
+      <section id="section-home" class="hero-section">
         <!-- Matrix Rain Canvas -->
         <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
         <div class="content">
@@ -109,15 +111,15 @@
         <p class="subtitle">NEURAL INTERFACE | DIGITAL PLAYGROUND</p>
       </section>
       <!-- About Section - NEURAL_GRID -->
-      <section id="section-about" class="snap-section about-section">
-        <div class="about-header">
+      <section id="section-about" class="about-section">
+        <div class="about-header reveal-up">
           <span class="about-header-tag">STATUS: NEURAL_LINK_STABLE</span>
           <h2 class="about-title glow-heading">NEURAL_GRID</h2>
           <div class="about-header-line"></div>
         </div>
         <div class="about-content">
           <!-- Left: Operator Profile Card -->
-          <div class="operator-card">
+          <div class="operator-card reveal-up">
             <div class="operator-card-accent"></div>
             <span class="operator-tag">[ OPERATOR_PROFILE ]</span>
             <h3 class="operator-name">PRITAM</h3>
@@ -149,7 +151,7 @@
             <div class="corner-bracket corner-br"></div>
           </div>
           <!-- Right: Neural Data Flow Visualization -->
-          <div class="neural-visualizer">
+          <div class="neural-visualizer reveal-scale">
             <!-- Connection lines (SVG) -->
             <svg class="neural-connections" viewBox="0 0 400 400">
               <!-- Lines from nodes to center -->
@@ -177,7 +179,7 @@
             <!-- Central Core -->
             <div class="neural-core">
               <div class="core-hexagon">
-                <span class="core-label">PX4</span>
+                <img src="images/px4 main logo.svg" alt="Px4 Logo" class="core-logo" />
               </div>
               <div class="core-ring core-ring-1"></div>
               <div class="core-ring core-ring-2"></div>
@@ -218,14 +220,14 @@
       </section>
 
       <!-- Skills Section -->
-      <section id="section-skills" class="snap-section skills-section">
-        <div class="skills-header">
+      <section id="section-skills" class="skills-section">
+        <div class="skills-header reveal-up">
           <span class="skills-header-tag">SYSTEM_CAPABILITIES_REPORT</span>
           <h2 class="section-title glow-heading">SKILL_MATRIX</h2>
           <div class="skills-header-line"></div>
         </div>
         <div class="skills-grid">
-          <div class="skill-card" data-module="MODULE_01">
+          <div class="skill-card reveal-up" data-module="MODULE_01">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-html5-plain"></i>
@@ -241,7 +243,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_02">
+          <div class="skill-card reveal-up" data-module="MODULE_02">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-css3-plain"></i>
@@ -257,7 +259,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_03">
+          <div class="skill-card reveal-up" data-module="MODULE_03">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-javascript-plain"></i>
@@ -273,7 +275,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_04">
+          <div class="skill-card reveal-up" data-module="MODULE_04">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-tailwindcss-original"></i>
@@ -289,7 +291,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_05">
+          <div class="skill-card reveal-up" data-module="MODULE_05">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-nodejs-plain"></i>
@@ -305,7 +307,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_06">
+          <div class="skill-card reveal-up" data-module="MODULE_06">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-git-plain"></i>
@@ -321,7 +323,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_07">
+          <div class="skill-card reveal-up" data-module="MODULE_07">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-github-original"></i>
@@ -337,7 +339,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_08">
+          <div class="skill-card reveal-up" data-module="MODULE_08">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-vitejs-plain"></i>
@@ -353,7 +355,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_09">
+          <div class="skill-card reveal-up" data-module="MODULE_09">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-react-original"></i>
@@ -369,7 +371,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_10">
+          <div class="skill-card reveal-up" data-module="MODULE_10">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-nextjs-plain"></i>
@@ -385,7 +387,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_11">
+          <div class="skill-card reveal-up" data-module="MODULE_11">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-threejs-original"></i>
@@ -401,7 +403,7 @@
             </div>
           </div>
 
-          <div class="skill-card" data-module="MODULE_12">
+          <div class="skill-card reveal-up" data-module="MODULE_12">
             <div class="skill-card-header">
               <div class="skill-icon">
                 <i class="devicon-java-plain"></i>
@@ -419,7 +421,7 @@
         </div>
       </section>
 
-      <section id="section-projects" class="section-project snap-section">
+      <section id="section-projects" class="section-project">
         <svg
           width="0"
           height="0"
@@ -446,11 +448,11 @@
             </clipPath>
           </defs>
         </svg>
-        <div class="project-heading">
+        <div class="project-heading reveal-up">
           <h1 class="glow-heading">PROJECT_VAULT</h1>
         </div>
         <div class="cards-container">
-          <div class="project-card">
+          <div class="project-card reveal-scale">
             <img src="images/scrolltrigger.png" alt=""/>
             <div class="card-info">
               <h3>Scroll Trigger</h3>
@@ -466,7 +468,7 @@
               </div>
             </div>
           </div>
-          <div class="project-card">
+          <div class="project-card reveal-scale">
             <img src="images/todolist.png" alt=""/>
             <div class="card-info">
               <h3>To-Do List</h3>
@@ -482,7 +484,7 @@
               </div>
             </div>
           </div>
-          <div class="project-card">
+          <div class="project-card reveal-scale">
             <img src="images/tictactoe.png" alt=""/>
             <div class="card-info">
               <h3>Tic Tac Toe</h3>
@@ -498,7 +500,7 @@
               </div>
             </div>
           </div>
-          <div class="project-card">
+          <div class="project-card reveal-scale">
             <img src="images/memorymanagementsimulator.png" alt="" />
             <div class="card-info">
               <h3>Memory Management simulator</h3>
@@ -514,7 +516,7 @@
               </div>
             </div>
           </div>
-          <div class="project-card">
+          <div class="project-card reveal-scale">
             <img src="images/snakegame.png" />
             <div class="card-info">
               <h3>Snake Game</h3>
@@ -528,8 +530,8 @@
         </div>
       </section>
 
-      <section id="section-contact" class="snap-section contact-section">
-        <div class="contact-left">
+      <section id="section-contact" class="contact-section">
+        <div class="contact-left reveal-up">
           <div class="speech-bubble-contact">
             <h2>COMM_LINK:</h2>
             <p>Datastream flowing. Inject your message and let's architect the impossible together!
@@ -572,7 +574,7 @@
           </div>
         </div>
 
-        <div class="contact-right">
+        <div class="contact-right reveal-scale">
           <img
             src="images/contact.png"
             alt="Left Image"

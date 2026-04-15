@@ -158,29 +158,7 @@ function animateNavbarEntry() {
   });
 }
 
-// Add blur background on scroll (Desktop Only)
-let lastScrollTop = 0;
-let scrollTimeout;
 
-window.addEventListener('scroll', () => {
-  // Clear previous timeout
-  clearTimeout(scrollTimeout);
-  
-  // Debounce scroll event
-  scrollTimeout = setTimeout(() => {
-    const navbar = document.querySelector('.navbar');
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add blur background after scrolling
-    if (currentScroll > 50) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-    
-    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-  }, 50);
-});
 
 // Sound System
 let audioContext;
@@ -1014,29 +992,7 @@ window.onload = () => {
   statsGrid = document.getElementById('statsGrid');
 };
 
-// Skills Animation Observer
-const skillCards = document.querySelectorAll('.skill-card');
-const skillProgressBars = document.querySelectorAll('.skill-progress');
-
-const observerOptions = {
-  threshold: 0.3,
-  rootMargin: '0px'
-};
-
-const skillsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('animate-in');
-      const progressBar = entry.target.querySelector('.skill-progress');
-      if (progressBar) {
-        const targetWidth = progressBar.getAttribute('data-progress');
-        setTimeout(() => progressBar.style.width = targetWidth + '%', 200);
-      }
-    }
-  });
-}, observerOptions);
-
-skillCards.forEach(card => skillsObserver.observe(card));
+// Skills Animation logic moved to modular GSAP ScrollTrigger below
 
 // ========================================
 // MATRIX RAIN EFFECT
@@ -1101,40 +1057,6 @@ function addGlitchEffect() {
   }, 3000);
 }
 
-// ========================================
-// PROJECT CARD 3D TILT EFFECT
-// ========================================
-function init3DTiltCards() {
-  const cards = document.querySelectorAll('.project-card');
-  
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = (y - centerY) / 10;
-      const rotateY = (centerX - x) / 10;
-      
-      card.style.transform = `translateY(-8px) scale(1.05) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'translateY(0) scale(1) perspective(1000px) rotateX(0deg) rotateY(0deg)';
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    init3DTiltCards();
-  }, 1000);
-});
-
-// ========================================
 // GSAP SKILL BARS ANIMATION ON SCROLL
 // ========================================
 if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
@@ -1236,26 +1158,125 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // ========================================
-// ENHANCED SECTION TRANSITIONS
+// LENIS SMOOTH SCROLLING & GSAP INTEGRATION
 // ========================================
-const snapSections = document.querySelectorAll('.snap-section');
 
-const sectionObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
+/**
+ * LENIS INITIALIZATION
+ * Handles smooth scrolling and syncing with GSAP
+ */
+let lenis;
+
+const initLenis = () => {
+  if (typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      lerp: 0.08,
+      wheelMultiplier: 1,
+      smoothWheel: true,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      normalizeWheel: true,
+      infinite: false,
+    });
+
+    // Sync ScrollTrigger with Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+
+    gsap.ticker.lagSmoothing(0);
+    
+    // Smooth transition for hash links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          lenis.scrollTo(target);
+        }
+      });
+    });
+  }
+};
+
+/**
+ * PREMIUM INTERACTION SYSTEM
+ * Orchestrates group-based timelines for a cohesive narrative
+ */
+const initPremiumInteractions = () => {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Default configuration for consistent interaction feel
+  const timelineConfig = (trigger) => ({
+    scrollTrigger: {
+      trigger: trigger,
+      start: "top 85%",
+      toggleActions: "play none none none",
+      once: true
     }
   });
-}, {
-  threshold: 0.05
-});
 
-snapSections.forEach(section => {
-  section.style.opacity = '0';
-  section.style.transform = 'translateY(30px)';
-  section.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-  sectionObserver.observe(section);
+  // 1. ABOUT SECTION TIMELINE
+  const aboutTl = gsap.timeline(timelineConfig('#section-about'));
+  aboutTl
+    .to('.about-header', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
+    .to('.operator-card', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.6")
+    .to('.neural-visualizer', { autoAlpha: 1, scale: 1, duration: 1, ease: "back.out(1.2)" }, "-=0.6")
+    .to('.data-ticker', { opacity: 1, duration: 0.8 }, "-=0.4");
+
+  // 2. SKILLS SECTION TIMELINE
+  const skillsTl = gsap.timeline(timelineConfig('#section-skills'));
+  skillsTl
+    .to('.skills-header', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
+    .to('.skill-card', { 
+        autoAlpha: 1, 
+        y: 0, 
+        duration: 0.8, 
+        stagger: 0.1, 
+        ease: "power2.out" 
+    }, "-=0.5")
+    // Chain skill bar fulfillment to the cards' appearance
+    .to('.skill-progress', {
+        width: (i, target) => target.getAttribute('data-progress') + "%",
+        duration: 1.2,
+        stagger: 0.1,
+        ease: "power4.out"
+    }, "-=0.8");
+
+  // 3. PROJECTS SECTION TIMELINE
+  const projectsTl = gsap.timeline(timelineConfig('#section-projects'));
+  projectsTl
+    .to('.project-heading', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
+    .to('.project-card', { 
+        autoAlpha: 1, 
+        scale: 1, 
+        duration: 0.8, 
+        stagger: 0.15, 
+        ease: "back.out(1.4)" 
+    }, "-=0.6");
+
+  // 4. CONTACT SECTION TIMELINE
+  const contactTl = gsap.timeline(timelineConfig('#section-contact'));
+  contactTl
+    .to('.contact-left', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
+    .to('.contact-right', { autoAlpha: 1, scale: 1, duration: 1, ease: "power2.out" }, "-=0.7")
+    .to('.social-icons a', { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.5, 
+        stagger: 0.1, 
+        ease: "power1.out" 
+    }, "-=0.5");
+};
+
+// Initialize everything on DOM Content Loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initLenis();
+  initPremiumInteractions();
 });
 
 

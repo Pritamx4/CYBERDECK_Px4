@@ -10,8 +10,8 @@
 body,
 html {
   user-select: none;
-  height: 100%;
-  overflow: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
   font-family: "Courier New", Courier, monospace;
   background: var(--color-background);
 }
@@ -617,15 +617,14 @@ html {
 }
 
 .scroll-container {
-  height: 100vh;
-  overflow-y: scroll;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
+  width: 100%;
 }
 
-.snap-section {
-  scroll-snap-align: start;
-  height: 100vh;
+.hero-section,
+.about-section,
+.skills-section,
+.contact-section {
+  min-height: 100vh;
   width: 100%;
   position: relative;
 }
@@ -662,15 +661,7 @@ a {
   transition: transform 0.3s ease, background 0.3s ease, backdrop-filter 0.3s ease;
 }
 
-/* Navbar with blur background when scrolled (desktop only) */
-@media (min-width: 769px) {
-  .navbar.scrolled {
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(0, 255, 247, 0.1);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  }
-}
+
 
 .glow-text {
   color: var(--color-primary);
@@ -754,8 +745,7 @@ a {
   width: 28px;
   height: 24px;
   position: relative;
-  z-index: 100000; /* Increased Z-index to avoid any overlap */
-  background-color: rgba(0, 0, 0, 0); /* Force hit testing on transparent space */
+  z-index: 10000;
   transition: all 0.3s ease;
 }
 
@@ -763,12 +753,10 @@ a {
 .menu-icon::after {
   content: '';
   position: absolute;
-  top: -20px;
-  bottom: -20px;
-  left: -20px;
-  right: -20px;
-  background-color: rgba(0, 0, 0, 0); /* invisible solid block for hit detection */
-  z-index: 1;
+  top: -15px;
+  bottom: -15px;
+  left: -15px;
+  right: -15px;
 }
 
 /* Nav links hidden by default on all screen sizes */
@@ -1095,7 +1083,6 @@ a {
   min-height: 100vh;
   background: #0a0a0a;
   padding: var(--spacing-xl) var(--spacing-xl);
-  scroll-snap-align: start;
   position: relative;
   overflow: hidden;
 }
@@ -1422,6 +1409,19 @@ a {
   background: #0a0a0a;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   z-index: -1;
+}
+
+.core-logo {
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 5px var(--color-primary));
+  z-index: 5;
+  transition: transform 0.3s ease;
+}
+
+.core-hexagon:hover .core-logo {
+  transform: scale(1.1);
 }
 
 @keyframes coreGlow {
@@ -1753,30 +1753,18 @@ a {
   height: 16.875rem;
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: var(--radius-md);
-  backdrop-filter: blur(12px);
-  cursor: pointer;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-  overflow: hidden;
   clip-path: url(#folderClip);
-  transform-style: preserve-3d;
-  perspective: 1000px;
+  overflow: hidden;
+  position: relative;
 }
 
 .project-card img {
   width: var(--container-lg);
   height: 10.625rem;
   object-fit: cover;
-  transition: transform var(--transition-fast);
 }
 
-.project-card:hover {
-  transform: translateY(calc(-1 * var(--spacing-sm))) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0, 255, 247, 0.3), 0 0 30px rgba(0, 255, 247, 0.2);
-}
 
-.project-card:hover img {
-  transform: scale(1.1);
-}
 
 .card-info {
   width: var(--container-lg);
@@ -2899,9 +2887,7 @@ html {
     overflow-y: auto;
   }
 
-  .snap-section {
-    height: auto !important;
-  }
+
 
   .contact-image {
     max-width: 90%;
@@ -2970,56 +2956,24 @@ body::before {
   z-index: 9999;
 }
 
-/* ========================= HOLOGRAPHIC SHIMMER ========================= */
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(
-    45deg,
-    transparent,
-    rgba(0, 255, 247, 0.3),
-    transparent,
-    rgba(255, 77, 219, 0.3),
-    transparent
-  );
-  background-size: 400% 400%;
-  border-radius: inherit;
-  z-index: -1;
+
+
+/* ========================= SCROLL REVEAL UTILITIES ========================= */
+.reveal-up {
   opacity: 0;
-  animation: shimmer 3s ease-in-out infinite;
-  transition: opacity 0.3s ease;
+  visibility: hidden;
+  will-change: transform, opacity;
 }
 
-.project-card:hover::before {
-  opacity: 1;
+.reveal-scale {
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
 }
 
-@keyframes shimmer {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
 
-/* ========================= PARALLAX ENHANCEMENTS ========================= */
-.hero-section,
-.about-section,
-.skills-section,
-.projects-section,
-.contact-section {
-  transition: transform 0.1s ease-out;
-}
 
-/* Smooth Scroll Snap */
-.scroll-container {
-  scroll-behavior: smooth;
-}
+
 
 /* ========================= LOADING OPTIMIZATION ========================= */
 img[loading="lazy"] {
