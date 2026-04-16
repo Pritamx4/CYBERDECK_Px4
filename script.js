@@ -7,9 +7,6 @@ const terminalLines = [
   '> DEPLOYING TO CYBERDECK_PX4...'
 ];
 
-let currentLine = 0;
-let progress = 0;
-
 function showLoadingScreen() {
   const terminalOutput = document.getElementById('terminalOutput');
   const progressBar = document.getElementById('progressBar');
@@ -116,10 +113,10 @@ function hideLoadingScreen() {
   setTimeout(() => {
     animateNavbarEntry();
     
-    // Initialize Matrix Rain after loading is complete
-    setTimeout(() => {
-      initMatrixRain();
-    }, 500);
+    // Matrix Rain removed to reveal main screen
+    // setTimeout(() => {
+    //   initMatrixRain();
+    // }, 500);
     
     // Add glitch effect to typewriter
     setTimeout(() => {
@@ -128,33 +125,23 @@ function hideLoadingScreen() {
   }, 300);
 }
 
-// Navbar Entry Animation with GSAP
+// Navbar Entry Fallback (Native JS)
 function animateNavbarEntry() {
-  if (typeof gsap === 'undefined') {
-    console.error('GSAP not loaded for navbar animation');
-    return;
-  }
-
   const navbarLogo = document.getElementById('navbarLogo');
   const navItems = document.querySelectorAll('.nav-item');
 
-  // Animate logo from top
-  gsap.from(navbarLogo, {
-    y: -50,
-    opacity: 0,
-    duration: 0.8,
-    ease: 'power3.out'
-  });
+  if (navbarLogo) {
+    navbarLogo.style.transition = 'all 0.8s ease-out';
+    navbarLogo.style.opacity = '1';
+    navbarLogo.style.transform = 'translateY(0)';
+  }
 
-  // Animate nav items from right, one by one
   navItems.forEach((item, index) => {
-    gsap.from(item, {
-      x: 100,
-      opacity: 0,
-      duration: 0.6,
-      delay: 0.3 + (index * 0.1),
-      ease: 'power2.out'
-    });
+    setTimeout(() => {
+      item.style.transition = 'all 0.5s ease-out';
+      item.style.opacity = '1';
+      item.style.transform = 'translateX(0)';
+    }, 300 + (index * 100));
   });
 }
 
@@ -183,7 +170,6 @@ function createSound(freq, type, duration, gain) {
   osc.stop(audioContext.currentTime + duration);
 }
 
-function playBeep() { createSound(800, 'sine', 0.1, 0.1); }
 function playTypingSound() { createSound(600, 'square', 0.08, 0.08); }
 function playHoverSound() { createSound(400, 'square', 0.05, 0.05); }
 
@@ -227,56 +213,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Initialize EmailJS
 (function() {
-  emailjs.init("glYVjrgq1NH52F9M2");
+  if (window.emailjs) {
+    emailjs.init("glYVjrgq1NH52F9M2");
+  }
 })();
 
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
+  if (!toast) return;
   const toastMessage = toast.querySelector('.toast-message');
+  if (!toastMessage) return;
   toastMessage.textContent = message;
   toast.className = `toast ${type}`;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// Mobile Menu with GSAP
+// Mobile Menu (native)
 function toggleMenu() {
   const navLinks = document.getElementById('navLinks');
   const menuIcon = document.querySelector('.menu-icon');
-  const menuItems = document.querySelectorAll('.nav-item');
+  if (!navLinks || !menuIcon) return;
 
-  if (typeof gsap === 'undefined') {
-    console.error('GSAP not loaded');
-    navLinks.classList.toggle('show');
-    return;
-  }
+  const isOpen = navLinks.classList.toggle('show');
+  menuIcon.classList.toggle('active', isOpen);
+  menuIcon.setAttribute('aria-expanded', String(isOpen));
+}
 
-  if (!navLinks.classList.contains('show')) {
-    navLinks.classList.add('show');
-    menuIcon.classList.add('active');
-
-    gsap.to(navLinks, { opacity: 1, duration: 0.3, ease: 'power2.out' });
-
-    menuItems.forEach((item, index) => {
-      gsap.fromTo(item, 
-        { opacity: 0, x: '100%' },
-        { opacity: 1, x: 0, duration: 0.6, delay: index * 0.12, ease: 'power3.out' }
-      );
-    });
-  } else {
-    menuIcon.classList.remove('active');
-
-    menuItems.forEach((item, index) => {
-      gsap.to(item, { opacity: 0, x: '100%', duration: 0.4, delay: index * 0.05, ease: 'power2.in' });
-    });
-
-    gsap.to(navLinks, {
-      opacity: 0,
-      duration: 0.3,
-      delay: 0.3,
-      ease: 'power2.in',
-      onComplete: () => navLinks.classList.remove('show')
-    });
+function handleMenuKeydown(event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    toggleMenu();
   }
 }
 
@@ -317,6 +284,7 @@ const delayBetweenTexts = 1000;
 const typedText = document.getElementById('typedText');
 
 function type() {
+  if (!typedText) return;
   if (charIndex < texts[textIndex].length) {
     typedText.textContent += texts[textIndex].charAt(charIndex);
     charIndex++;
@@ -327,6 +295,7 @@ function type() {
 }
 
 function erase() {
+  if (!typedText) return;
   if (charIndex > 0) {
     typedText.textContent = texts[textIndex].substring(0, charIndex - 1);
     charIndex--;
@@ -337,42 +306,41 @@ function erase() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => setTimeout(type, 1000));
+document.addEventListener('DOMContentLoaded', () => {
+  if (typedText) {
+    setTimeout(type, 1000);
+  }
+});
 
-// Contact Message Functionality
-const sendIcon = document.querySelector('.send-icon');
+// Contact Message Functionality (Fusion Grid)
+const sendBtn = document.querySelector('.send-btn');
 const messageInput = document.querySelector('.message-input');
-let isInputVisible = false;
 
-sendIcon.addEventListener('click', (e) => {
-  e.stopPropagation();
-  
-  if (!isInputVisible) {
-    messageInput.classList.remove('hide');
-    messageInput.classList.add('show');
-    isInputVisible = true;
-    messageInput.focus();
-  } else {
+if (sendBtn && messageInput) {
+  sendBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    
     const message = messageInput.value.trim();
     
-    // Validate message length
     if (!message) {
       showToast('Please enter a message first!', 'warning');
       return;
     }
     
-    if (message.length < 10) {
-      showToast('Message too short! Please write at least 10 characters.', 'warning');
+    if (message.length < 5) { // Reduced min length for better UX
+      showToast('Message too short!', 'warning');
+      return;
+    }
+
+    if (!window.emailjs) {
+      showToast('Service unavailable.', 'error');
       return;
     }
     
-    if (message.length > 500) {
-      showToast('Message too long! Please keep it under 500 characters.', 'warning');
-      return;
-    }
-    
-    // Send message
-    sendIcon.classList.add('sending', 'fly-away');
+    // Disable button during send
+    sendBtn.disabled = true;
+    const icon = sendBtn.querySelector('i');
+    if (icon) icon.className = 'fa-solid fa-spinner fa-spin';
     
     const templateParams = {
       message: message,
@@ -380,34 +348,26 @@ sendIcon.addEventListener('click', (e) => {
       to_name: 'Pritam Singh'
     };
     
-    emailjs.send('Pritamx4', 'Pritamx4', templateParams)
-      .then((response) => {
-        console.log('SUCCESS!', response.status, response.text);
-        showToast('✓ Message sent successfully! I\'ll get back to you soon.', 'success');
-        messageInput.value = '';
-        
-        setTimeout(() => {
-          sendIcon.classList.remove('fly-away');
-          messageInput.classList.remove('show');
-          messageInput.classList.add('hide');
-          sendIcon.classList.remove('sending');
-          isInputVisible = false;
-        }, 800);
-      }, (error) => {
-        console.error('FAILED...', error);
-        showToast('✗ Failed to send message. Please try again.', 'error');
-        sendIcon.classList.remove('sending', 'fly-away');
-      });
-  }
-});
+    try {
+      await emailjs.send('Pritamx4', 'Pritamx4', templateParams);
+      showToast('✓ Signal synchronized. Message sent.', 'success');
+      messageInput.value = '';
+    } catch (error) {
+      console.error('FAILED...', error);
+      showToast('✗ Signal lost. Please try again.', 'error');
+    } finally {
+      sendBtn.disabled = false;
+      if (icon) icon.className = 'fa-solid fa-paper-plane';
+    }
+  });
 
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.message-container') && isInputVisible) {
-    messageInput.classList.remove('show');
-    messageInput.classList.add('hide');
-    isInputVisible = false;
-  }
-});
+  // Allow 'Enter' key to send
+  messageInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+}
 
 // Active Navigation Indicator
 const sections = document.querySelectorAll('section[id]');
@@ -435,51 +395,28 @@ function updateActiveNav() {
 window.addEventListener('scroll', updateActiveNav);
 updateActiveNav(); // Call on page load
 
-// Bottom Tab Terminal
-document.addEventListener('DOMContentLoaded', () => {
-  const bottomTab = document.getElementById('bottomTab');
-  const toggleButton = bottomTab.querySelector('.toggle-btn');
-  const icon = document.getElementById('icon');
-  let hideTimeout;
-
-  bottomTab.addEventListener('mouseenter', () => {
-    clearTimeout(hideTimeout);
-    icon.classList.remove('fa-angle-up');
-    icon.classList.add('fa-angle-down');
-    bottomTab.classList.remove('hidden');
-    bottomTab.classList.add('shown');
-  });
-
-  bottomTab.addEventListener('mouseleave', () => {
-    hideTimeout = setTimeout(() => {
-      bottomTab.classList.add('hidden');
-      icon.classList.remove('fa-angle-down');
-      icon.classList.add('fa-angle-up');
-      bottomTab.classList.remove('shown');
-    }, 30);
-  });
-
-  hideTimeout = setTimeout(() => {
-    bottomTab.classList.add('hidden');
-    bottomTab.classList.remove('shown');
-    icon.classList.remove('fa-angle-down');
-    icon.classList.add('fa-angle-up');
-  }, 5000);
-});
-
 let hideTimeout;
 let hasShownOnce = false;
 let isBottomTabOpen = false;
 
 function toggleBottomTab() {
   const tab = document.getElementById('bottomTab');
+  const icon = document.getElementById('toggleIcon');
+  const toggleButton = document.querySelector('.tab-toggle');
   if (!tab) return;
   
   clearTimeout(hideTimeout);
   isBottomTabOpen = !isBottomTabOpen;
+  if (toggleButton) {
+    toggleButton.setAttribute('aria-expanded', String(isBottomTabOpen));
+  }
   
   if (isBottomTabOpen) {
     tab.classList.add('open');
+    if (icon) {
+      icon.classList.remove('fa-chevron-up');
+      icon.classList.add('fa-chevron-down');
+    }
     
     // Start typing effect only on first show
     if (!hasShownOnce) {
@@ -490,6 +427,10 @@ function toggleBottomTab() {
     }
   } else {
     tab.classList.remove('open');
+    if (icon) {
+      icon.classList.remove('fa-chevron-down');
+      icon.classList.add('fa-chevron-up');
+    }
   }
 }
 
@@ -981,7 +922,7 @@ function generateTrend(finalValue, points) {
   return trend;
 }
 
-window.onload = () => {
+window.addEventListener('load', () => {
   fetchGitHubStats().then(() => {
     // Stats fetched, ready to display when tab opens
   });
@@ -990,9 +931,42 @@ window.onload = () => {
   // Initialize element references
   terminalElement = document.getElementById('terminalText');
   statsGrid = document.getElementById('statsGrid');
-};
+});
 
-// Skills Animation logic moved to modular GSAP ScrollTrigger below
+// Skills animation using native IntersectionObserver
+function initSkillBars() {
+  const skillCards = document.querySelectorAll('.skill-card');
+  if (!skillCards.length) return;
+
+  if (!('IntersectionObserver' in window) || window.innerWidth <= 768) {
+    skillCards.forEach((card) => {
+      const progressBar = card.querySelector('.skill-progress');
+      if (!progressBar) return;
+      const targetWidth = progressBar.getAttribute('data-progress') || '0';
+      progressBar.style.width = `${targetWidth}%`;
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      const card = entry.target;
+      const progressBar = card.querySelector('.skill-progress');
+      if (progressBar) {
+        const targetWidth = progressBar.getAttribute('data-progress') || '0';
+        progressBar.style.width = `${targetWidth}%`;
+      }
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+      observer.unobserve(card);
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
+
+  skillCards.forEach((card) => observer.observe(card));
+}
 
 // ========================================
 // MATRIX RAIN EFFECT
@@ -1043,66 +1017,7 @@ function initMatrixRain() {
 // ========================================
 // GLITCH EFFECT ON TYPEWRITER
 // ========================================
-function addGlitchEffect() {
-  const typedText = document.getElementById('typedText');
-  if (!typedText) return;
-
-  setInterval(() => {
-    if (Math.random() > 0.95) {
-      typedText.classList.add('glitch');
-      setTimeout(() => {
-        typedText.classList.remove('glitch');
-      }, 300);
-    }
-  }, 3000);
-}
-
-// GSAP SKILL BARS ANIMATION ON SCROLL
-// ========================================
-if (typeof gsap !== 'undefined' && gsap.registerPlugin) {
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Only apply GSAP animations on desktop (not mobile)
-  if (window.innerWidth > 768) {
-    gsap.utils.toArray('.skill-card').forEach((card, index) => {
-      const progressBar = card.querySelector('.skill-progress');
-      const targetWidth = progressBar.getAttribute('data-progress');
-
-      gsap.from(card, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 90%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        },
-        opacity: 0,
-        y: 30,
-        duration: 0.6,
-        delay: index * 0.05,
-        ease: 'power3.out'
-      });
-
-      gsap.to(progressBar, {
-        scrollTrigger: {
-          trigger: card,
-          start: 'top 85%',
-        },
-        width: targetWidth + '%',
-        duration: 1.2,
-        delay: index * 0.05 + 0.1,
-        ease: 'power2.out'
-      });
-    });
-  } else {
-    // On mobile, just set progress bars to their target width immediately
-    document.querySelectorAll('.skill-card').forEach(card => {
-      const progressBar = card.querySelector('.skill-progress');
-      const targetWidth = progressBar.getAttribute('data-progress');
-      progressBar.style.width = targetWidth + '%';
-    });
-  }
-}
-
+// Glitch logic removed (replaced by high-fidelity CSS animations)
 
 // ========================================
 // PARALLAX SCROLL EFFECT
@@ -1114,11 +1029,11 @@ window.addEventListener('scroll', () => {
     window.requestAnimationFrame(() => {
       const scrolled = window.pageYOffset;
       
-      // Parallax for hero section
-      const heroSection = document.querySelector('.hero-section');
-      if (heroSection) {
-        heroSection.style.transform = `translateY(${scrolled * 0.4}px)`;
-      }
+      // Parallax logic for legacy hero removed to support grid stability
+      // const heroSection = document.querySelector('.hero-section');
+      // if (heroSection) {
+      //   heroSection.style.transform = `translateY(${scrolled * 0.4}px)`;
+      // }
       
       // Parallax for matrix canvas
       const matrixCanvas = document.getElementById('matrixCanvas');
@@ -1158,125 +1073,12 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // ========================================
-// LENIS SMOOTH SCROLLING & GSAP INTEGRATION
+// CORE INITIALIZER
 // ========================================
 
-/**
- * LENIS INITIALIZATION
- * Handles smooth scrolling and syncing with GSAP
- */
-let lenis;
-
-const initLenis = () => {
-  if (typeof Lenis !== 'undefined') {
-    lenis = new Lenis({
-      lerp: 0.08,
-      wheelMultiplier: 1,
-      smoothWheel: true,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      normalizeWheel: true,
-      infinite: false,
-    });
-
-    // Sync ScrollTrigger with Lenis
-    lenis.on('scroll', ScrollTrigger.update);
-
-    gsap.ticker.add((time) => {
-      lenis.raf(time * 1000);
-    });
-
-    gsap.ticker.lagSmoothing(0);
-    
-    // Smooth transition for hash links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          lenis.scrollTo(target);
-        }
-      });
-    });
-  }
-};
-
-/**
- * PREMIUM INTERACTION SYSTEM
- * Orchestrates group-based timelines for a cohesive narrative
- */
-const initPremiumInteractions = () => {
-  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-  
-  gsap.registerPlugin(ScrollTrigger);
-
-  // Default configuration for consistent interaction feel
-  const timelineConfig = (trigger) => ({
-    scrollTrigger: {
-      trigger: trigger,
-      start: "top 85%",
-      toggleActions: "play none none none",
-      once: true
-    }
-  });
-
-  // 1. ABOUT SECTION TIMELINE
-  const aboutTl = gsap.timeline(timelineConfig('#section-about'));
-  aboutTl
-    .to('.about-header', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
-    .to('.operator-card', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" }, "-=0.6")
-    .to('.neural-visualizer', { autoAlpha: 1, scale: 1, duration: 1, ease: "back.out(1.2)" }, "-=0.6")
-    .to('.data-ticker', { opacity: 1, duration: 0.8 }, "-=0.4");
-
-  // 2. SKILLS SECTION TIMELINE
-  const skillsTl = gsap.timeline(timelineConfig('#section-skills'));
-  skillsTl
-    .to('.skills-header', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
-    .to('.skill-card', { 
-        autoAlpha: 1, 
-        y: 0, 
-        duration: 0.8, 
-        stagger: 0.1, 
-        ease: "power2.out" 
-    }, "-=0.5")
-    // Chain skill bar fulfillment to the cards' appearance
-    .to('.skill-progress', {
-        width: (i, target) => target.getAttribute('data-progress') + "%",
-        duration: 1.2,
-        stagger: 0.1,
-        ease: "power4.out"
-    }, "-=0.8");
-
-  // 3. PROJECTS SECTION TIMELINE
-  const projectsTl = gsap.timeline(timelineConfig('#section-projects'));
-  projectsTl
-    .to('.project-heading', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
-    .to('.project-card', { 
-        autoAlpha: 1, 
-        scale: 1, 
-        duration: 0.8, 
-        stagger: 0.15, 
-        ease: "back.out(1.4)" 
-    }, "-=0.6");
-
-  // 4. CONTACT SECTION TIMELINE
-  const contactTl = gsap.timeline(timelineConfig('#section-contact'));
-  contactTl
-    .to('.contact-left', { autoAlpha: 1, y: 0, duration: 1, ease: "power2.out" })
-    .to('.contact-right', { autoAlpha: 1, scale: 1, duration: 1, ease: "power2.out" }, "-=0.7")
-    .to('.social-icons a', { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.5, 
-        stagger: 0.1, 
-        ease: "power1.out" 
-    }, "-=0.5");
-};
-
-// Initialize everything on DOM Content Loaded
 document.addEventListener('DOMContentLoaded', () => {
-  initLenis();
-  initPremiumInteractions();
+  initSkillBars();
+  console.log('System initialized: Native Mode');
 });
 
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="CYBERDECK_Px4 - Neural interface for digital exploration. Frontend experiments, interactive UI, and cyberpunk aesthetics by Pritam Singh." />
-    <meta name="keywords" content="Pritam Singh, Pritamx4, CYBERDECK, Frontend Developer, Interactive UI, Cyberpunk, Web Experiments, GSAP, Three.js" />
+    <meta name="keywords" content="Pritam Singh, Pritamx4, CYBERDECK, Frontend Developer, Interactive UI, Cyberpunk, Web Experiments, CSS Animations, Three.js" />
     <meta name="author" content="Pritam Singh" />
     <meta property="og:title" content="CYBERDECK_PX4 | SYSTEM ONLINE" />
     <meta property="og:description" content="Neural interface for digital exploration. Jack in to the grid." />
@@ -15,7 +15,6 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="CYBERDECK_Px4 | SYSTEM ONLINE" />
     <meta name="twitter:description" content="Neural interface for digital exploration. Enter the digital realm." />
-    <meta name="theme-color" content="#00ffff">
     <link rel="canonical" href="https://pritamx4.github.io/CYBERDECK_Px4/">
     <!-- Preload critical assets -->
     <link rel="preload" href="images/robo.png" as="image">
@@ -23,12 +22,12 @@
     <link rel="preload" href="script.js" as="script">
     
     <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
-    <link rel="icon" href="images main logoctor.svg" />
+    <link rel="icon" href="images/px4 main logo.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.cdnfonts.com/css/space-age" rel="stylesheet" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bruno+Ace&family=Michroma&family=Orbitron:wght@400..900&family=Pacifico&family=Rajdhani:wght@300;400;500;600;700&family=Russo+One&family=Satisfy&family=Warnes&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Audiowide&family=Bruno+Ace&family=Michroma&family=Orbitron:wght@400..900&family=Pacifico&family=Rajdhani:wght@300;400;500;600;700&family=Russo+One&family=Satisfy&family=Space+Grotesk:wght@400;500;700&family=Warnes&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -43,12 +42,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css" />
     <!-- EmailJS Library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!-- GSAP Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <!-- GSAP ScrollTrigger Plugin -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Lenis Smooth Scrolling -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   </head>
   <body>
     <!-- Loading Screen -->
@@ -56,7 +49,7 @@
       <div class="particles" id="particles"></div>
       <div class="loading-container">
         <div class="loading-logo">
-          <img src="images/p.svg" alt="P" class="logo-part logo-p" id="logoP" />
+          <img src="images/P.svg" alt="P" class="logo-part logo-p" id="logoP" />
           <img src="images/x.svg" alt="X" class="logo-part logo-x" id="logoX" />
           <img src="images/4.svg" alt="4" class="logo-part logo-4" id="logo4" />
         </div>
@@ -89,7 +82,7 @@
           <li class="nav-item"><a href="#section-contact" aria-label="Navigate to comm link section">COMM_LINK</a></li>
         </ul>
 
-        <div class="menu-icon" onclick="toggleMenu()" role="button" aria-label="Toggle mobile menu" tabindex="0">
+        <div class="menu-icon" onclick="toggleMenu()" onkeydown="handleMenuKeydown(event)" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
           <span class="menu-line"></span>
           <span class="menu-line"></span>
           <span class="menu-line"></span>
@@ -99,16 +92,34 @@
     <!-- Main Section with Background Image -->
     <main class="scroll-container" tabindex="0">
       <section id="section-home" class="hero-section">
-        <!-- Matrix Rain Canvas -->
-        <canvas id="matrixCanvas" class="matrix-canvas"></canvas>
-        <div class="content">
-          <img src="images/robo.png" alt="PNG Image" class="right-image" loading="lazy" />
+        <div class="hero-grid">
+          <div class="hero-content reveal-left">
+            <span class="tech-label">[ STATUS: NEURAL_LINK_STABLE ]</span>
+            <h1 class="hero-title">CYBERDECK<br><span class="pulse-text">PX4</span></h1>
+            <p class="hero-description">
+              Architecting high-performance digital ecosystems with a focus on 
+              immersive UX and hardware-level precision. Entering the digital void.
+            </p>
+            <div class="hero-actions">
+              <a href="#section-projects" class="btn-sleek">
+                <i class="fa-solid fa-folder-open"></i>
+                EXPLORE_VAULT
+              </a>
+              <a href="#section-contact" class="btn-outline">
+                INITIATE_SYNC
+              </a>
+            </div>
+          </div>
+          <div class="hero-visual reveal-right">
+            <div class="hero-frame">
+              <div class="retina-scan-line"></div>
+              <img src="images/robo.png" alt="Neural Interface Unit" class="hero-img" />
+              <div class="frame-bracket br-tl"></div>
+              <div class="frame-bracket br-br"></div>
+              <span class="frame-id">MODEL_PX4 // NEURAL_CORE</span>
+            </div>
+          </div>
         </div>
-        <!-- typewriter -->
-        <div class="typewriter">
-          <span id="typedText"></span><span class="cursor"></span>
-        </div>
-        <p class="subtitle">NEURAL INTERFACE | DIGITAL PLAYGROUND</p>
       </section>
       <!-- About Section - NEURAL_GRID -->
       <section id="section-about" class="about-section">
@@ -453,10 +464,10 @@
         </div>
         <div class="cards-container">
           <div class="project-card reveal-scale">
-            <img src="images/scrolltrigger.png" alt=""/>
+            <img src="images/scrolltrigger.png" alt="Scroll Trigger project preview"/>
             <div class="card-info">
               <h3>Scroll Trigger</h3>
-              <p>A scroll-triggered animation using GSAP.</p>
+              <p>A scroll-triggered animation built with native JavaScript.</p>
               <div class="links">
                 <a
                   href="https://github.com/Pritamx4/Scroll-trigger-effect/archive/refs/heads/main.zip"
@@ -469,7 +480,7 @@
             </div>
           </div>
           <div class="project-card reveal-scale">
-            <img src="images/todolist.png" alt=""/>
+            <img src="images/todolist.png" alt="To-Do List project preview"/>
             <div class="card-info">
               <h3>To-Do List</h3>
               <p>A to-do list application built with Next.js</p>
@@ -485,7 +496,7 @@
             </div>
           </div>
           <div class="project-card reveal-scale">
-            <img src="images/tictactoe.png" alt=""/>
+            <img src="images/tictactoe.png" alt="Tic Tac Toe project preview"/>
             <div class="card-info">
               <h3>Tic Tac Toe</h3>
               <p>by using HTML, CSS and JS.</p>
@@ -501,7 +512,7 @@
             </div>
           </div>
           <div class="project-card reveal-scale">
-            <img src="images/memorymanagementsimulator.png" alt="" />
+            <img src="images/memorymanagementsimulator.png" alt="Memory Management Simulator project preview" />
             <div class="card-info">
               <h3>Memory Management simulator</h3>
               <p>by using HTML CSS JS.</p>
@@ -517,7 +528,7 @@
             </div>
           </div>
           <div class="project-card reveal-scale">
-            <img src="images/snakegame.png" />
+            <img src="images/snakegame.png" alt="Snake Game project preview" />
             <div class="card-info">
               <h3>Snake Game</h3>
               <p>A classic snake game</p>
@@ -530,70 +541,76 @@
         </div>
       </section>
 
-      <section id="section-contact" class="contact-section">
-        <div class="contact-left reveal-up">
-          <div class="speech-bubble-contact">
-            <h2>COMM_LINK:</h2>
-            <p>Datastream flowing. Inject your message and let's architect the impossible together!
-              <span class="message-container">
-                <input type="text" class="message-input hide" placeholder="Message..." />
-                <i class="fa-solid fa-paper-plane send-icon"></i>
-              </span>
-            </p>
-          </div>
-          <div class="social-icons">
-            <a
-              href="https://github.com/Pritamx4"
-              target="_blank"
-              class="icon git"
-              aria-label="Visit GitHub profile"
-              ><i class="fab fa-github"></i
-            ></a>
-            <a href="https://www.instagram.com/pritamxfour/" class="icon insta"
-              target="_blank"
-              aria-label="Visit Instagram profile"
-              ><i class="fab fa-instagram"></i
-            ></a>
-            <a
-              href="https://www.youtube.com/@Pritamx4-Studio?sub_confirmation=1"
-              class="icon yt"
-              target="_blank"
-              aria-label="Visit YouTube channel"
-              ><i class="fab fa-youtube"></i
-            ></a>
-            <a href="https://www.linkedin.com/in/pritamx4/" class="icon li"
-              target="_blank"
-              aria-label="Visit LinkedIn profile"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <a href="https://www.pinterest.com/pritamx4/" class="icon pinterest"
-              target="_blank"
-              aria-label="Visit Pinterest profile"
-              ><i class="fab fa-pinterest"></i
-            ></a>
-          </div>
+      <section id="section-contact" class="contact-fusion">
+        <div class="fusion-header reveal-up">
+          <span class="tech-label">[ INITIATE_SIGNAL ]</span>
+          <h2 class="section-title">CONTACT_FUSION</h2>
+          <div class="fusion-line"></div>
         </div>
 
-        <div class="contact-right reveal-scale">
-          <img
-            src="images/contact.png"
-            alt="Left Image"
-            class="contact-image"
-          />
+        <div class="fusion-grid">
+          <!-- Left: Portrait Frame -->
+          <div class="portrait-container reveal-up">
+            <div class="portrait-frame">
+              <div class="scan-line"></div>
+              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" />
+              <div class="frame-decal bracket-tl"></div>
+              <div class="frame-decal bracket-br"></div>
+              <div class="frame-label">OPERATOR // PX4</div>
+            </div>
+          </div>
+
+          <!-- Right: Connect Panel -->
+          <div class="connect-panel reveal-up">
+            <div class="panel-content">
+              <span class="tech-label">[ CHANNEL: ENCRYPTED ]</span>
+              <p class="connect-description">
+                Bridging the gap between conceptual architecture and digital reality. 
+                Transmit your coordinates or inject a message to begin the sync.
+              </p>
+
+              <div class="social-matrix">
+                <a href="https://github.com/Pritamx4" target="_blank" class="social-item">
+                  <i class="fab fa-github"></i>
+                  <span class="social-label">GITHUB // SOURCE</span>
+                </a>
+                <a href="https://www.instagram.com/pritamxfour/" target="_blank" class="social-item">
+                  <i class="fab fa-instagram"></i>
+                  <span class="social-label">INSTAGRAM // INTEL</span>
+                </a>
+                <a href="https://www.linkedin.com/in/pritamx4/" target="_blank" class="social-item">
+                  <i class="fab fa-linkedin"></i>
+                  <span class="social-label">LINKEDIN // NETWORK</span>
+                </a>
+                <a href="https://www.youtube.com/@Pritamx4" target="_blank" class="social-item">
+                  <i class="fab fa-youtube"></i>
+                  <span class="social-label">YOUTUBE // BROADCAST</span>
+                </a>
+              </div>
+
+              <div class="terminal-input-wrapper">
+                <div class="terminal-prefix">>></div>
+                <input type="text" class="message-input" placeholder="inject_message..." />
+                <button class="send-btn" aria-label="Send Message">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>
 
     <!-- Bottom Stats Tab -->
     <div class="bottom-tab" id="bottomTab">
-      <button class="tab-toggle" onclick="toggleBottomTab()">
+      <button type="button" class="tab-toggle" onclick="toggleBottomTab()" aria-label="Toggle repository stats panel" title="Toggle repository stats panel">
         <i id="toggleIcon" class="fa fa-chevron-up"></i>
       </button>
       
       <div class="tab-content">
         <div class="terminal-output" id="terminalText"></div>
         
-        <div class="stats-grid" id="statsGrid" style="opacity: 0;">
+        <div class="stats-grid" id="statsGrid">
           <canvas class="sparkle-canvas" id="sparkleCanvas"></canvas>
           
           <!-- Stats Chart -->
@@ -604,19 +621,19 @@
           <!-- Language Stats -->
           <div class="stat-item language-stat">
             <span class="stat-label">HTML</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="html" style="width: 0%"></div></div>
+            <div class="stat-bar-bg"><div class="stat-bar" data-lang="html"></div></div>
             <span class="stat-percent" id="htmlPercent">0%</span>
           </div>
           
           <div class="stat-item language-stat">
             <span class="stat-label">CSS</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="css" style="width: 0%"></div></div>
+            <div class="stat-bar-bg"><div class="stat-bar" data-lang="css"></div></div>
             <span class="stat-percent" id="cssPercent">0%</span>
           </div>
           
           <div class="stat-item language-stat">
             <span class="stat-label">JavaScript</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="js" style="width: 0%"></div></div>
+            <div class="stat-bar-bg"><div class="stat-bar" data-lang="js"></div></div>
             <span class="stat-percent" id="jsPercent">0%</span>
           </div>
           
@@ -673,11 +690,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-      <span class="toast-message"></span>
     </div>
 
     <script src="script.js"></script>

@@ -6,7 +6,7 @@
 
 *A cutting-edge portfolio showcasing modern web development with stunning visual effects and animations*
 
-[🌟 Live Demo](https://pritamx4.github.io/frontend-web/) • [📖 Documentation](#-getting-started) • [🐛 Report Bug](https://github.com/Pritamx4/frontend-web/issues) • [💡 Request Feature](https://github.com/Pritamx4/frontend-web/issues)
+[🌟 Live Demo](https://pritamx4.github.io/CYBERDECK_Px4/) • [📖 Documentation](#-getting-started) • [🐛 Report Bug](https://github.com/Pritamx4/CYBERDECK_Px4/issues) • [💡 Request Feature](https://github.com/Pritamx4/CYBERDECK_Px4/issues)
 
 </div>
 
@@ -30,7 +30,7 @@
 ### ⚡ **Interactive Elements**
 - ⌨️ **Typewriter Animation** - Dynamic text effects
 - 🎯 **Smooth Scroll Snap** - Seamless section navigation
-- 🎪 **GSAP Animations** - Professional motion graphics
+- 🎪 **Native Scroll Animations** - Lightweight motion graphics
 - 🎨 **Font Awesome Icons** - Beautiful iconography
 
 </td>
@@ -39,7 +39,7 @@
 
 ### 🛠️ **Tech Stack**
 - **Frontend**: HTML5, CSS3 (Advanced), Vanilla JavaScript
-- **Animations**: GSAP, CSS Keyframes, Transform3D
+- **Animations**: CSS Keyframes, Transform3D, Native JavaScript
 - **Design**: Glassmorphism, Neumorphism, Gradient Design
 - **Fonts**: Orbitron, Space Age, Audiowide, Rajdhani
 
@@ -56,8 +56,8 @@
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/Pritamx4/frontend-web.git
-   cd frontend-web
+   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
+   cd CYBERDECK_Px4
    ```
 
 2. **Launch the project**
@@ -99,7 +99,7 @@
 ## 📁 Project Structure
 
 ```
-frontend-web/
+CYBERDECK_Px4/
 ├── 🏠 index.html              # Main HTML structure
 ├── 🎨 style.css               # Stylesheet with animations
 ├── ⚡ script.js               # Interactive functionality
