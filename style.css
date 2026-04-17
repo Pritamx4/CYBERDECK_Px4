@@ -142,6 +142,14 @@ html {
   border-color: #ff4444;
 }
 
+.toast.info {
+  border-color: #00fff7;
+}
+
+.toast.warning {
+  border-color: #ffaa00;
+}
+
 .toast-message {
   flex: 1;
   font-size: var(--font-sm);
