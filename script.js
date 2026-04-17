@@ -118,10 +118,7 @@ function hideLoadingScreen() {
     //   initMatrixRain();
     // }, 500);
     
-    // Add glitch effect to typewriter
-    setTimeout(() => {
-      addGlitchEffect();
-    }, 1000);
+    // Glitch effect removed
   }, 300);
 }
 
@@ -339,8 +336,7 @@ if (sendBtn && messageInput) {
     
     // Disable button during send
     sendBtn.disabled = true;
-    const icon = sendBtn.querySelector('i');
-    if (icon) icon.className = 'fa-solid fa-spinner fa-spin';
+    // Disabled icon spin logic (FontAwesome removed)
     
     const templateParams = {
       message: message,
@@ -357,7 +353,6 @@ if (sendBtn && messageInput) {
       showToast('✗ Signal lost. Please try again.', 'error');
     } finally {
       sendBtn.disabled = false;
-      if (icon) icon.className = 'fa-solid fa-paper-plane';
     }
   });
 
@@ -413,9 +408,8 @@ function toggleBottomTab() {
   
   if (isBottomTabOpen) {
     tab.classList.add('open');
-    if (icon) {
-      icon.classList.remove('fa-chevron-up');
-      icon.classList.add('fa-chevron-down');
+    if (toggleButton) {
+      toggleButton.style.transform = 'translateX(-50%) rotate(180deg)';
     }
     
     // Start typing effect only on first show
@@ -427,9 +421,8 @@ function toggleBottomTab() {
     }
   } else {
     tab.classList.remove('open');
-    if (icon) {
-      icon.classList.remove('fa-chevron-down');
-      icon.classList.add('fa-chevron-up');
+    if (toggleButton) {
+      toggleButton.style.transform = 'translateX(-50%) rotate(0deg)';
     }
   }
 }
