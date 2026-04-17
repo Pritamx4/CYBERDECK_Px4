@@ -141,86 +141,9 @@ function animateNavbarEntry() {
 // Sound System
 let audioContext;
 let soundEnabled = true;
-let humOscBase, humOscGrit, humGainBase, humGainGrit;
-let isHumming = false;
 
 function initAudio() {
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    setupBackgroundHum();
-  }
-  if (audioContext.state === 'suspended') {
-    audioContext.resume();
-  }
-}
-
-// Global Audio Unlocker for modern browsers
-document.addEventListener('mousedown', initAudio, { once: true });
-document.addEventListener('touchstart', initAudio, { once: true });
-document.addEventListener('keydown', initAudio, { once: true });
-
-
-function setupBackgroundHum() {
-  if (isHumming) return;
-  
-  // Base Sine Layer (Smooth foundation)
-  humOscBase = audioContext.createOscillator();
-  humGainBase = audioContext.createGain();
-  humOscBase.type = 'sine';
-  humOscBase.frequency.setValueAtTime(55, audioContext.currentTime); // Low A
-  humGainBase.gain.setValueAtTime(0, audioContext.currentTime); // Start silent
-  
-  // Grit Sawtooth Layer (Industrial texture)
-  humOscGrit = audioContext.createOscillator();
-  humGainGrit = audioContext.createGain();
-  humOscGrit.type = 'sawtooth';
-  humOscGrit.frequency.setValueAtTime(55, audioContext.currentTime);
-  humGainGrit.gain.setValueAtTime(0, audioContext.currentTime);
-
-  // Connect everything
-  humOscBase.connect(humGainBase);
-  humGainBase.connect(audioContext.destination);
-  
-  humOscGrit.connect(humGainGrit);
-  humGainGrit.connect(audioContext.destination);
-  
-  humOscBase.start();
-  humOscGrit.start();
-  isHumming = true;
-  
-  updateHumState();
-  animateHum();
-}
-
-function updateHumState() {
-  if (!audioContext) return;
-  const targetGainBase = soundEnabled ? 0.015 : 0;
-  const targetGainGrit = soundEnabled ? 0.005 : 0;
-  
-  humGainBase.gain.setTargetAtTime(targetGainBase, audioContext.currentTime, 0.1);
-  humGainGrit.gain.setTargetAtTime(targetGainGrit, audioContext.currentTime, 0.1);
-}
-
-function animateHum() {
-  if (!isHumming || !soundEnabled) {
-    requestAnimationFrame(animateHum);
-    return;
-  }
-
-  const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-  const velocity = Math.abs(window.scrollY - (window.lastScrollY || 0));
-  window.lastScrollY = window.scrollY;
-
-  // Modulate frequency based on scroll position (50Hz to 110Hz)
-  const targetFreq = 55 + (scrollPercent * 55);
-  humOscBase.frequency.setTargetAtTime(targetFreq, audioContext.currentTime, 0.1);
-  humOscGrit.frequency.setTargetAtTime(targetFreq * 1.01, audioContext.currentTime, 0.1); // Slight detune for grit
-
-  // Modulate grit based on movement velocity
-  const gritIntensity = Math.min(velocity * 0.001, 0.01);
-  humGainGrit.gain.setTargetAtTime(0.005 + gritIntensity, audioContext.currentTime, 0.05);
-
-  requestAnimationFrame(animateHum);
+  if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
 }
 
 function createSound(freq, type, duration, gain) {
@@ -238,49 +161,12 @@ function createSound(freq, type, duration, gain) {
   osc.stop(audioContext.currentTime + duration);
 }
 
-function playTypingSound() { createSound(600, 'square', 0.08, 0.06); }
-function playHoverSound() { createSound(350, 'sine', 0.1, 0.04); }
-function playClickSound() { createSound(800, 'square', 0.05, 0.08); }
-function playRevealSound() { createSound(150, 'sine', 0.5, 0.12); }
-
-// Global Global Sound Delegate
-function initGlobalSoundEvents() {
-  document.addEventListener('click', (e) => {
-    const target = e.target.closest('a, button, .menu-icon, .social-item');
-    if (target) {
-      playClickSound();
-    }
-  }, true);
-
-  document.addEventListener('mouseenter', (e) => {
-    const target = e.target.closest('a, button, .menu-icon, .social-item, .skill-card, .project-card, .bottom-tab');
-    if (target) {
-      playHoverSound();
-    }
-  }, true);
-}
-
-initGlobalSoundEvents();
-
-// Section Reveal Sounds
-function initRevealSounds() {
-  const revealElements = document.querySelectorAll('[class*="reveal-"]');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        try { playRevealSound(); } catch(e) {}
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  
-  revealElements.forEach(el => observer.observe(el));
-}
+function playTypingSound() { createSound(600, 'square', 0.08, 0.08); }
+function playHoverSound() { createSound(400, 'square', 0.05, 0.05); }
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') {
     soundEnabled = !soundEnabled;
-    updateHumState();
     showToast(soundEnabled ? 'Sound ON' : 'Sound OFF', 'info');
   }
 });
@@ -295,7 +181,6 @@ window.addEventListener('load', () => {
   loadingStarted = true;
   console.log('Window loaded!');
   document.body.style.overflow = 'hidden';
-  initRevealSounds();
   setTimeout(() => {
     console.log('Calling showLoadingScreen');
     showLoadingScreen();
@@ -1010,7 +895,6 @@ function initSkillBars() {
       }
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
-      try { playRevealSound(); } catch(e) {}
       observer.unobserve(card);
     });
   }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
@@ -1123,12 +1007,162 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // ========================================
+// 7. 3D MODULE - NEURAL_CORE_PX4
+// ========================================
+
+class NeuralCore3D {
+  constructor() {
+    this.container = document.getElementById('neural-canvas-container');
+    if (!this.container) return;
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    this.mouseX = 0;
+    this.mouseY = 0;
+    this.targetRotationX = 0;
+    this.targetRotationY = 0;
+
+    this.init();
+  }
+
+  init() {
+    // Renderer Setup
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.container.appendChild(this.renderer.domElement);
+
+    // Objects
+    this.createCore();
+    this.createParticles();
+
+    this.camera.position.z = 5;
+
+    // Events
+    window.addEventListener('resize', () => this.onResize());
+    window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+
+    this.animate();
+  }
+
+  createCore() {
+    this.group = new THREE.Group();
+
+    // Inner Core (Icosahedron)
+    const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
+    const innerMat = new THREE.MeshBasicMaterial({
+      color: 0x00f0ff,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+    });
+    this.innerMesh = new THREE.Mesh(innerGeo, innerMat);
+    this.group.add(this.innerMesh);
+
+    // Outer Shell (More detailed)
+    const outerGeo = new THREE.IcosahedronGeometry(2, 2);
+    const outerMat = new THREE.MeshBasicMaterial({
+      color: 0x635BFF,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.15
+    });
+    this.outerMesh = new THREE.Mesh(outerGeo, outerMat);
+    this.group.add(this.outerMesh);
+
+    // Floating Logo
+    const loader = new THREE.TextureLoader();
+    loader.load('images/px4 main logo.svg', (texture) => {
+      const logoGeo = new THREE.PlaneGeometry(1.2, 1.2);
+      const logoMat = new THREE.MeshBasicMaterial({
+        map: texture,
+        transparent: true,
+        side: THREE.DoubleSide
+      });
+      this.logoMesh = new THREE.Mesh(logoGeo, logoMat);
+      this.group.add(this.logoMesh);
+    });
+
+    // Pulsing Core Light (Point)
+    const light = new THREE.PointLight(0x00f0ff, 2, 10);
+    this.group.add(light);
+
+    this.scene.add(this.group);
+  }
+
+  createParticles() {
+    const particleCount = 200;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+        positions[i] = (Math.random() - 0.5) * 15;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+        color: 0x00f0ff,
+        size: 0.05,
+        transparent: true,
+        opacity: 0.5
+    });
+
+    this.particles = new THREE.Points(geometry, material);
+    this.scene.add(this.particles);
+  }
+
+  onMouseMove(e) {
+    const rect = this.container.getBoundingClientRect();
+    if (e.clientY > rect.top && e.clientY < rect.bottom && 
+        e.clientX > rect.left && e.clientX < rect.right) {
+      this.mouseX = (e.clientX - rect.left - rect.width / 2) / 100;
+      this.mouseY = (e.clientY - rect.top - rect.height / 2) / 100;
+    }
+  }
+
+  onResize() {
+    const width = this.container.offsetWidth;
+    const height = this.container.offsetHeight;
+    this.renderer.setSize(width, height);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+
+    // Continuous Rotation
+    this.innerMesh.rotation.y += 0.005;
+    this.innerMesh.rotation.z += 0.002;
+    this.outerMesh.rotation.y -= 0.002;
+    this.outerMesh.rotation.z -= 0.001;
+
+    if (this.logoMesh) {
+      this.logoMesh.rotation.y += 0.005;
+    }
+
+    // Mouse Parallax
+    this.targetRotationX += (this.mouseY - this.targetRotationX) * 0.05;
+    this.targetRotationY += (this.mouseX - this.targetRotationY) * 0.05;
+    this.group.rotation.x = this.targetRotationX;
+    this.group.rotation.y = this.targetRotationY;
+
+    // Particle Drift
+    this.particles.rotation.y += 0.001;
+
+    this.renderer.render(this.scene, this.camera);
+  }
+}
+
+// ========================================
 // CORE INITIALIZER
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-  initSkillBars();
-  console.log('System initialized: Native Mode');
+    initSkillBars();
+    new NeuralCore3D();
+    console.log('System initialized: 3D Engine Online');
 });
 
 

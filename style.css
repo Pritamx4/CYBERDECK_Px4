@@ -1354,168 +1354,20 @@ a {
   z-index: 2;
 }
 
-/* SVG Connection Lines */
-.neural-connections {
+/* Three.js Canvas Container */
+.neural-canvas-container {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 1;
+  pointer-events: none;
 }
 
-.data-line {
-  stroke: rgba(0, 255, 255, 0.12);
-  stroke-width: 1;
-  stroke-dasharray: 6 4;
-  animation: dashFlow 8s linear infinite;
-}
-
-@keyframes dashFlow {
-  to { stroke-dashoffset: -80; }
-}
-
-/* Data Particles */
-.data-particle {
-  fill: var(--color-neon-cyan);
-  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.8));
-  opacity: 0;
-  animation: particleFade 2s ease-in-out infinite;
-}
-
-.dp1 { fill: var(--color-primary); }
-.dp2 { fill: var(--color-secondary); }
-.dp3 { fill: var(--color-accent); }
-.dp4 { fill: var(--color-primary); }
-.dp5 { fill: var(--color-secondary); }
-.dp6 { fill: #fff; }
-
-@keyframes particleFade {
-  0% { opacity: 0; r: 1; }
-  20% { opacity: 1; }
-  80% { opacity: 0.8; }
-  100% { opacity: 0; r: 1; }
-}
-
-/* Central Core */
-.neural-core {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-}
-
-.core-hexagon {
-  width: 70px;
-  height: 70px;
-  background: rgba(0, 255, 255, 0.08);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  border: none;
-  animation: coreGlow 3s ease-in-out infinite;
-}
-
-.core-hexagon::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(135deg, var(--color-neon-cyan), var(--color-neon-purple));
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  z-index: -1;
-  opacity: 0.6;
-}
-
-.core-hexagon::after {
-  content: '';
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  background: #0a0a0a;
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  z-index: -1;
-}
-
-.core-logo {
-  width: 45px;
-  height: 45px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px var(--color-primary));
-  z-index: 5;
-  transition: transform 0.3s ease;
-}
-
-.core-hexagon:hover .core-logo {
-  transform: scale(1.1);
-}
-
-@keyframes coreGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.4));
-  }
-  50% {
-    filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.7))
-           drop-shadow(0 0 40px rgba(0, 255, 255, 0.2));
-  }
-}
-
-/* Core Rings */
-.core-ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1px solid transparent;
-}
-
-.core-ring-1 {
-  width: 100px;
-  height: 100px;
-  border-color: rgba(0, 255, 255, 0.2);
-  animation: ringPulse1 3s ease-in-out infinite;
-}
-
-.core-ring-2 {
-  width: 130px;
-  height: 130px;
-  border-color: rgba(0, 255, 255, 0.1);
-  border-style: dashed;
-  animation: ringRotate 20s linear infinite, ringPulse2 4s ease-in-out infinite;
-}
-
-.core-ring-3 {
-  width: 160px;
-  height: 160px;
-  border-color: rgba(0, 255, 255, 0.06);
-  animation: ringRotate 30s linear infinite reverse, ringPulse3 5s ease-in-out infinite;
-}
-
-@keyframes ringPulse1 {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
-}
-
-@keyframes ringPulse2 {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.7; }
-}
-
-@keyframes ringPulse3 {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.5; }
-}
-
-@keyframes ringRotate {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Neural Nodes - positioned around center */

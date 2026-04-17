@@ -21,11 +21,12 @@
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    
-    <!-- External Typography & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    
+    <!-- External Typography, Icons & 3D Engine -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     
     <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
     <link rel="icon" href="images/px4 main logo.svg" />
@@ -155,40 +156,10 @@
           </div>
           <!-- Right: Neural Data Flow Visualization -->
           <div class="neural-visualizer reveal-scale">
-            <!-- Connection lines (SVG) -->
-            <svg class="neural-connections" viewBox="0 0 400 400">
-              <!-- Lines from nodes to center -->
-              <line class="data-line" x1="200" y1="50" x2="200" y2="200" />
-              <line class="data-line" x1="350" y1="110" x2="200" y2="200" />
-              <line class="data-line" x1="350" y1="290" x2="200" y2="200" />
-              <line class="data-line" x1="200" y1="350" x2="200" y2="200" />
-              <line class="data-line" x1="50" y1="290" x2="200" y2="200" />
-              <line class="data-line" x1="50" y1="110" x2="200" y2="200" />
-              <!-- Data particles on lines -->
-              <circle class="data-particle dp1" r="3"><animateMotion dur="2s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
-              <circle class="data-particle dp2" r="3"><animateMotion dur="2.5s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
-              <circle class="data-particle dp3" r="3"><animateMotion dur="1.8s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
-              <circle class="data-particle dp4" r="3"><animateMotion dur="2.2s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
-              <circle class="data-particle dp5" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
-              <circle class="data-particle dp6" r="3"><animateMotion dur="2.1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
-              <!-- Second wave particles (offset) -->
-              <circle class="data-particle dp1" r="2"><animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
-              <circle class="data-particle dp2" r="2"><animateMotion dur="2.5s" begin="1.2s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
-              <circle class="data-particle dp3" r="2"><animateMotion dur="1.8s" begin="0.9s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
-              <circle class="data-particle dp4" r="2"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
-              <circle class="data-particle dp5" r="2"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
-              <circle class="data-particle dp6" r="2"><animateMotion dur="2.1s" begin="1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
-            </svg>
-            <!-- Central Core -->
-            <div class="neural-core">
-              <div class="core-hexagon">
-                <img src="images/px4 main logo.svg" alt="Px4 Logo" class="core-logo" />
-              </div>
-              <div class="core-ring core-ring-1"></div>
-              <div class="core-ring core-ring-2"></div>
-              <div class="core-ring core-ring-3"></div>
-            </div>
-            <!-- Orbiting Nodes -->
+            <!-- Three.js Canvas Container -->
+            <div id="neural-canvas-container" class="neural-canvas-container"></div>
+            
+            <!-- Orbiting Nodes (HTML Layer) -->
             <div class="neural-node node-1">
               <div class="node-dot"></div>
               <span class="node-label">HTML/CSS</span>
