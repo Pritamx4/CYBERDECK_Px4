@@ -23,8 +23,8 @@ html {
 :root {
   /* Colors - NEURAL_PULSE Palette */
   --color-primary: #00f0ff;      /* Electric Cyan */
-  --color-secondary: #635BFF;    /* Deep Indigo */
-  --color-accent: #ff00e5;       /* Cyber Magenta */
+  --color-secondary: #7A00FF;    /* Deep Electric Purple */
+  --color-accent: #BF00FF;       /* Bright Violet */
   --color-background: #000;
   --color-background-secondary: #000;
   --color-text-primary: #f2f2f2; /* Slate White (OLED-Safe) */
@@ -34,8 +34,8 @@ html {
   /* Neon Glow Colors */
   --color-neon-cyan: #00f0ff;
   --color-neon-blue: #00d2ff;
-  --color-neon-purple: #635BFF;
-  --color-neon-pink: #ff00e5;
+  --color-neon-purple: #7A00FF;
+  --color-neon-pink: #BF00FF;
 
   /* Spacing - Consistent Scale */
   --spacing-xs: 0.5rem; /* 8px */
@@ -2892,4 +2892,140 @@ img[loading="lazy"] {
 
 img[loading="lazy"].loaded {
   opacity: 1;
+}
+
+/* ========================================
+   HUD TARGETING CURSOR
+ ======================================== */
+@media screen and (min-width: 1025px) {
+  body, a, button, [role="button"], .nav-item a, .project-card, .social-item {
+    cursor: none !important;
+  }
+}
+
+.hud-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: screen;
+  transform: translate(-50%, -50%);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  /* Use explicit transitions for dimensions if JS doesn't animate them directly */
+  transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+              height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+              border-radius 0.3s ease;
+}
+
+@media screen and (min-width: 1025px) {
+  .hud-cursor {
+    display: flex;
+  }
+}
+
+.cursor-dot {
+  width: 4px;
+  height: 4px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--color-primary);
+  z-index: 2;
+}
+
+.cursor-ring {
+  position: absolute;
+  width: 40px; /* Keep ring size stable */
+  height: 40px;
+  border: 1px dashed rgba(0, 240, 255, 0.4);
+  border-radius: 50%;
+  animation: rotateHUD 8s linear infinite;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-brackets {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-primary);
+  filter: drop-shadow(0 0 5px var(--color-primary));
+  transition: all 0.3s ease;
+}
+
+/* Snap to edges precisely for framing */
+.br-tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+.br-tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+.br-bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+.br-br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+.cursor-coords {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: calc(100% + 5px);
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  color: var(--color-primary);
+  opacity: 0.6;
+  white-space: nowrap;
+  padding: 2px 4px;
+  background: rgba(0, 0, 0, 0.5);
+  border-left: 1px solid var(--color-primary);
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-coords span { display: block; }
+
+/* Cursor States */
+.hud-cursor.active {
+  width: 60px;
+  height: 60px;
+}
+
+.hud-cursor.locked {
+  /* Dimensions will be set via JS inline styles during lock-on */
+  border-radius: 4px; /* Slightly rounded corners for framing square */
+}
+
+.hud-cursor.locked .bracket {
+  border-color: var(--color-accent);
+  filter: drop-shadow(0 0 8px var(--color-accent));
+  width: 18px;
+  height: 18px;
+  border-width: 3px;
+}
+
+.hud-cursor.locked .cursor-dot {
+  background: var(--color-accent);
+  transform: scale(1.5);
+}
+
+.hud-cursor.locked .cursor-ring {
+  opacity: 0.2; /* Fade ring when framing */
+}
+
+.hud-cursor.click-pulse {
+  animation: cursorPulse 0.4s ease-out;
+}
+
+@keyframes rotateHUD {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cursorPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
 }

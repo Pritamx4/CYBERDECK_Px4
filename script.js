@@ -12,41 +12,41 @@ function showLoadingScreen() {
   const progressBar = document.getElementById('progressBar');
   const progressText = document.getElementById('progressText');
   const progressContainer = document.querySelector('.progress-container');
-  
+
   if (!terminalOutput || !progressBar || !progressText || !progressContainer) {
     console.error('Loading screen elements not found');
     hideLoadingScreen();
     return;
   }
-  
+
   console.log('Loading screen started');
-  
+
   progressContainer.style.display = 'none';
   progressText.style.display = 'none';
-  
+
   setTimeout(() => {
     console.log('Starting terminal typing');
     let lineIndex = 0;
-    
+
     function typeNextLine() {
       if (lineIndex < terminalLines.length) {
         const line = document.createElement('div');
         line.className = 'line';
         terminalOutput.appendChild(line);
-        
+
         let charIndex = 0;
         const currentText = terminalLines[lineIndex];
-        
+
         function typeCharacter() {
           if (charIndex < currentText.length) {
             line.textContent += currentText.charAt(charIndex);
-            try { playTypingSound(); } catch(e) { }
+            try { playTypingSound(); } catch (e) { }
             charIndex++;
             terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            setTimeout(typeCharacter, 25); 
+            setTimeout(typeCharacter, 25);
           } else {
             lineIndex++;
-            setTimeout(typeNextLine, 150); 
+            setTimeout(typeNextLine, 150);
           }
         }
         typeCharacter();
@@ -58,14 +58,14 @@ function showLoadingScreen() {
             const accessLine = document.createElement('div');
             accessLine.className = 'line access-granted';
             terminalOutput.appendChild(accessLine);
-            
+
             let accessCharIndex = 0;
             const accessText = '> ACCESS GRANTED..';
-            
+
             function typeAccessChar() {
               if (accessCharIndex < accessText.length) {
                 accessLine.textContent += accessText.charAt(accessCharIndex);
-                try { playTypingSound(); } catch(e) {}
+                try { playTypingSound(); } catch (e) { }
                 accessCharIndex++;
                 setTimeout(typeAccessChar, 40);
               } else {
@@ -73,17 +73,17 @@ function showLoadingScreen() {
                 setTimeout(() => {
                   progressContainer.style.display = 'block';
                   progressText.style.display = 'block';
-                  
+
                   const progressDuration = 1200;
                   const startTime = performance.now();
-                  
+
                   function updateProgress(currentTime) {
                     const elapsed = currentTime - startTime;
                     const progressPercent = Math.min((elapsed / progressDuration) * 100, 100);
-                    
+
                     progressBar.style.width = progressPercent + '%';
                     progressText.textContent = Math.floor(progressPercent) + '%';
-                    
+
                     if (progressPercent < 100) {
                       requestAnimationFrame(updateProgress);
                     } else {
@@ -110,7 +110,7 @@ function hideLoadingScreen() {
     loadingScreen.classList.add('hidden');
     setTimeout(() => {
       loadingScreen.style.display = 'none';
-      document.body.style.overflow = 'auto'; 
+      document.body.style.overflow = 'auto';
       animateNavbarEntry();
     }, 600);
   }
@@ -197,13 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
       showLoadingScreen();
     }
   }, 500);
-  
+
   const navLinks = document.querySelectorAll('.nav-links a');
   navLinks.forEach(link => link.addEventListener('mouseenter', playHoverSound));
 });
 
 // Initialize EmailJS
-(function() {
+(function () {
   if (window.emailjs) {
     emailjs.init("glYVjrgq1NH52F9M2");
   }
@@ -257,14 +257,14 @@ const messageInput = document.querySelector('.message-input');
 if (sendBtn && messageInput) {
   sendBtn.addEventListener('click', async (e) => {
     e.preventDefault();
-    
+
     const message = messageInput.value.trim();
-    
+
     if (!message) {
       showToast('Please enter a message first!', 'warning');
       return;
     }
-    
+
     if (message.length < 5) { // Reduced min length for better UX
       showToast('Message too short!', 'warning');
       return;
@@ -274,17 +274,17 @@ if (sendBtn && messageInput) {
       showToast('Service unavailable.', 'error');
       return;
     }
-    
+
     // Disable button during send
     sendBtn.disabled = true;
     // Disabled icon spin logic (FontAwesome removed)
-    
+
     const templateParams = {
       message: message,
       from_name: 'Portfolio Visitor',
       to_name: 'Pritam Singh'
     };
-    
+
     try {
       await emailjs.send('Pritamx4', 'Pritamx4', templateParams);
       showToast('✓ Signal synchronized. Message sent.', 'success');
@@ -311,12 +311,12 @@ const navItems = document.querySelectorAll('.nav-links a');
 
 function updateActiveNav() {
   const scrollY = window.pageYOffset;
-  
+
   sections.forEach(section => {
     const sectionTop = section.offsetTop - 100;
     const sectionHeight = section.offsetHeight;
     const sectionId = section.getAttribute('id');
-    
+
     if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
       navItems.forEach(item => {
         item.classList.remove('active');
@@ -340,19 +340,19 @@ function toggleBottomTab() {
   const icon = document.getElementById('toggleIcon');
   const toggleButton = document.querySelector('.tab-toggle');
   if (!tab) return;
-  
+
   clearTimeout(hideTimeout);
   isBottomTabOpen = !isBottomTabOpen;
   if (toggleButton) {
     toggleButton.setAttribute('aria-expanded', String(isBottomTabOpen));
   }
-  
+
   if (isBottomTabOpen) {
     tab.classList.add('open');
     if (toggleButton) {
       toggleButton.style.transform = 'translateX(-50%) rotate(180deg)';
     }
-    
+
     // Start typing effect only on first show
     if (!hasShownOnce) {
       setTimeout(() => {
@@ -371,7 +371,7 @@ function toggleBottomTab() {
 // Initialize bottom tab event listeners after DOM loads
 function initBottomTabEvents() {
   const bottomTab = document.getElementById('bottomTab');
-  
+
   if (bottomTab) {
     bottomTab.addEventListener('mouseenter', () => {
       if (isBottomTabOpen) {
@@ -427,9 +427,9 @@ async function fetchGitHubStats() {
   try {
     const username = 'Pritamx4';
     const repoName = 'CYBERDECK_Px4';
-    
+
     console.log('Fetching GitHub stats...');
-    
+
     // Fetch language stats
     const langResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}/languages`);
     if (langResponse.ok) {
@@ -444,7 +444,7 @@ async function fetchGitHubStats() {
         ];
       }
     }
-    
+
     // Fetch repository info
     const repoResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
     if (repoResponse.ok) {
@@ -457,7 +457,7 @@ async function fetchGitHubStats() {
       githubStats.size = repoInfo.size || 0; // in KB
       githubStats.lastUpdated = repoInfo.updated_at || '';
     }
-    
+
     // Fetch commit count
     const commitsResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}/commits?per_page=1`);
     if (commitsResponse.ok) {
@@ -469,15 +469,15 @@ async function fetchGitHubStats() {
         githubStats.commits = 1;
       }
     }
-    
+
     // Fetch user repos count
     const userResponse = await fetch(`https://api.github.com/users/${username}`);
     if (userResponse.ok) {
-      
+
       const userData = await userResponse.json();
       githubStats.repos = userData.public_repos || 0;
     }
-    
+
     // Fetch contributors count
     const contributorsResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}/contributors?per_page=1`);
     if (contributorsResponse.ok) {
@@ -490,7 +490,7 @@ async function fetchGitHubStats() {
         githubStats.contributors = contributors.length;
       }
     }
-    
+
     // Fetch branches count
     const branchesResponse = await fetch(`https://api.github.com/repos/${username}/${repoName}/branches?per_page=1`);
     if (branchesResponse.ok) {
@@ -503,7 +503,7 @@ async function fetchGitHubStats() {
         githubStats.branches = branches.length;
       }
     }
-    
+
     console.log('Final GitHub stats:', githubStats);
   } catch (error) {
     console.error('Error fetching GitHub stats:', error);
@@ -516,7 +516,7 @@ function typeEffect() {
     terminalElement = document.getElementById('terminalText');
   }
   if (!terminalElement) return;
-  
+
   if (msgIndex < messages.length) {
     if (charPos < messages[msgIndex].length) {
       terminalElement.innerHTML += messages[msgIndex].charAt(charPos);
@@ -538,7 +538,7 @@ function showStats() {
     statsGrid = document.getElementById('statsGrid');
   }
   if (!statsGrid) return;
-  
+
   statsGrid.style.opacity = '1';
   statsGrid.style.transition = 'opacity 1s ease';
 
@@ -547,29 +547,29 @@ function showStats() {
     const htmlBar = document.querySelector('[data-lang="html"]');
     const cssBar = document.querySelector('[data-lang="css"]');
     const jsBar = document.querySelector('[data-lang="js"]');
-    
+
     const htmlPercent = document.getElementById('htmlPercent');
     const cssPercent = document.getElementById('cssPercent');
     const jsPercent = document.getElementById('jsPercent');
-    
+
     if (htmlBar && htmlPercent) {
       htmlBar.style.width = repoData[0] + '%';
       animateCounter(htmlPercent, 0, repoData[0], 1000);
       setTimeout(() => createSparkle(htmlBar), 1000);
     }
-    
+
     if (cssBar && cssPercent) {
       cssBar.style.width = repoData[1] + '%';
       animateCounter(cssPercent, 0, repoData[1], 1000);
       setTimeout(() => createSparkle(cssBar), 1000);
     }
-    
+
     if (jsBar && jsPercent) {
       jsBar.style.width = repoData[2] + '%';
       animateCounter(jsPercent, 0, repoData[2], 1000);
       setTimeout(() => createSparkle(jsBar), 1000);
     }
-    
+
     // Animate GitHub stats
     setTimeout(() => {
       const commitEl = document.getElementById('commitCount');
@@ -582,7 +582,7 @@ function showStats() {
       const sizeEl = document.getElementById('repoSize');
       const updatedEl = document.getElementById('lastUpdated');
       const branchEl = document.getElementById('branchCount');
-      
+
       if (commitEl) animateCounter(commitEl, 0, githubStats.commits, 1500, false);
       if (repoEl) animateCounter(repoEl, 0, githubStats.repos, 1500, false);
       if (starEl) animateCounter(starEl, 0, githubStats.stars, 1500, false);
@@ -591,13 +591,13 @@ function showStats() {
       if (issueEl) animateCounter(issueEl, 0, githubStats.issues, 1500, false);
       if (contributorEl) animateCounter(contributorEl, 0, githubStats.contributors, 1500, false);
       if (branchEl) animateCounter(branchEl, 0, githubStats.branches, 1500, false);
-      
+
       // Format size
       if (sizeEl) {
         const sizeMB = (githubStats.size / 1024).toFixed(2);
         sizeEl.textContent = githubStats.size > 1024 ? sizeMB + ' MB' : githubStats.size + ' KB';
       }
-      
+
       // Format last updated
       if (updatedEl && githubStats.lastUpdated) {
         const date = new Date(githubStats.lastUpdated);
@@ -605,7 +605,7 @@ function showStats() {
         const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
         updatedEl.textContent = diffDays === 0 ? 'Today' : diffDays === 1 ? '1 day ago' : `${diffDays} days ago`;
       }
-      
+
       // Draw stats chart
       drawStatsChart();
     }, 500);
@@ -617,7 +617,7 @@ function animateCounter(element, start, end, duration, isPercentage = true) {
   const range = end - start;
   const increment = range / (duration / 16);
   let current = start;
-  
+
   const timer = setInterval(() => {
     current += increment;
     if (current >= end) {
@@ -633,14 +633,14 @@ function animateCounter(element, start, end, duration, isPercentage = true) {
 function createSparkle(barElement) {
   const canvas = document.getElementById('sparkleCanvas');
   if (!canvas) return;
-  
+
   const ctx = canvas.getContext('2d');
   const rect = barElement.getBoundingClientRect();
   const containerRect = canvas.parentElement.getBoundingClientRect();
-  
+
   const particles = [];
   const particleCount = 15;
-  
+
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: rect.right - containerRect.left,
@@ -652,10 +652,10 @@ function createSparkle(barElement) {
       color: `hsl(${Math.random() * 60 + 160}, 100%, 50%)`
     });
   }
-  
+
   function animateSparkles() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     let hasAlive = false;
     particles.forEach(p => {
       if (p.life > 0) {
@@ -664,7 +664,7 @@ function createSparkle(barElement) {
         p.y += p.vy;
         p.life -= 0.02;
         p.vy += 0.1; // gravity
-        
+
         ctx.globalAlpha = p.life;
         ctx.fillStyle = p.color;
         ctx.shadowBlur = 10;
@@ -674,12 +674,12 @@ function createSparkle(barElement) {
         ctx.fill();
       }
     });
-    
+
     if (hasAlive) {
       requestAnimationFrame(animateSparkles);
     }
   }
-  
+
   animateSparkles();
 }
 
@@ -687,57 +687,57 @@ function createSparkle(barElement) {
 function drawStatsChart() {
   const canvas = document.getElementById('statsChart');
   if (!canvas) return;
-  
+
   const ctx = canvas.getContext('2d');
   const width = canvas.width;
   const height = canvas.height;
-  
+
   // Clear canvas
   ctx.clearRect(0, 0, width, height);
-  
+
   // Chart settings
   const padding = { top: 30, right: 140, bottom: 50, left: 60 };
   const chartWidth = width - padding.left - padding.right;
   const chartHeight = height - padding.top - padding.bottom;
-  
+
   // Stats data with trends (simulated over 5 points)
   const stats = [
-    { 
-      label: 'Commits', 
+    {
+      label: 'Commits',
       color: '#00fff7',
       values: generateTrend(githubStats.commits, 5)
     },
-    { 
-      label: 'Stars', 
+    {
+      label: 'Stars',
       color: '#ff4ddb',
       values: generateTrend(githubStats.stars, 5)
     },
-    { 
-      label: 'Forks', 
+    {
+      label: 'Forks',
       color: '#00ff88',
       values: generateTrend(githubStats.forks, 5)
     },
-    { 
-      label: 'Watchers', 
+    {
+      label: 'Watchers',
       color: '#ffd700',
       values: generateTrend(githubStats.watchers, 5)
     },
-    { 
-      label: 'Issues', 
+    {
+      label: 'Issues',
       color: '#ff6b6b',
       values: generateTrend(githubStats.issues, 5)
     },
-    { 
-      label: 'Contributors', 
+    {
+      label: 'Contributors',
       color: '#a78bfa',
       values: generateTrend(githubStats.contributors, 5)
     }
   ];
-  
+
   // Find max value for scaling
   const allValues = stats.flatMap(s => s.values);
   const maxValue = Math.max(...allValues, 10);
-  
+
   // Draw grid
   ctx.strokeStyle = 'rgba(0, 255, 247, 0.1)';
   ctx.lineWidth = 1;
@@ -748,7 +748,7 @@ function drawStatsChart() {
     ctx.lineTo(padding.left + chartWidth, y);
     ctx.stroke();
   }
-  
+
   // Draw vertical grid
   for (let i = 0; i <= 4; i++) {
     const x = padding.left + (chartWidth / 4) * i;
@@ -757,19 +757,19 @@ function drawStatsChart() {
     ctx.lineTo(x, padding.top + chartHeight);
     ctx.stroke();
   }
-  
+
   // Draw lines for each stat
   stats.forEach((stat, index) => {
     ctx.strokeStyle = stat.color;
     ctx.lineWidth = 3;
     ctx.shadowBlur = 10;
     ctx.shadowColor = stat.color;
-    
+
     ctx.beginPath();
     stat.values.forEach((value, i) => {
       const x = padding.left + (chartWidth / (stat.values.length - 1)) * i;
       const y = padding.top + chartHeight - (value / maxValue) * chartHeight;
-      
+
       if (i === 0) {
         ctx.moveTo(x, y);
       } else {
@@ -777,12 +777,12 @@ function drawStatsChart() {
       }
     });
     ctx.stroke();
-    
+
     // Draw points
     stat.values.forEach((value, i) => {
       const x = padding.left + (chartWidth / (stat.values.length - 1)) * i;
       const y = padding.top + chartHeight - (value / maxValue) * chartHeight;
-      
+
       ctx.fillStyle = stat.color;
       ctx.shadowBlur = 15;
       ctx.shadowColor = stat.color;
@@ -790,13 +790,13 @@ function drawStatsChart() {
       ctx.arc(x, y, 5, 0, Math.PI * 2);
       ctx.fill();
     });
-    
+
     ctx.shadowBlur = 0;
-    
+
     // Draw legend
     const legendY = padding.top + index * 35;
     const legendX = padding.left + chartWidth + 20;
-    
+
     // Legend line
     ctx.strokeStyle = stat.color;
     ctx.lineWidth = 2;
@@ -804,36 +804,36 @@ function drawStatsChart() {
     ctx.moveTo(legendX, legendY);
     ctx.lineTo(legendX + 20, legendY);
     ctx.stroke();
-    
+
     // Legend circle
     ctx.fillStyle = stat.color;
     ctx.beginPath();
     ctx.arc(legendX + 10, legendY, 3, 0, Math.PI * 2);
     ctx.fill();
-    
+
     // Legend text
     ctx.fillStyle = stat.color;
     ctx.font = 'bold 13px Orbitron';
     ctx.textAlign = 'left';
     ctx.fillText(stat.label, legendX + 25, legendY + 5);
-    
+
     // Current value
     ctx.font = '11px Courier New';
     ctx.fillText(stat.values[stat.values.length - 1], legendX + 25, legendY + 20);
   });
-  
+
   // Draw axes labels
   ctx.fillStyle = 'rgba(0, 255, 247, 0.6)';
   ctx.font = '12px Courier New';
   ctx.textAlign = 'center';
-  
+
   // X-axis labels
   const labels = ['Start', 'Q1', 'Q2', 'Q3', 'Now'];
   labels.forEach((label, i) => {
     const x = padding.left + (chartWidth / (labels.length - 1)) * i;
     ctx.fillText(label, x, height - 15);
   });
-  
+
   // Y-axis label
   ctx.save();
   ctx.translate(20, padding.top + chartHeight / 2);
@@ -861,7 +861,7 @@ window.addEventListener('load', () => {
     // Stats fetched, ready to display when tab opens
   });
   initBottomTabEvents();
-  
+
   // Initialize element references
   terminalElement = document.getElementById('terminalText');
   statsGrid = document.getElementById('statsGrid');
@@ -908,7 +908,7 @@ function initSkillBars() {
 function initMatrixRain() {
   const canvas = document.getElementById('matrixCanvas');
   if (!canvas) return;
-  
+
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
@@ -925,7 +925,7 @@ function initMatrixRain() {
   function draw() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     ctx.fillStyle = '#00fff7';
     ctx.font = fontSize + 'px monospace';
 
@@ -962,29 +962,29 @@ window.addEventListener('scroll', () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
       const scrolled = window.pageYOffset;
-      
+
       // Parallax logic for legacy hero removed to support grid stability
       // const heroSection = document.querySelector('.hero-section');
       // if (heroSection) {
       //   heroSection.style.transform = `translateY(${scrolled * 0.4}px)`;
       // }
-      
+
       // Parallax for matrix canvas
       const matrixCanvas = document.getElementById('matrixCanvas');
       if (matrixCanvas) {
         matrixCanvas.style.transform = `translateY(${scrolled * 0.3}px)`;
       }
-      
+
       // Parallax for cubes
       const cubes = document.querySelectorAll('.cube');
       cubes.forEach((cube, index) => {
         const speed = 0.15 + (index * 0.05);
         cube.style.transform = `translateY(${scrolled * speed}px) rotateX(${scrolled * 0.05}deg) rotateY(${scrolled * 0.05}deg)`;
       });
-      
+
       ticking = false;
     });
-    
+
     ticking = true;
   }
 });
@@ -1018,12 +1018,12 @@ class NeuralCore3D {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
+
     this.mouseX = 0;
     this.mouseY = 0;
     this.targetRotationX = 0;
     this.targetRotationY = 0;
-    
+
     // VFX & Kinetic States
     this.pulses = [];
     this.nodes = [];
@@ -1066,7 +1066,7 @@ class NeuralCore3D {
     // Outer Shell
     const outerGeo = new THREE.IcosahedronGeometry(2, 2);
     const outerMat = new THREE.MeshBasicMaterial({
-      color: 0x635BFF,
+      color: 0x7A00FF, // Unified with new --color-secondary
       wireframe: true,
       transparent: true,
       opacity: 0.15
@@ -1121,10 +1121,10 @@ class NeuralCore3D {
         const verticalOffset = (Math.random() - 0.5) * 4;
 
         this.scene.add(sprite);
-        this.nodes.push({ 
-          sprite, 
+        this.nodes.push({
+          sprite,
           url,
-          orbit: { angle, radius, speed, verticalOffset } 
+          orbit: { angle, radius, speed, verticalOffset }
         });
       });
     });
@@ -1142,18 +1142,18 @@ class NeuralCore3D {
     const trail = [];
     const trailCount = 8;
     for (let i = 0; i < trailCount; i++) {
-        const tGeo = new THREE.SphereGeometry(0.1 - (i * 0.012), 4, 4);
-        const tMat = new THREE.MeshBasicMaterial({ 
-            color: 0x00f0ff, 
-            transparent: true, 
-            opacity: 0.6 - (i * 0.07) 
-        });
-        const tMesh = new THREE.Mesh(tGeo, tMat);
-        tMesh.position.copy(startPos);
-        this.scene.add(tMesh);
-        trail.push(tMesh);
+      const tGeo = new THREE.SphereGeometry(0.1 - (i * 0.012), 4, 4);
+      const tMat = new THREE.MeshBasicMaterial({
+        color: 0x00f0ff,
+        transparent: true,
+        opacity: 0.6 - (i * 0.07)
+      });
+      const tMesh = new THREE.Mesh(tGeo, tMat);
+      tMesh.position.copy(startPos);
+      this.scene.add(tMesh);
+      trail.push(tMesh);
     }
-    
+
     this.pulses.push({
       head: head,
       trail: trail,
@@ -1166,17 +1166,17 @@ class NeuralCore3D {
   updatePulses() {
     for (let i = this.pulses.length - 1; i >= 0; i--) {
       const p = this.pulses[i];
-      
+
       // Update historical positions for trail
       p.positions.unshift(p.head.position.clone());
       p.positions.pop();
 
       // Move Head
       p.head.position.lerp(p.target, p.speed);
-      
+
       // Update trail meshes
       p.trail.forEach((tMesh, idx) => {
-          tMesh.position.copy(p.positions[idx]);
+        tMesh.position.copy(p.positions[idx]);
       });
 
       if (p.head.position.distanceTo(p.target) < 0.3) {
@@ -1204,15 +1204,15 @@ class NeuralCore3D {
     const positions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 15;
+      positions[i] = (Math.random() - 0.5) * 15;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     const material = new THREE.PointsMaterial({
-        color: 0x00f0ff,
-        size: 0.05,
-        transparent: true,
-        opacity: 0.5
+      color: 0x00f0ff,
+      size: 0.05,
+      transparent: true,
+      opacity: 0.5
     });
 
     this.particles = new THREE.Points(geometry, material);
@@ -1245,10 +1245,10 @@ class NeuralCore3D {
 
     // Orbital Node Update
     this.nodes.forEach(node => {
-        node.orbit.angle += node.orbit.speed;
-        node.sprite.position.x = Math.cos(node.orbit.angle) * node.orbit.radius;
-        node.sprite.position.z = Math.sin(node.orbit.angle) * node.orbit.radius;
-        node.sprite.position.y = node.orbit.verticalOffset + Math.sin(node.orbit.angle * 0.5) * 1.5;
+      node.orbit.angle += node.orbit.speed;
+      node.sprite.position.x = Math.cos(node.orbit.angle) * node.orbit.radius;
+      node.sprite.position.z = Math.sin(node.orbit.angle) * node.orbit.radius;
+      node.sprite.position.y = node.orbit.verticalOffset + Math.sin(node.orbit.angle * 0.5) * 1.5;
     });
 
     // Core Rotation
@@ -1263,7 +1263,7 @@ class NeuralCore3D {
     this.group.rotation.y = this.targetRotationY;
 
     this.updatePulses();
-    
+
     if (this.boostPower > 0) {
       const scale = 1.0 + (this.boostPower * 0.3);
       this.group.scale.set(scale, scale, scale);
@@ -1279,14 +1279,121 @@ class NeuralCore3D {
   }
 }
 
+class HUDCursor {
+  constructor() {
+    this.cursor = document.getElementById('hud-cursor');
+    if (!this.cursor || window.innerWidth <= 1024) return;
+
+    this.dot = this.cursor.querySelector('.cursor-dot');
+    this.coordsX = this.cursor.querySelector('.x');
+    this.coordsY = this.cursor.querySelector('.y');
+
+    this.pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    this.delayedPos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+    this.size = { w: 40, h: 40 };
+    this.delayedSize = { w: 40, h: 40 };
+
+    this.lerpAmount = 0.15;
+    this.isLocked = false;
+    this.lockTarget = null;
+
+    this.init();
+  }
+
+  init() {
+    window.addEventListener('mousemove', (e) => {
+      // Only track mouse position as primary target if NOT locked
+      if (!this.isLocked) {
+        this.pos.x = e.clientX;
+        this.pos.y = e.clientY;
+      }
+
+      // Update coordinates text always follows actual mouse
+      if (this.coordsX) this.coordsX.textContent = Math.round(e.clientX).toString().padStart(3, '0');
+      if (this.coordsY) this.coordsY.textContent = Math.round(e.clientY).toString().padStart(3, '0');
+    });
+
+    window.addEventListener('mousedown', () => {
+      this.cursor.classList.add('click-pulse');
+      setTimeout(() => this.cursor.classList.remove('click-pulse'), 400);
+    });
+
+    // Handle window resize to re-calculate target bounds
+    window.addEventListener('resize', () => {
+      if (this.isLocked && this.lockTarget) {
+        this.lockOn(this.lockTarget);
+      }
+    });
+
+    this.addInteractions();
+    this.animate();
+  }
+
+  lockOn(el) {
+    const rect = el.getBoundingClientRect();
+    const padding = 12; // Extra space for framing
+
+    this.isLocked = true;
+    this.lockTarget = el;
+    this.cursor.classList.add('locked');
+
+    // Set target position to element center
+    this.pos.x = rect.left + rect.width / 2;
+    this.pos.y = rect.top + rect.height / 2;
+
+    // Set target dimensions to element size + padding
+    this.size.w = rect.width + padding * 2;
+    this.size.h = rect.height + padding * 2;
+  }
+
+  unlock() {
+    this.isLocked = false;
+    this.lockTarget = null;
+    this.cursor.classList.remove('locked');
+
+    // Revert to default size
+    this.size.w = 40;
+    this.size.h = 40;
+  }
+
+  addInteractions() {
+    const interactables = document.querySelectorAll('a, button, .project-card, .social-item, .tab-toggle, .skill-card, .btn-sleek, .btn-outline');
+
+    interactables.forEach(el => {
+      el.addEventListener('mouseenter', () => this.lockOn(el));
+      el.addEventListener('mouseleave', () => this.unlock());
+    });
+  }
+
+  animate() {
+    // LERP Position
+    this.delayedPos.x += (this.pos.x - this.delayedPos.x) * this.lerpAmount;
+    this.delayedPos.y += (this.pos.y - this.delayedPos.y) * this.lerpAmount;
+
+    // LERP Dimensions
+    this.delayedSize.w += (this.size.w - this.delayedSize.w) * this.lerpAmount;
+    this.delayedSize.h += (this.size.h - this.delayedSize.h) * this.lerpAmount;
+
+    // Apply styles
+    this.cursor.style.left = `${this.delayedPos.x}px`;
+    this.cursor.style.top = `${this.delayedPos.y}px`;
+    this.cursor.style.width = `${this.delayedSize.w}px`;
+    this.cursor.style.height = `${this.delayedSize.h}px`;
+
+    requestAnimationFrame(() => this.animate());
+  }
+}
+
 // ========================================
 // CORE INITIALIZER
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    initSkillBars();
-    new NeuralCore3D();
-    console.log('System initialized: 3D Engine Online');
+  initSkillBars();
+  new NeuralCore3D();
+  new HUDCursor(); // Initialize the Targeting HUD
+  console.log('System initialized: 3D Engine & HUD Online');
 });
 
 
