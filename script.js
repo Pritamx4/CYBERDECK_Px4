@@ -299,6 +299,7 @@ function erase() {
 
 document.addEventListener('DOMContentLoaded', () => {
   if (typedText) {
+    typedText.textContent = ''; // Clear fallback text
     setTimeout(type, 1000);
   }
 });
