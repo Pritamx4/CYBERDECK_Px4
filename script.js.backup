@@ -1,0 +1,586 @@
+
+      if (lineIndex < terminalLines.length) {
+        const line = document.createElement('div');
+        line.className = 'line';
+        terminalOutput.appendChild(line);
+        
+        let charIndex = 0;
+        const currentText = terminalLines[lineIndex];
+        
+        function typeCharacter() {
+          if (charIndex < currentText.length) {
+            line.textContent += currentText.charAt(charIndex);
+            try {
+              playTypingSound();
+            } catch(e) {
+              console.log('Sound error:', e);
+            }
+            charIndex++;
+            
+            // Scroll to bottom
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            
+            setTimeout(typeCharacter, 25); 
+          } else {
+            lineIndex++;
+            setTimeout(typeNextLine, 150); 
+          }
+        }
+        
+        typeCharacter();
+      } else {
+        console.log('All lines typed, clearing...');
+        // Clear all lines after a pause
+        setTimeout(() => {
+          terminalOutput.innerHTML = '';
+          
+          // Show centered ACCESS GRANTED
+          setTimeout(() => {
+            const accessLine = document.createElement('div');
+            accessLine.className = 'line access-granted';
+            terminalOutput.appendChild(accessLine);
+            
+            let accessCharIndex = 0;
+            const accessText = '> ACCESS GRANTED..';
+            
+            function typeAccessChar() {
+              if (accessCharIndex < accessText.length) {
+                accessLine.textContent += accessText.charAt(accessCharIndex);
+                try {
+                  playTypingSound();
+                } catch(e) {}
+                accessCharIndex++;
+                setTimeout(typeAccessChar, 40); // Faster: 80ms → 40ms
+              } else {
+                console.log('Starting progress bar');
+                // Show progress bar after access granted
+                setTimeout(() => {
+                  progressContainer.style.display = 'block';
+                  progressText.style.display = 'block';
+                  
+                  // Animate progress
+                  const progressDuration = 1200; // Faster: 2000ms → 1200ms
+                  const startTime = performance.now();
+                  
+                  function updateProgress(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progressPercent = Math.min((elapsed / progressDuration) * 100, 100);
+                    
+                    progressBar.style.width = progressPercent + '%';
+                    progressText.textContent = Math.floor(progressPercent) + '%';
+                    
+                    if (progressPercent < 100) {
+                      requestAnimationFrame(updateProgress);
+                    } else {
+                      console.log('Loading complete');
+                      setTimeout(hideLoadingScreen, 200); // Faster: 500ms → 200ms
+                    }
+                  }
+                  
+                  requestAnimationFrame(updateProgress);
+                }, 400); // Faster: 600ms → 400ms
+              }
+            }
+            
+            typeAccessChar();
+          }, 200); // Faster: 300ms → 200ms
+        }, 400); // Faster: 1000ms → 400ms
+      }
+
+function initAudio() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playBeep() {
+  if (!soundEnabled) return;
+  
+  initAudio();
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  oscillator.frequency.value = 800;
+  oscillator.type = 'sine';
+  
+  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+  
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 0.1);
+}
+
+function playTypingSound() {
+  if (!soundEnabled) return;
+  
+  initAudio();
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  oscillator.frequency.value = 600;
+  oscillator.type = 'square';
+  
+  gainNode.gain.setValueAtTime(0.08, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.08);
+  
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 0.08);
+}
+
+function playHoverSound() {
+  if (!soundEnabled) return;
+  
+  initAudio();
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+  
+  oscillator.frequency.value = 400;
+  oscillator.type = 'square';
+  
+  gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+  
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 0.05);
+}
+
+// Toggle sound
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'm' || e.key === 'M') {
+    soundEnabled = !soundEnabled;
+    showToast(soundEnabled ? 'Sound ON' : 'Sound OFF', 'info');
+  }
+});
+
+// Start loading screen on page load
+console.log('Setting up window load event');
+window.addEventListener('load', () => {
+  console.log('Window loaded!');
+  document.body.style.overflow = 'hidden';
+  
+  // Small delay to ensure everything is loaded
+  setTimeout(() => {
+    console.log('Calling showLoadingScreen');
+    showLoadingScreen();
+  }, 100);
+});
+
+// Add hover sounds to nav links
+document.addEventListener('DOMContentLoaded', () => {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  navLinks.forEach(link => {
+    link.addEventListener('mouseenter', playHoverSound);
+  });
+});
+
+// Initialize EmailJS with your public key
+(function() {
+  emailjs.init("YOUR_PUBLIC_KEY"); // Replace with your EmailJS public key
+})();
+
+// Toast Notification Function
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  const toastMessage = toast.querySelector('.toast-message');
+  
+  toastMessage.textContent = message;
+  toast.className = `toast ${type}`;
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 4000);
+}
+
+// ========================================
+// 1. NAVBAR FUNCTIONALITY
+// ========================================
+
+// Toggle mobile menu with GSAP animations
+function toggleMenu() {
+  const navLinks = document.getElementById('navLinks');
+  const menuIcon = document.querySelector('.menu-icon');
+  const menuItems = document.querySelectorAll('.nav-item');
+
+  // Check if GSAP is loaded
+  if (typeof gsap === 'undefined') {
+    console.error('GSAP not loaded');
+    navLinks.classList.toggle('show');
+    return;
+  }
+
+  if (!navLinks.classList.contains('show')) {
+    // Opening animation - each item starts when previous is 20% done
+    navLinks.classList.add('show');
+    menuIcon.classList.add('active');
+
+    // Fade in background first
+    gsap.to(navLinks, {
+      opacity: 1,
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+
+    // Animate each item with cascade effect
+    menuItems.forEach((item, index) => {
+      gsap.fromTo(item, 
+        {
+          opacity: 0,
+          x: '100%'
+        },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          delay: index * 0.12, // Each starts when previous is 20% done (0.6 * 0.2 = 0.12)
+          ease: 'power3.out'
+        }
+      );
+    });
+
+  } else {
+    // Closing animation - reverse cascade
+    menuIcon.classList.remove('active');
+
+    // Animate items out
+    menuItems.forEach((item, index) => {
+      gsap.to(item, {
+        opacity: 0,
+        x: '100%',
+        duration: 0.4,
+        delay: index * 0.05,
+        ease: 'power2.in'
+      });
+    });
+
+    // Fade out background
+    gsap.to(navLinks, {
+      opacity: 0,
+      duration: 0.3,
+      delay: 0.3,
+      ease: 'power2.in',
+      onComplete: () => {
+        navLinks.classList.remove('show');
+      }
+    });
+  }
+}
+
+// Auto-close menu when a link is clicked (on mobile)
+document.addEventListener('DOMContentLoaded', () => {
+  const links = document.querySelectorAll('#navLinks a');
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      const navLinks = document.getElementById('navLinks');
+      
+      if (navLinks.classList.contains('show')) {
+        toggleMenu();
+      }
+    });
+  });
+});
+
+// ========================================
+// 2. HERO SECTION - TYPEWRITER EFFECT
+// ========================================
+
+const texts = [
+  '⚡ SYSTEM INITIALIZING...',
+  '🔐 ACCESS GRANTED: CYBERDECK_PX4',
+  '💻 NEURAL INTERFACE ACTIVE',
+  '🌐 PRITAM SINGH | DIGITAL ARCHITECT',
+  '🚀 HTML • CSS • JAVASCRIPT • REACT',
+  '⚙️ COMPILING DIGITAL DREAMS...',
+  '🎯 THINK • CODE • EXECUTE',
+  '🔥 PASSION > PERFECTION',
+  '📡 ALWAYS LEARNING • ALWAYS BUILDING',
+  '🎮 ZERO TO HERO PROTOCOL',
+  '⚠️ ERROR 404: LIMITS NOT FOUND',
+  '💾 <FRONTEND_DEV/>',
+  '🔋 LOADING NEXT-GEN UI...',
+  '🌟 QUANTUM CODE DETECTED',
+  '🎨 ARCHITECTING THE IMPOSSIBLE',
+];
+
+let textIndex = 0;
+let charIndex = 0;
+const typingSpeed = 100;
+const erasingSpeed = 50;
+const delayBetweenTexts = 1000;
+const typedText = document.getElementById('typedText');
+
+function type() {
+  if (charIndex < texts[textIndex].length) {
+    typedText.textContent += texts[textIndex].charAt(charIndex);
+    charIndex++;
+    setTimeout(type, typingSpeed);
+  } else {
+    setTimeout(erase, delayBetweenTexts);
+  }
+}
+
+function erase() {
+  if (charIndex > 0) {
+    typedText.textContent = texts[textIndex].substring(0, charIndex - 1);
+    charIndex--;
+    setTimeout(erase, erasingSpeed);
+  } else {
+    textIndex = (textIndex + 1) % texts.length;
+    setTimeout(type, typingSpeed);
+  }
+}
+
+// Start typewriter effect on page load
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(type, 1000);
+});
+
+// ========================================
+// 5. CONTACT SECTION - Message Functionality
+// ========================================
+const sendIcon = document.querySelector('.send-icon');
+const messageInput = document.querySelector('.message-input');
+
+let isInputVisible = false;
+
+sendIcon.addEventListener('click', (e) => {
+  e.stopPropagation();
+  
+  if (!isInputVisible) {
+    // Show input field
+    messageInput.classList.remove('hide');
+    messageInput.classList.add('show');
+    isInputVisible = true;
+    messageInput.focus();
+  } else {
+    // Send message
+    const message = messageInput.value.trim();
+    if (message) {
+      // Add sending animation
+      sendIcon.classList.add('sending');
+      
+      // Send email using EmailJS
+      const templateParams = {
+        message: message,
+        from_name: 'Portfolio Visitor',
+        to_name: 'Pritam Singh'
+      };
+      
+      emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+        .then((response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          showToast('Message sent successfully! I\'ll get back to you soon.', 'success');
+          
+          // Reset
+          messageInput.value = '';
+          messageInput.classList.remove('show');
+          messageInput.classList.add('hide');
+          sendIcon.classList.remove('sending');
+          isInputVisible = false;
+        }, (error) => {
+          console.error('FAILED...', error);
+          showToast('Failed to send message. Please try again.', 'error');
+          sendIcon.classList.remove('sending');
+        });
+    } else {
+      showToast('Please enter a message first!', 'error');
+    }
+  }
+});
+
+// Close input if clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.message-container') && isInputVisible) {
+    messageInput.classList.remove('show');
+    messageInput.classList.add('hide');
+    isInputVisible = false;
+  }
+});
+
+// ========================================
+// 6. BOTTOM TAB - TERMINAL FUNCTIONALITY
+// ========================================
+
+// Auto-show bottom tab on hover and hide after inactivity
+document.addEventListener('DOMContentLoaded', () => {
+  const bottomTab = document.getElementById('bottomTab');
+  const toggleButton = bottomTab.querySelector('.toggle-btn');
+  const icon = document.getElementById('icon');
+  let hideTimeout;
+
+  bottomTab.addEventListener('mouseenter', () => {
+    clearTimeout(hideTimeout);
+    icon.classList.remove('fa-angle-up');
+    icon.classList.add('fa-angle-down');
+
+    bottomTab.classList.remove('hidden');
+    bottomTab.classList.add('shown');
+  });
+
+  bottomTab.addEventListener('mouseleave', () => {
+    hideTimeout = setTimeout(() => {
+      bottomTab.classList.add('hidden');
+      icon.classList.remove('fa-angle-down');
+      icon.classList.add('fa-angle-up');
+      bottomTab.classList.remove('shown');
+    }, 30);
+  });
+
+  hideTimeout = setTimeout(() => {
+    bottomTab.classList.add('hidden');
+    bottomTab.classList.remove('shown');
+    icon.classList.remove('fa-angle-down');
+    icon.classList.add('fa-angle-up');
+  }, 5000);
+});
+
+// Toggle the bottom tab visibility
+let hideTimeout;
+function toggleBottomTab() {
+  const tab = document.getElementById('bottomTab');
+  const button = tab.querySelector('.toggle-btn');
+  const icon = document.getElementById('icon');
+  const isHidden = tab.classList.contains('hidden');
+
+  if (isHidden) {
+    tab.classList.remove('hidden');
+    tab.classList.add('shown');
+    icon.classList.remove('fa-angle-up');
+    icon.classList.add('fa-angle-down');
+    button.classList.remove('rotate-icon');
+  } else {
+    tab.classList.add('hidden');
+    tab.classList.remove('shown');
+    icon.classList.remove('fa-angle-down');
+    icon.classList.add('fa-angle-up');
+    button.classList.add('rotate-icon');
+  }
+}
+
+// Terminal typing effect and GitHub repo stats
+const terminalElement = document.getElementById('terminal-text');
+const statsContainer = document.getElementById('stats-container');
+const progressBars = document.querySelectorAll('.progress-bar');
+const percentTexts = document.querySelectorAll('.percent');
+
+const messages = [
+  '> ACCESSING REPO: frontend-web',
+  '> ANALYZING SOURCE CODE...',
+  '> CALCULATING REPO STATISTICS...',
+  '> DEPLOYING SKILL METRICS... [COMPLETE]',
+];
+
+let msgIndex = 0;
+let charPos = 0;
+let repoData = [55, 35, 10]; 
+// Fetch GitHub stats
+async function fetchGitHubStats() {
+  try {
+    const response = await fetch(
+      'https://api.github.com/repos/Pritamx4/frontend-web/languages'
+    );
+
+    if (!response.ok) throw new Error('API Limit Reached');
+
+    const data = await response.json();
+    const totalBytes = Object.values(data).reduce((a, b) => a + b, 0);
+
+    if (totalBytes > 0) {
+      repoData = [
+        Math.round(((data.HTML || 0) / totalBytes) * 100),
+        Math.round(((data.CSS || 0) / totalBytes) * 100),
+        Math.round(((data.JavaScript || 0) / totalBytes) * 100),
+      ];
+    }
+  } catch (error) {
+    console.warn('Using fallback data due to:', error.message);
+  }
+}
+
+// Terminal typing effect
+function typeEffect() {
+  if (msgIndex < messages.length) {
+    if (charPos < messages[msgIndex].length) {
+      terminalElement.innerHTML += messages[msgIndex].charAt(charPos);
+      charPos++;
+      setTimeout(typeEffect, 30);
+    } else {
+      terminalElement.innerHTML += '<br>';
+      msgIndex++;
+      charPos = 0;
+      setTimeout(typeEffect, 400);
+    }
+  } else {
+    showStats();
+  }
+}
+
+// Show statistics with animation
+function showStats() {
+  statsContainer.style.opacity = '1';
+  statsContainer.style.transition = 'opacity 1s ease';
+
+  setTimeout(() => {
+    progressBars.forEach((bar, index) => {
+      const val = repoData[index];
+      const safeVal = isNaN(val) ? 0 : val;
+
+      bar.style.width = safeVal + '%';
+      if (percentTexts[index]) {
+        percentTexts[index].innerText = safeVal + '%';
+      }
+    });
+  }, 500);
+}
+
+// Initialize terminal effect on page load
+window.onload = () => {
+  fetchGitHubStats();
+  typeEffect();
+};
+
+// ========================================
+// SKILLS ANIMATION
+// ========================================
+const skillCards = document.querySelectorAll('.skill-card');
+const skillProgressBars = document.querySelectorAll('.skill-progress');
+
+// Intersection Observer for skills section
+const observerOptions = {
+  threshold: 0.3,
+  rootMargin: '0px'
+};
+
+const skillsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Animate cards
+      entry.target.classList.add('animate-in');
+      
+      // Animate progress bars
+      const progressBar = entry.target.querySelector('.skill-progress');
+      if (progressBar) {
+        const targetWidth = progressBar.getAttribute('data-progress');
+        setTimeout(() => {
+          progressBar.style.width = targetWidth + '%';
+        }, 200);
+      }
+    }
+  });
+}, observerOptions);
+
+// Observe all skill cards
+skillCards.forEach(card => {
+  skillsObserver.observe(card);
+});
+

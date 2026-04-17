@@ -12,15 +12,9 @@
                                                     ███    ███                                       ▀         
 ```
 
-# 🔮 CYBERDECK_Px4
+# CYBERDECK_Px4
 
-**⚡ JACK IN. CODE OUT. ENTER THE GRID. ⚡**
-
-*Elite neural interface for next-gen web architecture with quantum-state animations*
-
-**`[ SYSTEM STATUS: ONLINE ]`** **`[ NEURAL LINK: ACTIVE ]`** **`[ MATRIX: CONNECTED ]`**
-
-[🖥️ Neural Portal](https://pritamx4.github.io/CYBERDECK_Px4/) • [📡 Documentation](#-boot-sequence) • [⚠️ Report Anomaly](https://github.com/Pritamx4/CYBERDECK_Px4/issues) • [💡 Request Module](https://github.com/Pritamx4/CYBERDECK_Px4/issues)
+[🌟 Live Demo](https://pritamx4.github.io/CYBERDECK_Px4/) • [📖 Documentation](#-getting-started) • [🐛 Report Bug](https://github.com/Pritamx4/CYBERDECK_Px4/issues) • [💡 Request Feature](https://github.com/Pritamx4/CYBERDECK_Px4/issues)
 
 </div>
 
@@ -47,21 +41,37 @@
 </td>
 <td width="50%">
 
+<<<<<<< HEAD
+### ⚡ **Interactive Elements**
+- ⌨️ **Typewriter Animation** - Dynamic text effects
+- 🎯 **Smooth Scroll Snap** - Seamless section navigation
+- 🎪 **Native Scroll Animations** - Lightweight motion graphics
+- 🎨 **Font Awesome Icons** - Beautiful iconography
+=======
 ### ⚡ **REACTIVE SYSTEMS**
 - ⌨️ **Terminal Typewriter** - Real-time data stream
 - 🎯 **Smooth Navigation** - Zero-latency scroll protocol
 - 🎪 **GSAP Engine** - Advanced motion algorithms
 - 🎨 **Icon Matrix** - Font Awesome arsenal
+>>>>>>> origin/main
 
 </td>
 </tr>
 </table>
 
+<<<<<<< HEAD
+### 🛠️ **Tech Stack**
+- **Frontend**: HTML5, CSS3 (Advanced), Vanilla JavaScript
+- **Animations**: CSS Keyframes, Transform3D, Native JavaScript
+- **Design**: Glassmorphism, Neumorphism, Gradient Design
+- **Fonts**: Orbitron, Space Age, Audiowide, Rajdhani
+=======
 ### 💾 **CORE STACK**
 - **Neural Layer**: HTML5, CSS3 (Advanced), Vanilla JavaScript
 - **Animation Engine**: GSAP, CSS Keyframes, Transform3D
 - **Visual Design**: Glassmorphism, Neumorphism, Gradient Matrix
 - **Font Systems**: Orbitron, Space Age, Audiowide, Rajdhani
+>>>>>>> origin/main
 
 ---
 
@@ -82,10 +92,15 @@
 
 1. **Initialize Clone Sequence**
    ```bash
+<<<<<<< HEAD
+   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
+   cd CYBERDECK_Px4
+=======
    # >> Establishing connection to mainframe...
    git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
    cd CYBERDECK_Px4
    # >> Neural link established
+>>>>>>> origin/main
    ```
 
 2. **Execute Launch Protocol**
@@ -111,6 +126,20 @@
 ---
 
 ```
+<<<<<<< HEAD
+CYBERDECK_Px4/
+├── 🏠 index.html              # Main HTML structure
+├── 🎨 style.css               # Stylesheet with animations
+├── ⚡ script.js               # Interactive functionality
+├── 📄 README.md               # Project documentation
+├── 🖼️ images/                 # Image assets
+│   ├── 🤖 robo.png            # Hero section robot
+│   ├── 🎯 px4logo.png         # Brand logo
+│   ├── 📋 todolist.png        # Project thumbnails
+│   ├── 🌀 scrolltrigger.png   # Animation demos
+│   └── 🎨 *.jpg/*.png         # Additional assets
+└── 📋 .gitattributes          # Git configuration
+=======
 ╔════════════════════════════════════════════════════════════════════════╗
 ║                 >>> VISUAL DATA STREAMS <<<                            ║
 ╚════════════════════════════════════════════════════════════════════════╝
@@ -153,6 +182,7 @@ CYBERDECK_Px4/
 │   ├── 🌀 scrolltrigger.png   # Animation modules
 │   └── 🎨 *.jpg/*.png         # Additional resources
 └── 📋 .gitattributes          # Repository config
+>>>>>>> origin/main
 ```
 
 ---
