@@ -1,38 +1,4 @@
-// ========================================
-// 0. INITIALIZATION
-// ========================================
 
-console.log('Script loaded!');
-
-// Loading Screen
-const terminalLines = [
-  '> $ git clone Pritamx4/CYBERDECK_Px4',
-  '> COMPILING SOURCE [████████] 100%',
-  '> DEPLOYING TO CYBERDECK_PX4...'
-];
-
-let currentLine = 0;
-let progress = 0;
-
-function showLoadingScreen() {
-  const terminalOutput = document.getElementById('terminalOutput');
-  const progressBar = document.getElementById('progressBar');
-  const progressText = document.getElementById('progressText');
-  const progressContainer = document.querySelector('.progress-container');
-  
-  console.log('Loading screen started');
-  
-  // Hide progress initially
-  progressContainer.style.display = 'none';
-  progressText.style.display = 'none';
-  
-  // Wait for logo animation to complete (2 seconds - reduced)
-  setTimeout(() => {
-    console.log('Starting terminal typing');
-    // Start terminal typing with letter-by-letter effect
-    let lineIndex = 0;
-    
-    function typeNextLine() {
       if (lineIndex < terminalLines.length) {
         const line = document.createElement('div');
         line.className = 'line';
@@ -120,23 +86,6 @@ function showLoadingScreen() {
           }, 200); // Faster: 300ms → 200ms
         }, 400); // Faster: 1000ms → 400ms
       }
-    }
-    
-    typeNextLine();
-  }, 2000); // Faster: 3000ms → 2000ms
-}
-
-function hideLoadingScreen() {
-  const loadingScreen = document.getElementById('loadingScreen');
-  
-  // Simply fade out the loading screen
-  loadingScreen.classList.add('hidden');
-  document.body.style.overflow = 'auto';
-}
-
-// Sound Effects
-let audioContext;
-let soundEnabled = true;
 
 function initAudio() {
   if (!audioContext) {
