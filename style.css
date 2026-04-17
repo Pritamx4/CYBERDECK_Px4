@@ -1180,23 +1180,28 @@ a {
 .about-content {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Aligned left to keep card readable */
   gap: 3rem;
   width: 100%;
   max-width: 1200px;
   position: relative;
   z-index: 2;
+  pointer-events: none; /* Allow mouse interaction with canvas through container */
 }
 
 /* Operator Profile Card */
 .operator-card {
-  flex: 0 1 480px;
-  background: rgba(20, 20, 20, 0.8);
-  border: 1px solid rgba(58, 74, 73, 0.3);
+  flex: 0 1 520px;
+  background: rgba(14, 14, 14, 0.45);
+  border: 1px solid rgba(0, 240, 255, 0.2);
   border-top: 2px solid var(--color-neon-cyan);
-  padding: 2rem 2rem 1.5rem;
+  padding: 2.5rem;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: auto; /* Re-enable for card interactions */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .operator-card::after {
@@ -1308,9 +1313,9 @@ a {
   flex-direction: column;
   align-items: center;
   padding: 0.75rem 0.5rem;
-  border: 1px solid rgba(58, 74, 73, 0.3);
+  border: 1px solid rgba(0, 240, 255, 0.1);
   border-top: 2px solid var(--color-neon-cyan);
-  background: rgba(14, 14, 14, 0.6);
+  background: rgba(14, 14, 14, 0.3);
 }
 
 .stat-block + .stat-block {
@@ -1347,13 +1352,6 @@ a {
 /* =========================================
    NEURAL DATA FLOW VISUALIZER
 ========================================= */
-.neural-visualizer {
-  flex: 0 1 420px;
-  aspect-ratio: 1;
-  position: relative;
-  z-index: 2;
-}
-
 /* Three.js Canvas Container */
 .neural-canvas-container {
   position: absolute;
@@ -1362,77 +1360,12 @@ a {
   width: 100%;
   height: 100%;
   z-index: 1;
-  pointer-events: none;
 }
 
 canvas {
   width: 100% !important;
   height: 100% !important;
 }
-
-/* Neural Nodes - positioned around center */
-.neural-node {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  z-index: 4;
-}
-
-.node-dot {
-  width: 14px;
-  height: 14px;
-  background: rgba(99, 91, 255, 0.15);
-  border: 2px solid var(--color-primary);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  animation: nodePulse 2.5s ease-in-out infinite;
-  position: relative;
-}
-
-.node-dot::after {
-  content: '';
-  position: absolute;
-  inset: 3px;
-  background: var(--color-primary);
-  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  opacity: 0.6;
-}
-
-@keyframes nodePulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.4));
-    transform: scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 10px rgba(99, 91, 255, 0.6));
-    transform: scale(1.15);
-  }
-}
-
-.node-label {
-  font-family: 'Courier New', monospace;
-  font-size: 0.55rem;
-  color: rgba(0, 255, 255, 0.6);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-/* Node positions - hexagonal layout: top, top-right, bottom-right, bottom, bottom-left, top-left */
-.node-1 { top: 6%;   left: 50%;  transform: translateX(-50%); }
-.node-2 { top: 18%;  right: 3%;  }
-.node-3 { bottom: 18%; right: 3%; }
-.node-4 { bottom: 6%; left: 50%; transform: translateX(-50%); }
-.node-5 { bottom: 18%; left: 3%;  }
-.node-6 { top: 18%;  left: 3%;   }
-
-/* Staggered node pulse animations */
-.node-2 .node-dot { animation-delay: 0.4s; }
-.node-3 .node-dot { animation-delay: 0.8s; }
-.node-4 .node-dot { animation-delay: 1.2s; }
-.node-5 .node-dot { animation-delay: 1.6s; }
-.node-6 .node-dot { animation-delay: 2s; }
 
 /* Data Ticker */
 .data-ticker {
@@ -1465,23 +1398,17 @@ canvas {
     width: 100%;
     max-width: 500px;
   }
-
-  .neural-visualizer {
-    flex: 0 1 auto;
-    width: 320px;
-    height: 320px;
-  }
 }
 
 @media screen and (max-width: 768px) {
   .about-section {
-    min-height: 0;
-    height: auto;
+    min-height: 100vh;
     padding: var(--section-padding-y-mobile) var(--section-padding-x-mobile);
   }
 
   .about-content {
     flex-direction: column;
+    justify-content: center;
     gap: 1.5rem;
   }
 
@@ -2414,12 +2341,12 @@ canvas {
 ======================================== */
 .skills-section {
   padding: var(--section-padding-y) var(--section-padding-x);
+  background: var(--color-background);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  min-height: 100vh;
-  background: #000;
+  justify-content: center;
   position: relative;
   overflow: hidden;
 }

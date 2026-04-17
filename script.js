@@ -1023,24 +1023,27 @@ class NeuralCore3D {
     this.mouseY = 0;
     this.targetRotationX = 0;
     this.targetRotationY = 0;
+    
+    // VFX & Kinetic States
+    this.pulses = [];
+    this.nodes = [];
+    this.boostPower = 0;
+    this.lastPulseTime = 0;
 
     this.init();
   }
 
   init() {
-    // Renderer Setup
     this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     this.container.appendChild(this.renderer.domElement);
 
-    // Objects
     this.createCore();
+    this.createNodes();
     this.createParticles();
 
-    this.camera.position.z = 5;
-
-    // Events
-    window.addEventListener('resize', () => this.onResize());
+    this.camera.position.z = 10; // Pull back further for immersion
+    this.onResize(); // Initial call to set positions
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
 
     this.animate();
@@ -1051,16 +1054,16 @@ class NeuralCore3D {
 
     // Inner Core (Icosahedron)
     const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
-    const innerMat = new THREE.MeshBasicMaterial({
+    this.innerMat = new THREE.MeshBasicMaterial({
       color: 0x00f0ff,
       wireframe: true,
       transparent: true,
       opacity: 0.3
     });
-    this.innerMesh = new THREE.Mesh(innerGeo, innerMat);
+    this.innerMesh = new THREE.Mesh(innerGeo, this.innerMat);
     this.group.add(this.innerMesh);
 
-    // Outer Shell (More detailed)
+    // Outer Shell
     const outerGeo = new THREE.IcosahedronGeometry(2, 2);
     const outerMat = new THREE.MeshBasicMaterial({
       color: 0x635BFF,
@@ -1071,10 +1074,10 @@ class NeuralCore3D {
     this.outerMesh = new THREE.Mesh(outerGeo, outerMat);
     this.group.add(this.outerMesh);
 
-    // Floating Logo
+    // Floating Px4 Logo
     const loader = new THREE.TextureLoader();
     loader.load('images/px4 main logo.svg', (texture) => {
-      const logoGeo = new THREE.PlaneGeometry(1.2, 1.2);
+      const logoGeo = new THREE.PlaneGeometry(1.5, 1.5);
       const logoMat = new THREE.MeshBasicMaterial({
         map: texture,
         transparent: true,
@@ -1084,11 +1087,115 @@ class NeuralCore3D {
       this.group.add(this.logoMesh);
     });
 
-    // Pulsing Core Light (Point)
-    const light = new THREE.PointLight(0x00f0ff, 2, 10);
-    this.group.add(light);
-
     this.scene.add(this.group);
+  }
+
+  createNodes() {
+    const skillIcons = [
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/threejs/threejs-original.svg',
+      'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg'
+    ];
+
+    const loader = new THREE.TextureLoader();
+
+    skillIcons.forEach((url, i) => {
+      loader.load(url, (texture) => {
+        const material = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.85 });
+        const sprite = new THREE.Sprite(material);
+        sprite.scale.set(0.9, 0.9, 0.9);
+
+        // Larger, more expansive radii for full-section swarming
+        const radius = 6 + Math.random() * 4;
+        const speed = 0.003 + Math.random() * 0.007;
+        const angle = (i / skillIcons.length) * Math.PI * 2;
+        const verticalOffset = (Math.random() - 0.5) * 4;
+
+        this.scene.add(sprite);
+        this.nodes.push({ 
+          sprite, 
+          url,
+          orbit: { angle, radius, speed, verticalOffset } 
+        });
+      });
+    });
+  }
+
+  createPulse(startPos) {
+    // VFX Pulse: Comet Head
+    const headGeo = new THREE.SphereGeometry(0.12, 8, 8);
+    const headMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 1 });
+    const head = new THREE.Mesh(headGeo, headMat);
+    head.position.copy(startPos);
+    this.scene.add(head);
+
+    // Trail system
+    const trail = [];
+    const trailCount = 8;
+    for (let i = 0; i < trailCount; i++) {
+        const tGeo = new THREE.SphereGeometry(0.1 - (i * 0.012), 4, 4);
+        const tMat = new THREE.MeshBasicMaterial({ 
+            color: 0x00f0ff, 
+            transparent: true, 
+            opacity: 0.6 - (i * 0.07) 
+        });
+        const tMesh = new THREE.Mesh(tGeo, tMat);
+        tMesh.position.copy(startPos);
+        this.scene.add(tMesh);
+        trail.push(tMesh);
+    }
+    
+    this.pulses.push({
+      head: head,
+      trail: trail,
+      target: this.group.position, // Link to dynamic core position
+      speed: 0.05 + Math.random() * 0.05,
+      positions: Array(trailCount).fill().map(() => startPos.clone())
+    });
+  }
+
+  updatePulses() {
+    for (let i = this.pulses.length - 1; i >= 0; i--) {
+      const p = this.pulses[i];
+      
+      // Update historical positions for trail
+      p.positions.unshift(p.head.position.clone());
+      p.positions.pop();
+
+      // Move Head
+      p.head.position.lerp(p.target, p.speed);
+      
+      // Update trail meshes
+      p.trail.forEach((tMesh, idx) => {
+          tMesh.position.copy(p.positions[idx]);
+      });
+
+      if (p.head.position.distanceTo(p.target) < 0.3) {
+        this.scene.remove(p.head);
+        p.trail.forEach(t => this.scene.remove(t));
+        this.pulses.splice(i, 1);
+        this.triggerBoost();
+      }
+    }
+
+    if (Date.now() - this.lastPulseTime > 1200 && this.nodes.length > 5) {
+      const randomNode = this.nodes[Math.floor(Math.random() * this.nodes.length)];
+      this.createPulse(randomNode.sprite.position);
+      this.lastPulseTime = Date.now();
+    }
+  }
+
+  triggerBoost() {
+    this.boostPower = 1.0;
   }
 
   createParticles() {
@@ -1114,11 +1221,8 @@ class NeuralCore3D {
 
   onMouseMove(e) {
     const rect = this.container.getBoundingClientRect();
-    if (e.clientY > rect.top && e.clientY < rect.bottom && 
-        e.clientX > rect.left && e.clientX < rect.right) {
-      this.mouseX = (e.clientX - rect.left - rect.width / 2) / 100;
-      this.mouseY = (e.clientY - rect.top - rect.height / 2) / 100;
-    }
+    this.mouseX = (e.clientX - rect.left - rect.width / 2) / 100;
+    this.mouseY = (e.clientY - rect.top - rect.height / 2) / 100;
   }
 
   onResize() {
@@ -1127,20 +1231,30 @@ class NeuralCore3D {
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
+
+    // Responsive Positioning of the Core
+    if (width > 1024) {
+      this.group.position.x = 3.5; // Offset to the right to clear the card
+    } else {
+      this.group.position.x = 0; // Center on mobile
+    }
   }
 
   animate() {
     requestAnimationFrame(() => this.animate());
 
-    // Continuous Rotation
-    this.innerMesh.rotation.y += 0.005;
-    this.innerMesh.rotation.z += 0.002;
-    this.outerMesh.rotation.y -= 0.002;
-    this.outerMesh.rotation.z -= 0.001;
+    // Orbital Node Update
+    this.nodes.forEach(node => {
+        node.orbit.angle += node.orbit.speed;
+        node.sprite.position.x = Math.cos(node.orbit.angle) * node.orbit.radius;
+        node.sprite.position.z = Math.sin(node.orbit.angle) * node.orbit.radius;
+        node.sprite.position.y = node.orbit.verticalOffset + Math.sin(node.orbit.angle * 0.5) * 1.5;
+    });
 
-    if (this.logoMesh) {
-      this.logoMesh.rotation.y += 0.005;
-    }
+    // Core Rotation
+    this.innerMesh.rotation.y += 0.005;
+    this.outerMesh.rotation.y -= 0.002;
+    if (this.logoMesh) this.logoMesh.rotation.y += 0.005;
 
     // Mouse Parallax
     this.targetRotationX += (this.mouseY - this.targetRotationX) * 0.05;
@@ -1148,9 +1262,19 @@ class NeuralCore3D {
     this.group.rotation.x = this.targetRotationX;
     this.group.rotation.y = this.targetRotationY;
 
-    // Particle Drift
-    this.particles.rotation.y += 0.001;
+    this.updatePulses();
+    
+    if (this.boostPower > 0) {
+      const scale = 1.0 + (this.boostPower * 0.3);
+      this.group.scale.set(scale, scale, scale);
+      this.innerMat.opacity = 0.3 + (this.boostPower * 0.6);
+      this.boostPower *= 0.94;
+    } else {
+      this.group.scale.set(1, 1, 1);
+      this.innerMat.opacity = 0.3;
+    }
 
+    this.particles.rotation.y += 0.001;
     this.renderer.render(this.scene, this.camera);
   }
 }
