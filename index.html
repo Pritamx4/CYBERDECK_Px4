@@ -20,7 +20,8 @@
     <link rel="preload" href="images/robo.png" as="image">
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
-    
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
     <link rel="icon" href="images/px4 main logo.svg" />
   </head>
@@ -77,9 +78,8 @@
           <div class="hero-content reveal-left">
             <span class="tech-label">[ STATUS: NEURAL_LINK_STABLE ]</span>
             <h1 class="hero-title">CYBERDECK<br><span class="pulse-text">PX4</span></h1>
-            <p class="hero-description">
-              Architecting high-performance digital ecosystems with a focus on 
-              immersive UX and hardware-level precision. Entering the digital void.
+            <p class="hero-description" id="typedText">
+              <!-- Typewriter effect will inject text here -->
             </p>
             <div class="hero-actions">
               <a href="#section-projects" class="btn-sleek">
@@ -643,6 +643,7 @@
       </button>
       
       <div class="tab-content">
+        <canvas id="sparkleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></canvas>
         <div class="terminal-output" id="terminalText"></div>
         
         <div class="stats-grid" id="statsGrid">
