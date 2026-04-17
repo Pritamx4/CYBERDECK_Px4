@@ -248,61 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Hero Typewriter Effect
-const texts = [
-  '⚡ SYSTEM INITIALIZING...',
-  '🔐 ACCESS GRANTED: CYBERDECK_PX4',
-  '💻 NEURAL INTERFACE ACTIVE',
-  '🌐 PRITAM SINGH | DIGITAL ARCHITECT',
-  '🚀 HTML • CSS • JAVASCRIPT • REACT',
-  '⚙️ COMPILING DIGITAL DREAMS...',
-  '🎯 THINK • CODE • EXECUTE',
-  '🔥 PASSION > PERFECTION',
-  '📡 ALWAYS LEARNING • ALWAYS BUILDING',
-  '🎮 ZERO TO HERO PROTOCOL',
-  '⚠️ ERROR 404: LIMITS NOT FOUND',
-  '💾 <FRONTEND_DEV/>',
-  '🔋 LOADING NEXT-GEN UI...',
-  '🌟 QUANTUM CODE DETECTED',
-  '🎨 ARCHITECTING THE IMPOSSIBLE',
-];
-
-let textIndex = 0;
-let charIndex = 0;
-const typingSpeed = 100;
-const erasingSpeed = 50;
-const delayBetweenTexts = 1000;
-const typedText = document.getElementById('typedText');
-
-function type() {
-  if (!typedText) return;
-  if (charIndex < texts[textIndex].length) {
-    typedText.textContent += texts[textIndex].charAt(charIndex);
-    charIndex++;
-    setTimeout(type, typingSpeed);
-  } else {
-    setTimeout(erase, delayBetweenTexts);
-  }
-}
-
-function erase() {
-  if (!typedText) return;
-  if (charIndex > 0) {
-    typedText.textContent = texts[textIndex].substring(0, charIndex - 1);
-    charIndex--;
-    setTimeout(erase, erasingSpeed);
-  } else {
-    textIndex = (textIndex + 1) % texts.length;
-    setTimeout(type, typingSpeed);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  if (typedText) {
-    typedText.textContent = ''; // Clear fallback text
-    setTimeout(type, 1000);
-  }
-});
+// Hero Section logic (if any needed)
 
 // Contact Message Functionality (Fusion Grid)
 const sendBtn = document.querySelector('.send-btn');
