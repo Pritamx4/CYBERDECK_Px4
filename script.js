@@ -141,9 +141,86 @@ function animateNavbarEntry() {
 // Sound System
 let audioContext;
 let soundEnabled = true;
+let humOscBase, humOscGrit, humGainBase, humGainGrit;
+let isHumming = false;
 
 function initAudio() {
-  if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    setupBackgroundHum();
+  }
+  if (audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
+}
+
+// Global Audio Unlocker for modern browsers
+document.addEventListener('mousedown', initAudio, { once: true });
+document.addEventListener('touchstart', initAudio, { once: true });
+document.addEventListener('keydown', initAudio, { once: true });
+
+
+function setupBackgroundHum() {
+  if (isHumming) return;
+  
+  // Base Sine Layer (Smooth foundation)
+  humOscBase = audioContext.createOscillator();
+  humGainBase = audioContext.createGain();
+  humOscBase.type = 'sine';
+  humOscBase.frequency.setValueAtTime(55, audioContext.currentTime); // Low A
+  humGainBase.gain.setValueAtTime(0, audioContext.currentTime); // Start silent
+  
+  // Grit Sawtooth Layer (Industrial texture)
+  humOscGrit = audioContext.createOscillator();
+  humGainGrit = audioContext.createGain();
+  humOscGrit.type = 'sawtooth';
+  humOscGrit.frequency.setValueAtTime(55, audioContext.currentTime);
+  humGainGrit.gain.setValueAtTime(0, audioContext.currentTime);
+
+  // Connect everything
+  humOscBase.connect(humGainBase);
+  humGainBase.connect(audioContext.destination);
+  
+  humOscGrit.connect(humGainGrit);
+  humGainGrit.connect(audioContext.destination);
+  
+  humOscBase.start();
+  humOscGrit.start();
+  isHumming = true;
+  
+  updateHumState();
+  animateHum();
+}
+
+function updateHumState() {
+  if (!audioContext) return;
+  const targetGainBase = soundEnabled ? 0.015 : 0;
+  const targetGainGrit = soundEnabled ? 0.005 : 0;
+  
+  humGainBase.gain.setTargetAtTime(targetGainBase, audioContext.currentTime, 0.1);
+  humGainGrit.gain.setTargetAtTime(targetGainGrit, audioContext.currentTime, 0.1);
+}
+
+function animateHum() {
+  if (!isHumming || !soundEnabled) {
+    requestAnimationFrame(animateHum);
+    return;
+  }
+
+  const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  const velocity = Math.abs(window.scrollY - (window.lastScrollY || 0));
+  window.lastScrollY = window.scrollY;
+
+  // Modulate frequency based on scroll position (50Hz to 110Hz)
+  const targetFreq = 55 + (scrollPercent * 55);
+  humOscBase.frequency.setTargetAtTime(targetFreq, audioContext.currentTime, 0.1);
+  humOscGrit.frequency.setTargetAtTime(targetFreq * 1.01, audioContext.currentTime, 0.1); // Slight detune for grit
+
+  // Modulate grit based on movement velocity
+  const gritIntensity = Math.min(velocity * 0.001, 0.01);
+  humGainGrit.gain.setTargetAtTime(0.005 + gritIntensity, audioContext.currentTime, 0.05);
+
+  requestAnimationFrame(animateHum);
 }
 
 function createSound(freq, type, duration, gain) {
@@ -161,12 +238,49 @@ function createSound(freq, type, duration, gain) {
   osc.stop(audioContext.currentTime + duration);
 }
 
-function playTypingSound() { createSound(600, 'square', 0.08, 0.08); }
-function playHoverSound() { createSound(400, 'square', 0.05, 0.05); }
+function playTypingSound() { createSound(600, 'square', 0.08, 0.06); }
+function playHoverSound() { createSound(350, 'sine', 0.1, 0.04); }
+function playClickSound() { createSound(800, 'square', 0.05, 0.08); }
+function playRevealSound() { createSound(150, 'sine', 0.5, 0.12); }
+
+// Global Global Sound Delegate
+function initGlobalSoundEvents() {
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('a, button, .menu-icon, .social-item');
+    if (target) {
+      playClickSound();
+    }
+  }, true);
+
+  document.addEventListener('mouseenter', (e) => {
+    const target = e.target.closest('a, button, .menu-icon, .social-item, .skill-card, .project-card, .bottom-tab');
+    if (target) {
+      playHoverSound();
+    }
+  }, true);
+}
+
+initGlobalSoundEvents();
+
+// Section Reveal Sounds
+function initRevealSounds() {
+  const revealElements = document.querySelectorAll('[class*="reveal-"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        try { playRevealSound(); } catch(e) {}
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  revealElements.forEach(el => observer.observe(el));
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') {
     soundEnabled = !soundEnabled;
+    updateHumState();
     showToast(soundEnabled ? 'Sound ON' : 'Sound OFF', 'info');
   }
 });
@@ -181,6 +295,7 @@ window.addEventListener('load', () => {
   loadingStarted = true;
   console.log('Window loaded!');
   document.body.style.overflow = 'hidden';
+  initRevealSounds();
   setTimeout(() => {
     console.log('Calling showLoadingScreen');
     showLoadingScreen();
@@ -895,6 +1010,7 @@ function initSkillBars() {
       }
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
+      try { playRevealSound(); } catch(e) {}
       observer.unobserve(card);
     });
   }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
