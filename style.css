@@ -235,66 +235,10 @@ html {
 }
 
 .loading-screen.hidden {
-  animation: glitchReveal 0.8s steps(10) forwards;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease-out;
   pointer-events: none;
-}
-
-@keyframes glitchReveal {
-  0% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  10% {
-    opacity: 0.9;
-    clip-path: inset(20% 0 30% 0);
-    transform: translateX(-5px);
-  }
-  20% {
-    opacity: 0.8;
-    clip-path: inset(40% 0 10% 0);
-    transform: translateX(5px);
-  }
-  30% {
-    opacity: 0.7;
-    clip-path: inset(10% 0 50% 0);
-    transform: translateX(-3px);
-  }
-  40% {
-    opacity: 0.6;
-    clip-path: inset(60% 0 20% 0);
-    transform: translateX(4px);
-  }
-  50% {
-    opacity: 0.5;
-    clip-path: inset(30% 0 40% 0);
-    transform: translateX(-2px);
-  }
-  60% {
-    opacity: 0.4;
-    clip-path: inset(70% 0 10% 0);
-    transform: translateX(3px);
-  }
-  70% {
-    opacity: 0.3;
-    clip-path: inset(15% 0 60% 0);
-    transform: translateX(-4px);
-  }
-  80% {
-    opacity: 0.2;
-    clip-path: inset(50% 0 30% 0);
-    transform: translateX(2px);
-  }
-  90% {
-    opacity: 0.1;
-    clip-path: inset(80% 0 10% 0);
-    transform: translateX(-1px);
-  }
-  100% {
-    opacity: 0;
-    clip-path: inset(100% 0 0 0);
-    transform: translateX(0);
-    visibility: hidden;
-  }
 }
 
 .loading-container {

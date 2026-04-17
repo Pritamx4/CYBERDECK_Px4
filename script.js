@@ -106,20 +106,14 @@ function showLoadingScreen() {
 
 function hideLoadingScreen() {
   const loadingScreen = document.getElementById('loadingScreen');
-  loadingScreen.classList.add('hidden');
-  document.body.style.overflow = 'auto';
-  
-  // Animate navbar entry after loading screen
-  setTimeout(() => {
-    animateNavbarEntry();
-    
-    // Matrix Rain removed to reveal main screen
-    // setTimeout(() => {
-    //   initMatrixRain();
-    // }, 500);
-    
-    // Glitch effect removed
-  }, 300);
+  if (loadingScreen) {
+    loadingScreen.classList.add('hidden');
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+      document.body.style.overflow = 'auto'; 
+      animateNavbarEntry();
+    }, 600);
+  }
 }
 
 // Navbar Entry Fallback (Native JS)
