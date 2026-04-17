@@ -1,10 +1,18 @@
-# 🚀 Pritamx4 Frontend Portfolio
-
 <div align="center">
 
-**✨ Crafting Futuristic Frontend Experiences ✨**
+```
+   ▄████████ ▄██   ▄   ▀█████████▄     ▄████████    ▄████████ ████████▄     ▄████████  ▄████████    ▄█   ▄█▄ 
+  ███    ███ ███   ██▄   ███    ███   ███    ███   ███    ███ ███   ▀███   ███    ███ ███    ███   ███ ▄███▀ 
+  ███    █▀  ███▄▄▄███   ███    ███   ███    █▀    ███    ███ ███    ███   ███    █▀  ███    █▀    ███▐██▀   
+  ███        ▀▀▀▀▀▀███  ▄███▄▄▄██▀   ▄███▄▄▄      ▄███▄▄▄▄██▀ ███    ███  ▄███▄▄▄     ███         ▄█████▀    
+  ███        ▄██   ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ███    ███ ▀▀███▀▀▀     ███        ▀▀█████▄    
+  ███    █▄  ███   ███   ███    ██▄   ███    █▄  ▀███████████ ███    ███   ███    █▄  ███    █▄    ███▐██▄   
+  ███    ███ ███   ███   ███    ███   ███    ███   ███    ███ ███   ▄███   ███    ███ ███    ███   ███ ▀███▄ 
+  ████████▀   ▀█████▀  ▄█████████▀    ██████████   ███    ███ ████████▀    ██████████ ████████▀    ███   ▀█▀ 
+                                                    ███    ███                                       ▀         
+```
 
-*A cutting-edge portfolio showcasing modern web development with stunning visual effects and animations*
+# CYBERDECK_Px4
 
 [🌟 Live Demo](https://pritamx4.github.io/CYBERDECK_Px4/) • [📖 Documentation](#-getting-started) • [🐛 Report Bug](https://github.com/Pritamx4/CYBERDECK_Px4/issues) • [💡 Request Feature](https://github.com/Pritamx4/CYBERDECK_Px4/issues)
 
@@ -12,93 +20,113 @@
 
 ---
 
-## 🌟 Features
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║                    >>> SYSTEM CAPABILITIES <<<                         ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## 🖥️ SYSTEM CAPABILITIES
 
 <table>
 <tr>
 <td width="50%">
 
-### 🎨 **Visual Excellence**
-- ✨ **Glassmorphism Effects** - Modern glass-like UI components
-- 🎭 **3D CSS Animations** - Interactive rotating cubes
-- 🌈 **Gradient Overlays** - Stunning color transitions
-- 📱 **Responsive Design** - Perfect on all devices
+### 🔮 **VISUAL PROTOCOLS**
+- ✨ **Glassmorphism Matrix** - Holographic UI components
+- 🎭 **3D Neural Cubes** - Quantum-state rotations
+- 🌈 **Neon Overlays** - Cyberpunk color gradients
+- 📱 **Adaptive Interface** - Multi-device sync enabled
 
 </td>
 <td width="50%">
 
+<<<<<<< HEAD
 ### ⚡ **Interactive Elements**
 - ⌨️ **Typewriter Animation** - Dynamic text effects
 - 🎯 **Smooth Scroll Snap** - Seamless section navigation
 - 🎪 **Native Scroll Animations** - Lightweight motion graphics
 - 🎨 **Font Awesome Icons** - Beautiful iconography
+=======
+### ⚡ **REACTIVE SYSTEMS**
+- ⌨️ **Terminal Typewriter** - Real-time data stream
+- 🎯 **Smooth Navigation** - Zero-latency scroll protocol
+- 🎪 **GSAP Engine** - Advanced motion algorithms
+- 🎨 **Icon Matrix** - Font Awesome arsenal
+>>>>>>> origin/main
 
 </td>
 </tr>
 </table>
 
+<<<<<<< HEAD
 ### 🛠️ **Tech Stack**
 - **Frontend**: HTML5, CSS3 (Advanced), Vanilla JavaScript
 - **Animations**: CSS Keyframes, Transform3D, Native JavaScript
 - **Design**: Glassmorphism, Neumorphism, Gradient Design
 - **Fonts**: Orbitron, Space Age, Audiowide, Rajdhani
+=======
+### 💾 **CORE STACK**
+- **Neural Layer**: HTML5, CSS3 (Advanced), Vanilla JavaScript
+- **Animation Engine**: GSAP, CSS Keyframes, Transform3D
+- **Visual Design**: Glassmorphism, Neumorphism, Gradient Matrix
+- **Font Systems**: Orbitron, Space Age, Audiowide, Rajdhani
+>>>>>>> origin/main
 
 ---
-
-## 🚀 Getting Started
-
-### 📋 Prerequisites
-- 🌐 Modern web browser (Chrome, Firefox, Safari, Edge)
-- 📝 Basic text editor or IDE
-- 🔧 Live server extension (optional but recommended)
-
-### 💻 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
-   cd CYBERDECK_Px4
-   ```
-
-2. **Launch the project**
-   ```bash
-   # Option 1: Open directly in browser
-   open index.html
-   
-   # Option 2: Use Live Server (VS Code)
-   # Install Live Server extension and right-click index.html → "Open with Live Server"
-   
-   # Option 3: Use Python (if installed)
-   python -m http.server 8000
-   # Then visit: http://localhost:8000
-   ```
-
-3. **Start exploring! 🎉**
-   - Navigate through different sections using the navbar
-   - Experience the typewriter effect on the home section
-   - Interact with the 3D cubes in the about section
-   - Explore the project showcase
-
----
-
-## 📸 Screenshots & Demo
-
-### 🏠 Hero Section
-> Done✅
-
-### 🎭 Interactive 3D Cubes
-> Done✅
-### 💼 Project Showcase
-> Done✅
-
-### 📞 Contact Section
-> Done✅
-
----
-
-## 📁 Project Structure
 
 ```
+╔════════════════════════════════════════════════════════════════════════╗
+║                    >>> BOOT SEQUENCE <<<                               ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## ⚡ BOOT SEQUENCE
+
+### 💾 SYSTEM REQUIREMENTS
+- 🖥️ Neural browser interface (Chrome/Firefox/Safari/Edge)
+- 📝 Code editor or IDE terminal
+- 🔧 Live server protocol (optional but recommended for optimal performance)
+
+### 💻 DEPLOYMENT PROTOCOL
+
+1. **Initialize Clone Sequence**
+   ```bash
+<<<<<<< HEAD
+   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
+   cd CYBERDECK_Px4
+=======
+   # >> Establishing connection to mainframe...
+   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
+   cd CYBERDECK_Px4
+   # >> Neural link established
+>>>>>>> origin/main
+   ```
+
+2. **Execute Launch Protocol**
+   ```bash
+   # Option 1: Direct neural interface
+   open index.html
+   
+   # Option 2: Live Server Protocol (VS Code)
+   # Install Live Server extension and right-click index.html → "Open with Live Server"
+   
+   # Option 3: Python Server Matrix (if Python installed)
+   python -m http.server 8000
+   # >> Navigate to: http://localhost:8000
+   # >> System online at port 8000
+   ```
+
+3. **Enter The Grid 🔮**
+   - Navigate cyberspace via neural navbar
+   - Experience real-time typewriter data streams
+   - Interact with quantum-state 3D cubes
+   - Explore the project matrix
+
+---
+
+```
+<<<<<<< HEAD
 CYBERDECK_Px4/
 ├── 🏠 index.html              # Main HTML structure
 ├── 🎨 style.css               # Stylesheet with animations
@@ -111,63 +139,125 @@ CYBERDECK_Px4/
 │   ├── 🌀 scrolltrigger.png   # Animation demos
 │   └── 🎨 *.jpg/*.png         # Additional assets
 └── 📋 .gitattributes          # Git configuration
+=======
+╔════════════════════════════════════════════════════════════════════════╗
+║                 >>> VISUAL DATA STREAMS <<<                            ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## 📸 INTERFACE PREVIEW
+
+### 🖥️ Neural Hub
+> Done✅
+
+### 🔮 Quantum Cubes
+> Done✅
+
+### 💼 Project Matrix
+> Done✅
+
+### 📡 Uplink Terminal
+> Done✅
+
+---
+
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║              >>> FILE SYSTEM ARCHITECTURE <<<                          ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## 📂 FILE SYSTEM ARCHITECTURE
+
+```
+CYBERDECK_Px4/
+├── 🖥️ index.html              # Core neural structure
+├── 🔮 style.css               # Visual matrix & animations
+├── ⚡ script.js               # Interactive protocol engine
+├── 📡 README.md               # System documentation
+├── 💾 images/                 # Asset storage
+│   ├── 🤖 robo.png            # Neural hub avatar
+│   ├── 🎯 px4logo.png         # System identifier
+│   ├── 📋 todolist.png        # Project interfaces
+│   ├── 🌀 scrolltrigger.png   # Animation modules
+│   └── 🎨 *.jpg/*.png         # Additional resources
+└── 📋 .gitattributes          # Repository config
+>>>>>>> origin/main
 ```
 
 ---
 
-## 🤝 Contributing
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║                   >>> JOIN THE NETWORK <<<                             ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
 
-We love contributions! 💖 Here's how you can help make this project even better:
+## 🌐 JOIN THE NETWORK
 
-### 🌟 Ways to Contribute
-- 🐛 **Bug Reports**: Found an issue? Let us know!
-- 💡 **Feature Requests**: Have a cool idea? Share it!
-- 🎨 **Design Improvements**: Make it look even more stunning
-- 📚 **Documentation**: Help others understand the code
-- 🔧 **Code Improvements**: Optimize performance or add features
+Incoming transmissions welcomed! 💚 Here's how you can upgrade the mainframe:
 
-### 📝 Contributing Process
-1. 🍴 Fork the repository
-2. 🌿 Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. 💾 Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. 📤 Push to the branch (`git push origin feature/AmazingFeature`)
-5. 🎯 Open a Pull Request
+### 🔮 Network Protocols
+- ⚠️ **Bug Reports**: Detected an anomaly? Transmit data!
+- 💡 **Feature Requests**: Have a neural upgrade? Share the code!
+- 🎨 **Visual Enhancements**: Make the interface even more cyberpunk
+- 📚 **Documentation**: Help other netrunners decode the system
+- 🔧 **Code Optimization**: Boost performance or deploy new modules
 
----
-
-## 📄 License
-
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
-📋 **What this means:**
-- ✅ Commercial use allowed
-- ✅ Modification allowed
-- ✅ Distribution allowed
-- ✅ Private use allowed
-- ❗ License and copyright notice required
+### 📝 Connection Process
+1. 🍴 Fork the mainframe repository
+2. 🌿 Create your feature branch (`git checkout -b feature/QuantumUpgrade`)
+3. 💾 Commit your neural data (`git commit -m 'Add QuantumUpgrade module'`)
+4. 📤 Push to the network (`git push origin feature/QuantumUpgrade`)
+5. 🎯 Initiate Pull Request protocol
 
 ---
 
-## 📞 Contact & Connect
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║                     >>> LICENSE PROTOCOL <<<                           ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## 📄 LICENSE PROTOCOL
+
+This system operates under **MIT License** - access [LICENSE](LICENSE) for full protocol.
+
+📋 **Access Permissions:**
+- ✅ Commercial deployment authorized
+- ✅ Modification protocols enabled
+- ✅ Distribution rights granted
+- ✅ Private use permitted
+- ❗ License and copyright notice required for all forks
+
+---
+
+```
+╔════════════════════════════════════════════════════════════════════════╗
+║                   >>> UPLINK CHANNELS <<<                              ║
+╚════════════════════════════════════════════════════════════════════════╝
+```
+
+## 📡 UPLINK CHANNELS
 
 <div align="center">
 
-### 👨‍💻 **Pritam Singh (Pritamx4)**
+### 👨‍💻 **Pritam Singh (Pritamx4) - System Architect**
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Pritamx4)
 [![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@Pritamx4-Studio?sub_confirmation=1)
 [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/smile._.only__/)
 
-**💼 "Think. Code. Create."**  
-**🎯 Frontend Developer | Digital Architect | UI/UX Enthusiast**
+**💾 "Think. Code. Create. Repeat."**  
+**⚡ Netrunner | Digital Architect | Neural UI Engineer**
 
 ---
 
-### 💌 Get in Touch
-- 📧 **Email**: Open an issue for direct communication
-- 🌟 **Collaborations**: Always open to exciting projects!
-- 🎓 **Mentorship**: Happy to help fellow developers
-- 🎮 **Let's build something amazing together!**
+### 💌 Establish Connection
+- 📧 **Direct Link**: Open an issue for secure transmission
+- 🌟 **Collaborations**: Neural network always open to new protocols!
+- 🎓 **Knowledge Transfer**: Ready to assist fellow netrunners
+- 🎮 **Let's hack the matrix together!**
 
 </div>
 
@@ -175,8 +265,18 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful! ⭐**
+```
+╔═══════════════════════════════════════════════════════════════════╗
+║  ⭐ STAR THIS REPO IF YOU FOUND IT USEFUL ⭐                       ║
+║                                                                   ║
+║  >> System Status: Fully Operational                             ║
+║  >> Neural Link: Stable                                          ║
+║  >> Uptime: 99.9%                                                ║
+╚═══════════════════════════════════════════════════════════════════╝
+```
 
-*Made with 💖 and lots of ☕ by [Pritamx4](https://github.com/Pritamx4)*
+*Crafted with 💚 and quantum processors by [Pritamx4](https://github.com/Pritamx4)*
+
+**`[ CYBERDECK_Px4 v1.0 ]`** **`[ ALL SYSTEMS NOMINAL ]`**
 
 </div>
