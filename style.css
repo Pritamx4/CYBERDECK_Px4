@@ -1,3 +1,10 @@
+@font-face {
+  font-family: 'Zero Master';
+  src: url('./Zero Master Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* ========================================
    BASIC RESET & GLOBAL STYLES
 ======================================== */
@@ -13,7 +20,7 @@ html {
   user-select: none;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: "Courier New", Courier, monospace;
+  font-family: var(--font-body);
   background: var(--color-background);
 }
 
@@ -21,10 +28,16 @@ html {
    CSS ROOT VARIABLES
 ======================================== */
 :root {
-  /* Colors - NEURAL_PULSE Palette */
-  --color-primary: #00f0ff;      /* Electric Cyan */
-  --color-secondary: #7A00FF;    /* Deep Electric Purple */
-  --color-accent: #BF00FF;       /* Bright Violet */
+  --font-heading: 'Zero Master', sans-serif;
+  --font-subheading: 'Oxanium', sans-serif;
+  --font-body: 'Exo 2', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-glitch: 'Major Mono Display', monospace;
+  --font-retro: 'VT323', monospace;
+  /* Colors - CHROME_CORE Palette */
+  --color-primary: #00FFD1;      /* Electric Mint */
+  --color-secondary: #CCFF00;    /* Phosphor Lime */
+  --color-accent: #FFFFFF;       /* Pure White */
   --color-background: #000;
   --color-background-secondary: #000;
   --color-text-primary: #f2f2f2; /* Slate White (OLED-Safe) */
@@ -32,10 +45,10 @@ html {
   --color-text-muted: #64748b;   /* Deep Metadata */
 
   /* Neon Glow Colors */
-  --color-neon-cyan: #00f0ff;
-  --color-neon-blue: #00d2ff;
-  --color-neon-purple: #7A00FF;
-  --color-neon-pink: #BF00FF;
+  --color-neon-cyan: #00FFD1;
+  --color-neon-blue: #00FFFF;
+  --color-neon-purple: #CCFF00;
+  --color-neon-pink: #FFFFFF;
 
   /* Spacing - Consistent Scale */
   --spacing-xs: 0.5rem; /* 8px */
@@ -70,8 +83,8 @@ html {
   --transition-slow: 1s ease;
 
   /* Shadows */
-  --shadow-sm: 0 0 12px rgba(0, 255, 255, 0.2);
-  --shadow-md: 0 0 15px rgba(0, 255, 247, 0.2);
+  --shadow-sm: 0 0 12px rgba(0, 255, 209, 0.2);
+  --shadow-md: 0 0 15px rgba(204, 255, 0, 0.2);
   --shadow-lg: 0 -2px 20px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 10px var(--color-primary), 0 0 20px var(--color-primary);
 
@@ -190,20 +203,20 @@ html {
   position: absolute;
   width: 4px;
   height: 4px;
-  background: rgba(0, 255, 255, 0.6);
+  background: rgba(0, 255, 209, 0.6);
   border-radius: 50%;
   box-shadow: 
-    100px 200px 0 rgba(0, 255, 255, 0.4),
+    100px 200px 0 rgba(0, 255, 209, 0.4),
     300px 100px 0 rgba(255, 0, 110, 0.4),
-    500px 300px 0 rgba(0, 255, 255, 0.4),
+    500px 300px 0 rgba(0, 255, 209, 0.4),
     700px 150px 0 rgba(255, 0, 110, 0.4),
-    200px 400px 0 rgba(0, 255, 255, 0.4),
+    200px 400px 0 rgba(0, 255, 209, 0.4),
     900px 250px 0 rgba(255, 0, 110, 0.4),
-    150px 500px 0 rgba(0, 255, 255, 0.4),
+    150px 500px 0 rgba(0, 255, 209, 0.4),
     600px 450px 0 rgba(255, 0, 110, 0.4),
-    400px 50px 0 rgba(0, 255, 255, 0.4),
+    400px 50px 0 rgba(0, 255, 209, 0.4),
     800px 400px 0 rgba(255, 0, 110, 0.4),
-    250px 300px 0 rgba(0, 255, 255, 0.4),
+    250px 300px 0 rgba(0, 255, 209, 0.4),
     950px 100px 0 rgba(255, 0, 110, 0.4);
   animation: particleFloat 15s linear infinite;
 }
@@ -211,17 +224,17 @@ html {
 .particles::after {
   box-shadow: 
     150px 150px 0 rgba(255, 0, 110, 0.4),
-    350px 250px 0 rgba(0, 255, 255, 0.4),
+    350px 250px 0 rgba(0, 255, 209, 0.4),
     550px 350px 0 rgba(255, 0, 110, 0.4),
-    750px 200px 0 rgba(0, 255, 255, 0.4),
+    750px 200px 0 rgba(0, 255, 209, 0.4),
     250px 450px 0 rgba(255, 0, 110, 0.4),
-    850px 300px 0 rgba(0, 255, 255, 0.4),
+    850px 300px 0 rgba(0, 255, 209, 0.4),
     100px 550px 0 rgba(255, 0, 110, 0.4),
-    650px 500px 0 rgba(0, 255, 255, 0.4),
+    650px 500px 0 rgba(0, 255, 209, 0.4),
     450px 100px 0 rgba(255, 0, 110, 0.4),
-    850px 450px 0 rgba(0, 255, 255, 0.4),
+    850px 450px 0 rgba(0, 255, 209, 0.4),
     300px 350px 0 rgba(255, 0, 110, 0.4),
-    900px 150px 0 rgba(0, 255, 255, 0.4);
+    900px 150px 0 rgba(0, 255, 209, 0.4);
   animation: particleFloat 20s linear infinite reverse;
 }
 
@@ -443,21 +456,21 @@ html {
 .loading-screen .terminal-output {
   font-family: 'Courier New', monospace;
   font-size: 0.85rem;
-  color: #00f0ff !important;
+  color: var(--color-primary) !important;
   text-align: left;
   margin-bottom: 1.5rem;
   min-height: 120px;
   max-height: 120px;
   overflow: hidden;
   line-height: 1.6;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 209, 0.4);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
 
 .loading-screen .terminal-output .line {
-  color: #00f0ff !important;
+  color: var(--color-primary) !important;
   white-space: nowrap;
   text-align: left;
   display: block;
@@ -519,7 +532,7 @@ html {
   width: 0%;
   transition: width 0.3s ease;
   border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 20px rgba(0, 255, 209, 0.6);
 }
 
 @keyframes progressGlow {
@@ -532,7 +545,7 @@ html {
 }
 
 .progress-text {
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-mono);
   font-size: 1.2rem;
   color: #ff4ddb;
   font-weight: bold;
@@ -630,7 +643,7 @@ a {
 
 .nav-links li a {
   color: rgba(0, 255, 247, 0.9);
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-subheading);
   text-transform: uppercase;
   letter-spacing: 0.08rem;
   font-weight: 400;
@@ -917,11 +930,10 @@ a {
 }
 
 .hero-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(3rem, 8vw, 6rem);
   line-height: 1;
   font-weight: 900;
-  text-transform: uppercase;
   margin-bottom: 2rem;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
@@ -1045,7 +1057,7 @@ a {
   left: 20px;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.6rem;
-  color: rgba(0, 240, 255, 0.5);
+  color: rgba(0, 255, 209, 0.5);
   letter-spacing: 0.3rem;
   text-transform: uppercase;
 }
@@ -1146,7 +1158,7 @@ a {
 
 .about-header-tag {
   display: block;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-glitch);
   font-size: 0.7rem;
   color: rgba(0, 255, 255, 0.5);
   letter-spacing: 0.25em;
@@ -1160,20 +1172,19 @@ a {
   font-weight: 800;
   margin-bottom: var(--spacing-md);
   color: var(--color-text-primary);
-  font-family: 'Orbitron', sans-serif;
-  text-transform: uppercase;
+  font-family: var(--font-heading);
 }
 
 .section-title {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-heading);
   font-weight: 700;
   text-transform: uppercase;
 }
 
 .about-title {
   color: var(--color-primary);
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: var(--section-title-size);
   text-align: center;
   text-transform: uppercase;
@@ -1190,7 +1201,7 @@ a {
   margin: 0 auto;
   background: linear-gradient(90deg, transparent, var(--color-neon-cyan), var(--color-neon-purple), transparent);
   border-radius: 2px;
-  box-shadow: 0 0 8px rgba(0, 255, 255, 0.4);
+  box-shadow: 0 0 8px rgba(0, 255, 209, 0.4);
 }
 
 /* About Content - Split Layout */
@@ -1272,9 +1283,9 @@ a {
 
 .operator-tag {
   display: block;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-glitch);
   font-size: 0.65rem;
-  color: rgba(0, 255, 255, 0.6);
+  color: rgba(0, 255, 209, 0.6);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   margin-bottom: 0.75rem;
@@ -1283,7 +1294,7 @@ a {
 }
 
 .operator-name {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-size: clamp(2rem, 5vw, 3rem);
   color: var(--color-primary);
   font-weight: 800;
@@ -1297,7 +1308,7 @@ a {
 }
 
 .operator-role {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-body);
   font-size: 1rem;
   color: var(--color-text-secondary);
   letter-spacing: 0.03rem;
@@ -1307,7 +1318,7 @@ a {
 }
 
 .operator-bio {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: rgba(185, 202, 201, 0.7);
   line-height: 1.7;
@@ -1349,7 +1360,7 @@ a {
 }
 
 .operator-stats .stat-value {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-mono);
   font-size: 1.5rem;
   color: var(--color-primary);
   font-weight: 700;
@@ -1358,7 +1369,7 @@ a {
 }
 
 .stat-unit {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-mono);
   font-size: 0.6rem;
   color: var(--color-text-secondary);
   letter-spacing: 0.15em;
@@ -1520,15 +1531,16 @@ canvas {
 
 .project-heading h1 {
   font-size: var(--section-title-size);
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   font-weight: 700;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
 }
 
 .glow-heading {
+  font-family: var(--font-heading);
   font-size: var(--section-title-size);
-  font-weight: bold;
+  font-weight: normal;
   letter-spacing: 0.1rem;
   background: linear-gradient(
     90deg,
@@ -1540,7 +1552,7 @@ canvas {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: glowShift 5s ease infinite;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4), 0 0 20px rgba(122, 0, 255, 0.3),
+  text-shadow: 0 0 10px rgba(0, 255, 209, 0.4), 0 0 20px rgba(122, 0, 255, 0.3),
     0 0 30px rgba(255, 0, 255, 0.2);
 }
 
@@ -1626,7 +1638,7 @@ canvas {
   font-weight: 500;
   margin: 0;
   line-height: 1.2;
-  font-family: orbitron;
+  font-family: var(--font-mono);
   color: var(--color-text-secondary);
 }
 
@@ -1664,11 +1676,20 @@ canvas {
   text-decoration: none;
   font-size: var(--font-sm);
   font-weight: 500;
-  color: var(--color-secondary);
+  color: #FFFFFF;
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   line-height: 1.1;
+  text-shadow: none;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.links a:hover {
+  opacity: 1;
+  color: #FFFFFF;
+  text-shadow: none;
 }
 
 /* Projects Section Responsive */
@@ -1730,7 +1751,7 @@ canvas {
 }
 
 .tech-label {
-  font-family: var(--font-mono);
+  font-family: var(--font-glitch);
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.4rem;
@@ -1742,9 +1763,9 @@ canvas {
 .fusion-line {
   width: 100px;
   height: 1px;
-  background: #00f0ff;
+  background: var(--color-primary);
   margin-top: 1.5rem;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
 }
 
 .fusion-grid {
@@ -1794,10 +1815,10 @@ canvas {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #00f0ff, transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
   z-index: 2;
   animation: retinaScan 4s linear infinite;
-  box-shadow: 0 0 15px #00f0ff;
+  box-shadow: 0 0 15px var(--color-primary);
   opacity: 0.6;
 }
 
@@ -1810,7 +1831,7 @@ canvas {
   position: absolute;
   width: 20px;
   height: 20px;
-  border: 2px solid #00f0ff;
+  border: 2px solid var(--color-primary);
   z-index: 3;
 }
 
@@ -1912,7 +1933,7 @@ canvas {
 }
 
 .terminal-input-wrapper:focus-within {
-  border-bottom-color: #00f0ff;
+  border-bottom-color: var(--color-primary);
 }
 
 .terminal-prefix {
@@ -1934,7 +1955,7 @@ canvas {
 .send-btn {
   background: transparent;
   border: none;
-  color: #00f0ff;
+  color: var(--color-primary);
   cursor: pointer;
   font-size: 1.2rem;
   transition: var(--transition-fast);
@@ -2145,7 +2166,7 @@ canvas {
 }
 
 .tab-content .terminal-output {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-retro);
   font-size: 0.85rem;
   color: var(--color-primary);
   line-height: 1.8;
@@ -2311,7 +2332,7 @@ canvas {
 .stat-percent {
   color: var(--color-neon-cyan);
   font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-mono);
   font-size: 0.9rem;
   min-width: 45px;
   text-align: right;
@@ -2329,7 +2350,7 @@ canvas {
   color: var(--color-neon-cyan);
   font-weight: bold;
   font-size: 1.2rem;
-  font-family: 'Orbitron', sans-serif;
+  font-family: var(--font-mono);
   text-shadow: 0 0 10px var(--color-neon-cyan);
 }
 
@@ -2431,7 +2452,7 @@ canvas {
   font-size: var(--section-title-size);
   margin-bottom: 0.75rem;
   text-align: center;
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-heading);
   letter-spacing: 0.1rem;
   text-transform: uppercase;
 }
@@ -2504,13 +2525,13 @@ canvas {
   right: 0;
   width: 20px;
   height: 20px;
-  background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 255, 0.08) 50%);
+  background: linear-gradient(135deg, transparent 50%, rgba(0, 255, 209, 0.1) 50%);
   pointer-events: none;
   z-index: 1;
 }
 
 .skill-card:hover {
-  border-color: rgba(0, 255, 255, 0.4);
+  border-color: rgba(0, 255, 209, 0.4);
   border-top-color: var(--color-neon-cyan);
   background: rgba(25, 25, 30, 0.95);
   box-shadow:
@@ -2554,7 +2575,7 @@ canvas {
 
 /* Module ID Label */
 .module-id {
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-glitch);
   font-size: 0.6rem;
   color: rgba(131, 148, 147, 0.6);
   letter-spacing: 0.08em;
@@ -2569,8 +2590,8 @@ canvas {
   font-size: 0.95rem;
   color: var(--color-text-primary);
   margin-bottom: 0.85rem;
-  font-family: "Orbitron", sans-serif;
-  font-weight: 600;
+  font-family: var(--font-subheading);
+  font-weight: normal;
   letter-spacing: 0.05rem;
   text-transform: uppercase;
   position: relative;
@@ -2631,7 +2652,7 @@ canvas {
   font-weight: 700;
   font-family: 'Courier New', monospace;
   letter-spacing: 0.05rem;
-  text-shadow: 0 0 6px rgba(0, 255, 255, 0.4);
+  text-shadow: 0 0 6px rgba(0, 255, 209, 0.4);
   min-width: 28px;
   text-align: right;
 }
