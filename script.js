@@ -136,8 +136,6 @@ function animateNavbarEntry() {
   });
 }
 
-
-
 // Sound System
 let audioContext;
 let soundEnabled = true;
@@ -992,7 +990,7 @@ window.addEventListener('scroll', () => {
 // ========================================
 // LAZY LOADING IMAGES
 // ========================================
-const lazyImages = document.querySelectorAll('img[loading=\"lazy\"]');
+const lazyImages = document.querySelectorAll('img[loading="lazy"]');
 
 const imageObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach(entry => {
@@ -1007,7 +1005,88 @@ const imageObserver = new IntersectionObserver((entries, observer) => {
 lazyImages.forEach(img => imageObserver.observe(img));
 
 // ========================================
-// 7. 3D MODULE - NEURAL_CORE_PX4
+// 7. 3D MODULE - GLOBAL_PARTICLES (ENVIRONMENT)
+// ========================================
+
+class GlobalParticles {
+  constructor() {
+    this.container = document.getElementById('global-particles-backdrop');
+    if (!this.container) return;
+
+    this.isMobile = window.innerWidth <= 768;
+    this.isVisible = true;
+    
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    this.init();
+    this.setupVisibilityObserver();
+  }
+
+  init() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    // Optimization: Cap pixel ratio on mobile to prevent GPU lag
+    const maxDPR = this.isMobile ? 1.5 : 2;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
+    this.container.appendChild(this.renderer.domElement);
+
+    this.createParticles();
+    this.camera.position.z = 20;
+
+    window.addEventListener('resize', () => this.onResize());
+    this.animate();
+  }
+
+  setupVisibilityObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      this.isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(this.container);
+  }
+
+  createParticles() {
+    // Optimization: Adaptive density for mobile
+    const particleCount = this.isMobile ? 150 : 400; 
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+
+    for (let i = 0; i < particleCount * 3; i++) {
+        positions[i] = (Math.random() - 0.5) * 50; 
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const material = new THREE.PointsMaterial({
+      color: 0x00f0ff,
+      size: this.isMobile ? 0.06 : 0.04,
+      transparent: true,
+      opacity: 0.3,
+      blending: THREE.AdditiveBlending
+    });
+
+    this.particles = new THREE.Points(geometry, material);
+    this.scene.add(this.particles);
+  }
+
+  onResize() {
+    this.isMobile = window.innerWidth <= 768;
+    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+    if (!this.isVisible) return; // Optimization: Stop render if hidden
+
+    this.particles.rotation.y += 0.0005;
+    this.particles.rotation.z += 0.0002;
+    this.renderer.render(this.scene, this.camera);
+  }
+}
+
+// ========================================
+// 8. 3D MODULE - NEURAL_CORE_PX4 (LOCAL)
 // ========================================
 
 class NeuralCore3D {
@@ -1015,6 +1094,9 @@ class NeuralCore3D {
     this.container = document.getElementById('neural-canvas-container');
     if (!this.container) return;
 
+    this.isMobile = window.innerWidth <= 768;
+    this.isVisible = false;
+    
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -1031,28 +1113,37 @@ class NeuralCore3D {
     this.lastPulseTime = 0;
 
     this.init();
+    this.setupVisibilityObserver();
   }
 
   init() {
     this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
-    this.renderer.setPixelRatio(window.devicePixelRatio);
+    const maxDPR = this.isMobile ? 1.5 : 2;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
     this.container.appendChild(this.renderer.domElement);
 
     this.createCore();
     this.createNodes();
-    this.createParticles();
 
-    this.camera.position.z = 10; // Pull back further for immersion
-    this.onResize(); // Initial call to set positions
+    this.camera.position.z = 10; 
+    this.onResize(); 
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+    window.addEventListener('resize', () => this.onResize());
 
     this.animate();
+  }
+
+  setupVisibilityObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      this.isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(this.container);
   }
 
   createCore() {
     this.group = new THREE.Group();
 
-    // Inner Core (Icosahedron)
+    // Inner Core
     const innerGeo = new THREE.IcosahedronGeometry(1.5, 1);
     this.innerMat = new THREE.MeshBasicMaterial({
       color: 0x00f0ff,
@@ -1066,7 +1157,7 @@ class NeuralCore3D {
     // Outer Shell
     const outerGeo = new THREE.IcosahedronGeometry(2, 2);
     const outerMat = new THREE.MeshBasicMaterial({
-      color: 0x7A00FF, // Unified with new --color-secondary
+      color: 0x7A00FF,
       wireframe: true,
       transparent: true,
       opacity: 0.15
@@ -1107,18 +1198,20 @@ class NeuralCore3D {
     ];
 
     const loader = new THREE.TextureLoader();
+    
+    // Optimization: Filter nodes if on low-end
+    const iconsToRender = this.isMobile ? skillIcons.slice(0, 8) : skillIcons;
 
-    skillIcons.forEach((url, i) => {
+    iconsToRender.forEach((url, i) => {
       loader.load(url, (texture) => {
         const material = new THREE.SpriteMaterial({ map: texture, transparent: true, opacity: 0.85 });
         const sprite = new THREE.Sprite(material);
         sprite.scale.set(0.9, 0.9, 0.9);
 
-        // Larger, more expansive radii for full-section swarming
-        const radius = 6 + Math.random() * 4;
-        const speed = 0.003 + Math.random() * 0.007;
-        const angle = (i / skillIcons.length) * Math.PI * 2;
-        const verticalOffset = (Math.random() - 0.5) * 4;
+        const radius = this.isMobile ? (8 + Math.random() * 6) : (10 + Math.random() * 12);
+        const speed = 0.002 + Math.random() * 0.006;
+        const angle = (i / iconsToRender.length) * Math.PI * 2;
+        const verticalOffset = (Math.random() - 0.5) * (this.isMobile ? 5 : 8);
 
         this.scene.add(sprite);
         this.nodes.push({
@@ -1131,16 +1224,14 @@ class NeuralCore3D {
   }
 
   createPulse(startPos) {
-    // VFX Pulse: Comet Head
     const headGeo = new THREE.SphereGeometry(0.12, 8, 8);
     const headMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 1 });
     const head = new THREE.Mesh(headGeo, headMat);
     head.position.copy(startPos);
     this.scene.add(head);
 
-    // Trail system
     const trail = [];
-    const trailCount = 8;
+    const trailCount = this.isMobile ? 4 : 8; // Optimization: Shorter trails on mobile
     for (let i = 0; i < trailCount; i++) {
       const tGeo = new THREE.SphereGeometry(0.1 - (i * 0.012), 4, 4);
       const tMat = new THREE.MeshBasicMaterial({
@@ -1157,7 +1248,7 @@ class NeuralCore3D {
     this.pulses.push({
       head: head,
       trail: trail,
-      target: this.group.position, // Link to dynamic core position
+      target: this.group.position,
       speed: 0.05 + Math.random() * 0.05,
       positions: Array(trailCount).fill().map(() => startPos.clone())
     });
@@ -1166,15 +1257,9 @@ class NeuralCore3D {
   updatePulses() {
     for (let i = this.pulses.length - 1; i >= 0; i--) {
       const p = this.pulses[i];
-
-      // Update historical positions for trail
       p.positions.unshift(p.head.position.clone());
       p.positions.pop();
-
-      // Move Head
       p.head.position.lerp(p.target, p.speed);
-
-      // Update trail meshes
       p.trail.forEach((tMesh, idx) => {
         tMesh.position.copy(p.positions[idx]);
       });
@@ -1187,7 +1272,7 @@ class NeuralCore3D {
       }
     }
 
-    if (Date.now() - this.lastPulseTime > 1200 && this.nodes.length > 5) {
+    if (Date.now() - this.lastPulseTime > 1500 && this.nodes.length > 3) {
       const randomNode = this.nodes[Math.floor(Math.random() * this.nodes.length)];
       this.createPulse(randomNode.sprite.position);
       this.lastPulseTime = Date.now();
@@ -1196,27 +1281,6 @@ class NeuralCore3D {
 
   triggerBoost() {
     this.boostPower = 1.0;
-  }
-
-  createParticles() {
-    const particleCount = 200;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-
-    for (let i = 0; i < particleCount * 3; i++) {
-      positions[i] = (Math.random() - 0.5) * 15;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const material = new THREE.PointsMaterial({
-      color: 0x00f0ff,
-      size: 0.05,
-      transparent: true,
-      opacity: 0.5
-    });
-
-    this.particles = new THREE.Points(geometry, material);
-    this.scene.add(this.particles);
   }
 
   onMouseMove(e) {
@@ -1228,35 +1292,39 @@ class NeuralCore3D {
   onResize() {
     const width = this.container.offsetWidth;
     const height = this.container.offsetHeight;
+    if (width === 0 || height === 0) return;
+    
+    this.isMobile = window.innerWidth <= 768;
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
 
-    // Responsive Positioning of the Core
     if (width > 1024) {
-      this.group.position.x = 3.5; // Offset to the right to clear the card
+      this.group.position.x = 3.5;
+      this.group.position.y = 0;
+      this.camera.position.z = 10;
     } else {
-      this.group.position.x = 0; // Center on mobile
+      this.group.position.x = 0;
+      this.group.position.y = 1.8;
+      this.camera.position.z = 14;
     }
   }
 
   animate() {
     requestAnimationFrame(() => this.animate());
+    if (!this.isVisible) return; // Optimization: Stop render if hidden
 
-    // Orbital Node Update
     this.nodes.forEach(node => {
       node.orbit.angle += node.orbit.speed;
       node.sprite.position.x = Math.cos(node.orbit.angle) * node.orbit.radius;
       node.sprite.position.z = Math.sin(node.orbit.angle) * node.orbit.radius;
-      node.sprite.position.y = node.orbit.verticalOffset + Math.sin(node.orbit.angle * 0.5) * 1.5;
+      node.sprite.position.y = node.orbit.verticalOffset + Math.sin(node.orbit.angle * 0.5) * 2;
     });
 
-    // Core Rotation
     this.innerMesh.rotation.y += 0.005;
     this.outerMesh.rotation.y -= 0.002;
     if (this.logoMesh) this.logoMesh.rotation.y += 0.005;
 
-    // Mouse Parallax
     this.targetRotationX += (this.mouseY - this.targetRotationX) * 0.05;
     this.targetRotationY += (this.mouseX - this.targetRotationY) * 0.05;
     this.group.rotation.x = this.targetRotationX;
@@ -1274,15 +1342,18 @@ class NeuralCore3D {
       this.innerMat.opacity = 0.3;
     }
 
-    this.particles.rotation.y += 0.001;
     this.renderer.render(this.scene, this.camera);
   }
 }
 
+// ========================================
+// 9. HUD_INTERFACE MODULE
+// ========================================
+
 class HUDCursor {
   constructor() {
     this.cursor = document.getElementById('hud-cursor');
-    if (!this.cursor || window.innerWidth <= 1024) return;
+    if (!this.cursor) return;
 
     this.dot = this.cursor.querySelector('.cursor-dot');
     this.coordsX = this.cursor.querySelector('.x');
@@ -1297,21 +1368,36 @@ class HUDCursor {
     this.lerpAmount = 0.15;
     this.isLocked = false;
     this.lockTarget = null;
+    this.hideTimeout = null;
 
     this.init();
   }
 
   init() {
-    window.addEventListener('mousemove', (e) => {
-      // Only track mouse position as primary target if NOT locked
+    const updatePosition = (x, y) => {
       if (!this.isLocked) {
-        this.pos.x = e.clientX;
-        this.pos.y = e.clientY;
+        this.pos.x = x;
+        this.pos.y = y;
       }
+      this.cursor.classList.add('active');
+      this.resetHideTimeout();
+      
+      if (this.coordsX) this.coordsX.textContent = Math.round(x).toString().padStart(3, '0');
+      if (this.coordsY) this.coordsY.textContent = Math.round(y).toString().padStart(3, '0');
+    };
 
-      // Update coordinates text always follows actual mouse
-      if (this.coordsX) this.coordsX.textContent = Math.round(e.clientX).toString().padStart(3, '0');
-      if (this.coordsY) this.coordsY.textContent = Math.round(e.clientY).toString().padStart(3, '0');
+    // Mouse Listeners
+    window.addEventListener('mousemove', (e) => updatePosition(e.clientX, e.clientY));
+
+    // Touch Listeners for Mobile Compatibility
+    window.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      updatePosition(touch.clientX, touch.clientY);
+    });
+
+    window.addEventListener('touchmove', (e) => {
+      const touch = e.touches[0];
+      updatePosition(touch.clientX, touch.clientY);
     });
 
     window.addEventListener('mousedown', () => {
@@ -1319,7 +1405,6 @@ class HUDCursor {
       setTimeout(() => this.cursor.classList.remove('click-pulse'), 400);
     });
 
-    // Handle window resize to re-calculate target bounds
     window.addEventListener('resize', () => {
       if (this.isLocked && this.lockTarget) {
         this.lockOn(this.lockTarget);
@@ -1330,52 +1415,54 @@ class HUDCursor {
     this.animate();
   }
 
+  resetHideTimeout() {
+    clearTimeout(this.hideTimeout);
+    // On mobile, hide cursor after 3s of inactivity to keep space clean
+    if (window.innerWidth <= 768) {
+        this.hideTimeout = setTimeout(() => {
+            if (!this.isLocked) this.cursor.classList.remove('active');
+        }, 3000);
+    }
+  }
+
   lockOn(el) {
     const rect = el.getBoundingClientRect();
-    const padding = 12; // Extra space for framing
-
+    const padding = 12;
     this.isLocked = true;
     this.lockTarget = el;
-    this.cursor.classList.add('locked');
-
-    // Set target position to element center
+    this.cursor.classList.add('locked', 'active');
     this.pos.x = rect.left + rect.width / 2;
     this.pos.y = rect.top + rect.height / 2;
-
-    // Set target dimensions to element size + padding
     this.size.w = rect.width + padding * 2;
     this.size.h = rect.height + padding * 2;
+    this.resetHideTimeout();
   }
 
   unlock() {
     this.isLocked = false;
     this.lockTarget = null;
     this.cursor.classList.remove('locked');
-
-    // Revert to default size
     this.size.w = 40;
     this.size.h = 40;
+    this.resetHideTimeout();
   }
 
   addInteractions() {
     const interactables = document.querySelectorAll('a, button, .project-card, .social-item, .tab-toggle, .skill-card, .btn-sleek, .btn-outline');
-
     interactables.forEach(el => {
       el.addEventListener('mouseenter', () => this.lockOn(el));
       el.addEventListener('mouseleave', () => this.unlock());
+      // For mobile: trigger lock on tap
+      el.addEventListener('touchstart', () => this.lockOn(el));
     });
   }
 
   animate() {
-    // LERP Position
     this.delayedPos.x += (this.pos.x - this.delayedPos.x) * this.lerpAmount;
     this.delayedPos.y += (this.pos.y - this.delayedPos.y) * this.lerpAmount;
-
-    // LERP Dimensions
     this.delayedSize.w += (this.size.w - this.delayedSize.w) * this.lerpAmount;
     this.delayedSize.h += (this.size.h - this.delayedSize.h) * this.lerpAmount;
 
-    // Apply styles
     this.cursor.style.left = `${this.delayedPos.x}px`;
     this.cursor.style.top = `${this.delayedPos.y}px`;
     this.cursor.style.width = `${this.delayedSize.w}px`;
@@ -1391,9 +1478,8 @@ class HUDCursor {
 
 document.addEventListener('DOMContentLoaded', () => {
   initSkillBars();
-  new NeuralCore3D();
-  new HUDCursor(); // Initialize the Targeting HUD
-  console.log('System initialized: 3D Engine & HUD Online');
+  new GlobalParticles(); // permanent environment
+  new NeuralCore3D();    // local about grid
+  new HUDCursor();       // interactive targeting
+  console.log('System initialized: 3D Layered Environment & HUD Online');
 });
-
-
