@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,19 +20,42 @@
     <link rel="preload" href="images/robo.png" as="image">
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.lordicon.com" crossorigin>
+    <link rel="preconnect" href="https://media.lordicon.com" crossorigin>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
     <!-- External Typography, Icons & 3D Engine -->
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Major+Mono+Display&family=Oxanium:wght@300;400;700&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <!-- External Typography, Icons & 3D Engine -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Major+Mono+Display&family=Oxanium:wght@300;400;700&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="https://cdn.lordicon.com/lordicon.js" defer></script>
+
+    <!-- Utility Modules -->
+    <script src="modules/config.js" defer></script>
+    <script src="modules/loader.js" defer></script>
+    <script src="modules/audio.js" defer></script>
+    <script src="modules/contact.js" defer></script>
+    <script src="modules/ui.js" defer></script>
+    
+    <!-- Class Definitions -->
+    <script src="modules/neural-core-3d.js" defer></script>
+    <script src="modules/hud-cursor.js" defer></script>
+    <script src="modules/project-vault-3d.js" defer></script>
+    
+    <!-- Main Application Script -->
+    <script src="script.js" defer></script>
     
     <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
     <link rel="icon" href="images/px4 main logo.svg" />
   </head>
   <body>
+    <!-- Skip-to-Content Link for Accessibility -->
+    <a href="#section-home" class="skip-to-content">SKIP TO CONTENT</a>
+
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
       <div class="particles" id="particles"></div>
@@ -84,7 +107,7 @@
         <div class="hero-grid">
           <div class="hero-content reveal-left">
             <span class="tech-label">[ STATUS: NEURAL_LINK_STABLE ]</span>
-            <h1 class="hero-title">Cyberdeck<br><span class="pulse-text">Px4</span></h1>
+            <h1 class="hero-title">Cyberdeck<br><span class="pulse-text">Pritamx4</span></h1>
             <p class="hero-description">
               Architecting high-performance digital ecosystems with a focus on 
               immersive UX and hardware-level precision. Entering the digital void.
@@ -93,13 +116,13 @@
               <a href="#section-projects" class="btn-sleek">
                 <lord-icon src="https://cdn.lordicon.com/piurhpdv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" 
                 stroke="bold"
-                style="width:24px;height:24px"></lord-icon>
+                class="icon-24"></lord-icon>
                 EXPLORE_VAULT
               </a>
               <a href="#section-contact" class="btn-outline">
                 <lord-icon src="https://cdn.lordicon.com/motnbmtz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                 stroke="bold"
-                style="width:24px;height:24px" target="self"></lord-icon>
+                class="icon-24" target="self"></lord-icon>
                 INITIATE_SYNC
               </a>
             </div>
@@ -422,7 +445,7 @@
 
             <button class="close-detail" aria-label="Close project detail">
               <span class="close-text">DISCONNECT</span>
-              <lord-icon src="https://cdn.lordicon.com/nhfyvxhf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:24px;height:24px"></lord-icon>
+              <lord-icon src="https://cdn.lordicon.com/nhfyvxhf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-24"></lord-icon>
             </button>
 
             <div class="detail-grid">
@@ -432,6 +455,10 @@
                   <img id="detail-img" src="" alt="Project Preview" />
                   <div class="frame-bracket br-tl"></div>
                   <div class="frame-bracket br-br"></div>
+                </div>
+                <div class="detail-nav" role="group" aria-label="Project navigation">
+                  <button type="button" class="detail-nav-btn" id="detail-prev" aria-label="View previous project">PREV</button>
+                  <button type="button" class="detail-nav-btn" id="detail-next" aria-label="View next project">NEXT</button>
                 </div>
               </div>
               <div class="detail-content">
@@ -448,11 +475,11 @@
 
                 <div class="detail-actions">
                   <a id="detail-code" href="#" class="btn-sleek" target="_blank">
-                    <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
                     SOURCE_CODE
                   </a>
                   <a id="detail-live" href="#" class="btn-outline" target="_blank">
-                    <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+                    <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
                     LIVE_DEPLOY
                   </a>
                 </div>
@@ -461,122 +488,7 @@
           </div>
         </div>
 
-        <div class="cards-container">
-          <div class="project-card reveal-scale">
-            <img src="images/scrolltrigger.png" alt="Scroll Trigger project preview"/>
-            <div class="card-info">
-              <h3>Scroll Trigger</h3>
-              <p>A scroll-triggered animation built with native JavaScript.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/Scroll-trigger-effect/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/Scroll-trigger-effect/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/todolist.png" alt="To-Do List project preview"/>
-            <div class="card-info">
-              <h3>To-Do List</h3>
-              <p>A to-do list application built with Next.js</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/todolist/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://to-do-list-delta-amber-46.vercel.app/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/tictactoe.png" alt="Tic Tac Toe project preview"/>
-            <div class="card-info">
-              <h3>Tic Tac Toe</h3>
-              <p>by using HTML, CSS and JS.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/tic-tac-toe/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/tic-tac-toe/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/memorymanagementsimulator.png" alt="Memory Management Simulator project preview" />
-            <div class="card-info">
-              <h3>Memory Management simulator</h3>
-              <p>by using HTML CSS JS.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/os-project/archive/refs/heads/master.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/os-project/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" 
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/snakegame.png" alt="Snake Game project preview" />
-            <div class="card-info">
-              <h3>Snake Game</h3>
-              <p>A classic snake game</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/snake-game/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/snake-game/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/drivemate.png" alt="Drivemate project preview" />
-            <div class="card-info">
-              <h3>Drivemate</h3>
-              <p>Car rental app using React</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/drivemate/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://drivemate-eight.vercel.app/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div class="cards-container" id="projectCardsContainer"></div>
       </section>
 
       <section id="section-contact" class="contact-fusion">
@@ -591,7 +503,7 @@
           <div class="portrait-container reveal-up">
             <div class="portrait-frame">
               <div class="scan-line"></div>
-              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" />
+              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" loading="lazy" decoding="async" width="400" height="500" />
               <div class="frame-decal bracket-tl"></div>
               <div class="frame-decal bracket-br"></div>
               <div class="frame-label">OPERATOR // PX4</div>
@@ -611,36 +523,38 @@
                 <a href="https://github.com/Pritamx4" target="_blank" rel="noopener noreferrer" class="social-item">
                   <lord-icon src="https://cdn.lordicon.com/jjxzcivr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">GITHUB // SOURCE</span>
                 </a>
                 <a href="https://www.instagram.com/pritamxfour/" target="_blank" rel="noopener noreferrer" class="social-item">
                   <lord-icon src="https://cdn.lordicon.com/tgyvxauj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">INSTAGRAM // INTEL</span>
                 </a>
                 <a href="https://www.linkedin.com/in/pritamx4/" target="_blank" rel="noopener noreferrer" class="social-item">
                   <lord-icon src="https://cdn.lordicon.com/dsdlqjde.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">LINKEDIN // NETWORK</span>
                 </a>
                 <a href="https://www.youtube.com/@Pritamx4" target="_blank" rel="noopener noreferrer" class="social-item">
                   <lord-icon src="https://cdn.lordicon.com/lyjuidpq.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">YOUTUBE // BROADCAST</span>
                 </a>
               </div>
 
               <div class="terminal-input-wrapper">
                 <div class="terminal-prefix">>></div>
-                <input type="text" class="message-input" placeholder="inject_message..." />
+                <label for="messageInput" class="message-label">Inject message:</label>
+                <input type="text" id="messageInput" class="message-input" placeholder="inject_message..." aria-describedby="messageError" aria-invalid="false" />
+                <p id="messageError" class="message-error" role="alert" aria-live="polite"></p>
                 <button class="send-btn" aria-label="Send Message">
                   <lord-icon src="https://cdn.lordicon.com/vpbspaec.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:24px;height:24px"></lord-icon>
+                  class="icon-24"></lord-icon>
                 </button>
               </div>
             </div>
@@ -652,11 +566,11 @@
     <!-- Bottom Stats Tab -->
     <div class="bottom-tab" id="bottomTab">
       <button type="button" class="tab-toggle" id="tabToggle" onclick="toggleBottomTab()" aria-label="Toggle repository stats panel" title="Toggle repository stats panel">
-        <lord-icon src="https://cdn.lordicon.com/lrzdmsmx.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:24px;height:24px"></lord-icon>
+        <lord-icon src="https://cdn.lordicon.com/lrzdmsmx.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-24"></lord-icon>
       </button>
       
       <div class="tab-content">
-        <canvas id="sparkleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></canvas>
+        <canvas id="sparkleCanvas" class="sparkle-canvas"></canvas>
         <div class="terminal-output" id="terminalText"></div>
         
         <div class="stats-grid" id="statsGrid">
@@ -667,21 +581,21 @@
           
           <!-- Language Stats -->
           <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvaxaowk.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/yvaxaowk.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">HTML</span>
             <div class="stat-bar-bg"><div class="stat-bar" data-lang="html"></div></div>
             <span class="stat-percent" id="htmlPercent">0%</span>
           </div>
           
           <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/gvtjlyjf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/gvtjlyjf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">CSS</span>
             <div class="stat-bar-bg"><div class="stat-bar" data-lang="css"></div></div>
             <span class="stat-percent" id="cssPercent">0%</span>
           </div>
           
           <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yraqammt.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/yraqammt.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">JavaScript</span>
             <div class="stat-bar-bg"><div class="stat-bar" data-lang="js"></div></div>
             <span class="stat-percent" id="jsPercent">0%</span>
@@ -689,61 +603,61 @@
           
           <!-- GitHub Stats -->
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/exymduqj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/exymduqj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Commits</span>
             <span class="stat-value" id="commitCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvjimpju.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/yvjimpju.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Repos</span>
             <span class="stat-value" id="repoCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/cvwrvyjv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/cvwrvyjv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Stars</span>
             <span class="stat-value" id="starCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Forks</span>
             <span class="stat-value" id="forkCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Watchers</span>
             <span class="stat-value" id="watcherCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yhtmwrae.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/yhtmwrae.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Issues</span>
             <span class="stat-value" id="issueCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/jdgfsfzr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/jdgfsfzr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Contributors</span>
             <span class="stat-value" id="contributorCount">0</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/xqdfobxg.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/xqdfobxg.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Size</span>
             <span class="stat-value" id="repoSize">0 KB</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/okqjaags.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/okqjaags.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Updated</span>
             <span class="stat-value" id="lastUpdated">-</span>
           </div>
           
           <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
             <span class="stat-label">Branches</span>
             <span class="stat-value" id="branchCount">0</span>
           </div>
@@ -768,6 +682,5 @@
       </div>
     </div>
 
-    <script src="script.js?v=1768418744"></script>
   </body>
 </html>
