@@ -1521,20 +1521,23 @@ canvas {
 
 .project-heading {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
   position: relative;
-  z-index: 2;
-  margin-bottom: var(--spacing-3xl);
+  z-index: 10;
+  margin-bottom: var(--spacing-2xl);
+  pointer-events: none;
 }
 
 .project-heading h1 {
   font-size: var(--section-title-size);
   font-family: var(--font-heading);
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.15rem;
   text-transform: uppercase;
+  margin: 0;
 }
 
 .glow-heading {
@@ -1727,8 +1730,231 @@ canvas {
   .project-heading h1 {
     /* font-size: clamp(var(--font-xl), 4vw, var(--font-2xl)); */
     font-size: clamp(1.8rem, 5vw, 2.5rem);
-    letter-spacing: 0.1rem;
   }
+}
+
+/* ========================================
+   3D PROJECT VAULT - ORBITAL SYSTEM
+======================================== */
+.project-canvas-container {
+  position: absolute;
+  top: 5rem; /* Below heading */
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 5rem);
+  z-index: 5;
+  cursor: grab;
+}
+
+.project-canvas-container:active {
+  cursor: grabbing;
+}
+
+/* Hide fallback container when 3D is active */
+.section-project.orbital-active .cards-container {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.project-detail-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(25px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.project-detail-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.detail-container {
+  width: 95%;
+  max-width: 1100px;
+  min-height: 500px;
+  background: rgba(5, 5, 8, 0.95);
+  border: 1px solid rgba(0, 255, 247, 0.2);
+  padding: 3rem;
+  position: relative;
+  transform: scale(0.95) translateY(20px);
+  transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 255, 247, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.project-detail-overlay.active .detail-container {
+  transform: scale(1) translateY(0);
+}
+
+/* Modal UI Decals */
+.modal-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--color-primary);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.target-tl { top: 1rem; left: 1rem; border-right: none; border-bottom: none; }
+.target-tr { top: 1rem; right: 1rem; border-left: none; border-bottom: none; }
+.target-bl { bottom: 1rem; left: 1rem; border-right: none; border-top: none; }
+.target-br { bottom: 1rem; right: 1rem; border-left: none; border-top: none; }
+
+.modal-ui-layer {
+  position: absolute;
+  top: 1.5rem;
+  left: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgba(0, 255, 247, 0.5);
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+
+.close-detail {
+  position: absolute;
+  top: 1.5rem;
+  right: 2.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.close-detail:hover {
+  background: rgba(255, 0, 85, 0.1);
+  border-color: #ff0055;
+  transform: translateX(-5px);
+}
+
+.close-text {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  color: #fff;
+  letter-spacing: 0.2rem;
+}
+
+/* Detail Content Layout */
+.detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+}
+
+.detail-visual {
+  width: 100%;
+  position: relative;
+}
+
+.detail-frame {
+  position: relative;
+  background: #000;
+  border: 1px solid rgba(0, 255, 247, 0.2);
+  padding: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scanline-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+#detail-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+/* Reticle VFX */
+.frame-bracket {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-primary);
+  z-index: 3;
+}
+.br-tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
+.br-br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+
+.detail-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* Fix overflow */
+}
+
+.detail-title {
+  font-family: "Major Mono Display", monospace;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+  margin-bottom: 1rem;
+  word-wrap: break-word;
+  opacity: 1 !important;
+}
+
+.detail-description {
+  font-family: "Space Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #ccd6f6;
+  margin-bottom: 2rem;
+  opacity: 1 !important;
+}
+
+.detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 992px) {
+  .detail-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .detail-container { padding: 3rem 2rem; width: 95%; }
+}
+
+@media screen and (max-width: 768px) {
+  .project-canvas-container { height: 60vh; }
+  .close-text { display: none; }
 }
 
 /* ========================================
@@ -1751,13 +1977,13 @@ canvas {
 }
 
 .tech-label {
-  font-family: var(--font-glitch);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  letter-spacing: 0.3rem;
   text-transform: uppercase;
   display: block;
-  margin-bottom: 1rem;
+  opacity: 0.7;
 }
 
 .fusion-line {

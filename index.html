@@ -26,6 +26,7 @@
     <!-- External Typography, Icons & 3D Engine -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Major+Mono+Display&family=Oxanium:wght@300;400;700&family=Space+Mono:wght@400;700&family=VT323&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     
     <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
@@ -399,7 +400,67 @@
         </svg>
         <div class="project-heading reveal-up">
           <h1 class="glow-heading">PROJECT_VAULT</h1>
+          <span class="tech-label">[ MODE: NEURAL_3D_ORBITAL ]</span>
         </div>
+
+        <!-- 3D PROJECT ENGINE CONTAINER -->
+        <div id="project-canvas-container" class="project-canvas-container"></div>
+
+        <!-- PROJECT DETAIL OVERLAY (Hidden by default) -->
+        <div id="project-detail-overlay" class="project-detail-overlay">
+          <div class="detail-container glass-morphic">
+            <!-- Decorative Brackets -->
+            <div class="modal-corner target-tl"></div>
+            <div class="modal-corner target-tr"></div>
+            <div class="modal-corner target-bl"></div>
+            <div class="modal-corner target-br"></div>
+            
+            <div class="modal-ui-layer">
+              <span class="ui-coord">X: 192.44 | Y: 88.102</span>
+              <span class="ui-mode">MODE: ENCRYPTED_VAULT</span>
+            </div>
+
+            <button class="close-detail" aria-label="Close project detail">
+              <span class="close-text">DISCONNECT</span>
+              <lord-icon src="https://cdn.lordicon.com/nhfyvxhf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:24px;height:24px"></lord-icon>
+            </button>
+
+            <div class="detail-grid">
+              <div class="detail-visual">
+                <div class="detail-frame">
+                  <div class="scanline-modal"></div>
+                  <img id="detail-img" src="" alt="Project Preview" />
+                  <div class="frame-bracket br-tl"></div>
+                  <div class="frame-bracket br-br"></div>
+                </div>
+              </div>
+              <div class="detail-content">
+                <div class="content-header">
+                  <span class="tech-label">[ DATA_MODULE: RESOLVED ]</span>
+                  <h2 id="detail-title" class="detail-title glow-text">PROJECT_NAME</h2>
+                </div>
+                
+                <div class="content-body">
+                  <p id="detail-description" class="detail-description">
+                    Initializing neural uplink...
+                  </p>
+                </div>
+
+                <div class="detail-actions">
+                  <a id="detail-code" href="#" class="btn-sleek" target="_blank">
+                    <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+                    SOURCE_CODE
+                  </a>
+                  <a id="detail-live" href="#" class="btn-outline" target="_blank">
+                    <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
+                    LIVE_DEPLOY
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="cards-container">
           <div class="project-card reveal-scale">
             <img src="images/scrolltrigger.png" alt="Scroll Trigger project preview"/>

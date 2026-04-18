@@ -161,6 +161,11 @@ function createSound(freq, type, duration, gain) {
 
 function playTypingSound() { createSound(600, 'square', 0.08, 0.08); }
 function playHoverSound() { createSound(400, 'square', 0.05, 0.05); }
+function playDataGlitch() {
+  createSound(150, 'sawtooth', 0.1, 0.1);
+  setTimeout(() => createSound(300, 'square', 0.05, 0.15), 50);
+  setTimeout(() => createSound(100, 'sawtooth', 0.2, 0.08), 100);
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'm' || e.key === 'M') {
@@ -1473,13 +1478,387 @@ class HUDCursor {
 }
 
 // ========================================
+// 10. PROJECT_VAULT_3D MODULE (ORBITAL MAP)
+// ========================================
+
+// ========================================
+// 10. PROJECT_VAULT_3D MODULE (ORBITAL MAP)
+// ========================================
+
+class ProjectVault3D {
+  constructor() {
+    this.container = document.getElementById('project-canvas-container');
+    this.projectSection = document.getElementById('section-projects');
+    if (!this.container || !this.projectSection) return;
+
+    this.projectsData = this.extractProjectData();
+    this.isMobile = window.innerWidth <= 768;
+    this.isVisible = false;
+    this.isDragging = false;
+    this.rotationEnabled = true;
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
+    this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    this.shards = [];
+    this.labels = [];
+    this.pulses = [];
+    this.latticeLines = [];
+    this.raycaster = new THREE.Raycaster();
+    this.mouse = new THREE.Vector2();
+
+    this.init();
+    this.setupVisibilityObserver();
+    this.setupDetailOverlay();
+  }
+
+  extractProjectData() {
+    const cards = document.querySelectorAll('.project-card');
+    const data = Array.from(cards).map((card, index) => {
+      const h3 = card.querySelector('h3');
+      const p = card.querySelector('p');
+      const img = card.querySelector('img');
+      const links = card.querySelectorAll('.links a');
+
+      return {
+        id: index,
+        title: (h3 && h3.textContent) ? h3.textContent.trim() : `MODULE_${index + 1}`,
+        description: (p && p.textContent) ? p.textContent.trim() : 'Neural link active. Data stream stabilized.',
+        img: img ? img.getAttribute('src') : 'images/fallback.png',
+        codeLink: (links[0] && links[0].href) ? links[0].href : '#',
+        liveLink: (links[1] && links[1].href) ? links[1].href : '#'
+      };
+    });
+    console.table(data);
+    return data;
+  }
+
+  createLabelTexture(text) {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 256;
+    canvas.height = 64;
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = 'bold 24px "Space Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    ctx.shadowColor = '#00f0ff';
+    ctx.shadowBlur = 10;
+    ctx.fillStyle = '#00f0ff';
+    ctx.fillText(text.toUpperCase(), 128, 32);
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    for (let i = 0; i < canvas.height; i += 4) {
+      ctx.fillRect(0, i, canvas.width, 1);
+    }
+
+    const texture = new THREE.CanvasTexture(canvas);
+    return texture;
+  }
+
+  init() {
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    const maxDPR = this.isMobile ? 1 : 2;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxDPR));
+    this.container.appendChild(this.renderer.domElement);
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    this.scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0x00f0ff, 150, 50);
+    pointLight.position.set(0, 10, 10);
+    this.scene.add(pointLight);
+
+    this.createCore();
+    this.createProjectShards();
+    this.createLattice();
+
+    this.camera.position.z = this.isMobile ? 25 : 22;
+
+    window.addEventListener('resize', () => this.onResize());
+    this.container.addEventListener('click', (e) => this.onClick(e));
+    this.container.addEventListener('mousemove', (e) => this.onHover(e));
+
+    let prevMouseX = 0;
+    this.container.addEventListener('mousedown', (e) => {
+      this.isDragging = true;
+      prevMouseX = e.clientX;
+    });
+    window.addEventListener('mouseup', () => this.isDragging = false);
+    window.addEventListener('mousemove', (e) => {
+      if (this.isDragging) {
+        const deltaX = (e.clientX - prevMouseX) * 0.005;
+        this.group.rotation.y += deltaX;
+        prevMouseX = e.clientX;
+      }
+    });
+
+    this.projectSection.classList.add('orbital-active');
+    this.animate();
+
+    setInterval(() => this.spawnPulse(), 2000);
+  }
+
+  setupVisibilityObserver() {
+    const observer = new IntersectionObserver((entries) => {
+      this.isVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(this.container);
+  }
+
+  createCore() {
+    this.group = new THREE.Group();
+    this.coreGroup = new THREE.Group();
+
+    const geo1 = new THREE.IcosahedronGeometry(2.5, 0);
+    const mat1 = new THREE.MeshStandardMaterial({
+      color: 0x00f0ff,
+      wireframe: true,
+      emissive: 0x00f0ff,
+      emissiveIntensity: 0.5
+    });
+    this.coreOuter = new THREE.Mesh(geo1, mat1);
+    this.coreGroup.add(this.coreOuter);
+
+    const geo2 = new THREE.OctahedronGeometry(1.5, 0);
+    const mat2 = new THREE.MeshStandardMaterial({
+      color: 0xCCFF00,
+      wireframe: true,
+      emissive: 0xCCFF00,
+      emissiveIntensity: 0.8
+    });
+    this.coreInner = new THREE.Mesh(geo2, mat2);
+    this.coreGroup.add(this.coreInner);
+
+    const particleCount = 200;
+    const pGeo = new THREE.BufferGeometry();
+    const pPos = new Float32Array(particleCount * 3);
+    for (let i = 0; i < particleCount * 3; i++) { pPos[i] = (Math.random() - 0.5) * 2; }
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+    const pMat = new THREE.PointsMaterial({ color: 0x00f0ff, size: 0.05, transparent: true, opacity: 0.8 });
+    this.coreParticles = new THREE.Points(pGeo, pMat);
+    this.coreGroup.add(this.coreParticles);
+
+    this.group.add(this.coreGroup);
+    this.scene.add(this.group);
+  }
+
+  createProjectShards() {
+    const loader = new THREE.TextureLoader();
+    const count = this.projectsData.length;
+
+    this.projectsData.forEach((data, i) => {
+      const angle = (i / count) * Math.PI * 2;
+      const radius = this.isMobile ? 12 : 16;
+      const geometry = new THREE.CylinderGeometry(2.2, 2.2, 0.4, 6);
+
+      loader.load(data.img, (texture) => {
+        const materials = [
+          new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.5, wireframe: true }),
+          new THREE.MeshStandardMaterial({ map: texture, transparent: true, opacity: 0.9 }),
+          new THREE.MeshStandardMaterial({ color: 0x111111 })
+        ];
+
+        const shard = new THREE.Mesh(geometry, materials);
+        shard.rotation.x = Math.PI / 2;
+        shard.position.x = Math.cos(angle) * radius;
+        shard.position.z = Math.sin(angle) * radius;
+        shard.position.y = (Math.random() - 0.5) * 6;
+
+        shard.userData = data;
+        shard.userData.angle = angle;
+        this.shards.push(shard);
+        this.group.add(shard);
+
+        const labelMat = new THREE.SpriteMaterial({ map: this.createLabelTexture(data.title), transparent: true, opacity: 0 });
+        const label = new THREE.Sprite(labelMat);
+        label.scale.set(6, 1.5, 1);
+        label.position.copy(shard.position);
+        label.position.y += 3;
+        shard.userData.label = label;
+        this.group.add(label);
+
+        const wireGeo = new THREE.CylinderGeometry(2.3, 2.3, 0.45, 6);
+        const wireMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.2 });
+        const circuit = new THREE.Mesh(wireGeo, wireMat);
+        shard.add(circuit);
+      });
+    });
+  }
+
+  createLattice() {
+    this.latticeGroup = new THREE.Group();
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.1 });
+    this.shards.forEach(() => {
+      const geo = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)]);
+      const line = new THREE.Line(geo, lineMat);
+      this.latticeLines.push(line);
+      this.latticeGroup.add(line);
+    });
+    this.group.add(this.latticeGroup);
+  }
+
+  spawnPulse() {
+    if (!this.isVisible || this.shards.length === 0 || !window.gsap) return;
+    const targetShard = this.shards[Math.floor(Math.random() * this.shards.length)];
+
+    const pulseGeo = new THREE.SphereGeometry(0.15, 8, 8);
+    const pulseMat = new THREE.MeshStandardMaterial({ color: 0xCCFF00, emissive: 0xCCFF00, emissiveIntensity: 1 });
+    const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+    this.group.add(pulse);
+
+    gsap.to(pulse.position, {
+      x: targetShard.position.x,
+      y: targetShard.position.y,
+      z: targetShard.position.z,
+      duration: 1.5,
+      ease: "power2.inOut",
+      onComplete: () => {
+        this.group.remove(pulse);
+        gsap.to(targetShard.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 0.1, yoyo: true, repeat: 1 });
+      }
+    });
+  }
+
+  updateLattice() {
+    this.shards.forEach((shard, i) => {
+      if (this.latticeLines[i]) {
+        this.latticeLines[i].geometry.setFromPoints([new THREE.Vector3(0, 0, 0), shard.position]);
+        this.latticeLines[i].geometry.attributes.position.needsUpdate = true;
+      }
+    });
+  }
+
+  setupDetailOverlay() {
+    this.overlay = document.getElementById('project-detail-overlay');
+    this.closeBtn = this.overlay.querySelector('.close-detail');
+    if (this.closeBtn) this.closeBtn.addEventListener('click', () => this.closeProjectDetail());
+    this.overlay.addEventListener('click', (e) => { if (e.target === this.overlay) this.closeProjectDetail(); });
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && this.overlay.classList.contains('active')) this.closeProjectDetail();
+    });
+  }
+
+  closeProjectDetail() {
+    this.overlay.classList.remove('active');
+    this.rotationEnabled = true;
+    try { playDataGlitch(); } catch (e) { }
+  }
+
+  showProjectDetail(data) {
+    console.log("PROJECT_UPLINK_START:", data.title);
+    const title = document.getElementById('detail-title');
+    const desc = document.getElementById('detail-description');
+    const img = document.getElementById('detail-img');
+    const code = document.getElementById('detail-code');
+    const live = document.getElementById('detail-live');
+
+    if (!title || !desc || !img) return;
+
+    title.textContent = data.title;
+    desc.textContent = data.description;
+    img.style.opacity = '0';
+    img.src = data.img;
+    img.onload = () => { img.style.opacity = '1'; };
+
+    if (code) { code.href = data.codeLink; code.style.display = data.codeLink === '#' ? 'none' : 'flex'; }
+    if (live) { live.href = data.liveLink; live.style.display = data.liveLink === '#' ? 'none' : 'flex'; }
+
+    this.overlay.classList.add('active');
+    this.rotationEnabled = false;
+    try { playDataGlitch(); } catch (e) { }
+
+    if (window.gsap) {
+      gsap.killTweensOf([title, desc, ".detail-frame"]);
+      gsap.set([title, desc], { opacity: 1, y: 0 });
+      gsap.from([title, desc], { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out", clearProps: "all" });
+      gsap.fromTo(".detail-frame", { scaleX: 0, transformOrigin: "left", opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: "expo.out", delay: 0.2 });
+    }
+  }
+
+  onHover(e) {
+    if (!window.gsap) return;
+    const rect = this.container.getBoundingClientRect();
+    this.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.shards);
+
+    if (intersects.length > 0) {
+      this.container.style.cursor = 'pointer';
+      const shard = intersects[0].object;
+      if (!shard.isAnimating) {
+        shard.isAnimating = true;
+        gsap.to(shard.rotation, { z: shard.rotation.z + 0.5, duration: 0.4, ease: "power2.out", onComplete: () => { shard.isAnimating = false; } });
+        gsap.to(shard.scale, { x: 1.1, y: 1.1, z: 1.1, duration: 0.3 });
+        if (shard.userData.label) gsap.to(shard.userData.label.material, { opacity: 1, duration: 0.3 });
+      }
+    } else {
+      this.container.style.cursor = this.isDragging ? 'grabbing' : 'grab';
+      this.shards.forEach(shard => {
+        gsap.to(shard.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
+        if (shard.userData.label) gsap.to(shard.userData.label.material, { opacity: 0, duration: 0.3 });
+      });
+    }
+  }
+
+  onClick(e) {
+    this.raycaster.setFromCamera(this.mouse, this.camera);
+    const intersects = this.raycaster.intersectObjects(this.shards);
+    if (intersects.length > 0) {
+      this.showProjectDetail(intersects[0].object.userData);
+      if (window.gsap) gsap.to(intersects[0].object.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.4, yoyo: true, repeat: 1, ease: "power2.inOut" });
+    }
+  }
+
+  onResize() {
+    this.isMobile = window.innerWidth <= 768;
+    this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
+    this.camera.aspect = this.container.offsetWidth / this.container.offsetHeight;
+    this.camera.updateProjectionMatrix();
+    this.camera.position.z = this.isMobile ? 25 : 22;
+  }
+
+  animate() {
+    requestAnimationFrame(() => this.animate());
+    if (!this.isVisible) return;
+    if (this.rotationEnabled && !this.isDragging) { this.group.rotation.y += 0.002; }
+    this.coreOuter.rotation.y += 0.01;
+    this.coreInner.rotation.x -= 0.015;
+    this.coreParticles.rotation.y += 0.005;
+    const time = Date.now() * 0.001;
+    this.coreInner.scale.setScalar(1 + Math.sin(time * 3) * 0.1);
+    this.shards.forEach(shard => {
+      shard.lookAt(this.camera.position);
+      shard.rotation.x = Math.PI / 2;
+      shard.position.y += Math.sin(time * 0.5 + shard.userData.angle) * 0.01;
+      if (shard.userData.label) { shard.userData.label.position.copy(shard.position); shard.userData.label.position.y += 2.5; }
+    });
+    this.updateLattice();
+    this.renderer.render(this.scene, this.camera);
+  }
+}
+
+// ========================================
 // CORE INITIALIZER
 // ========================================
 
+const PROJECT_VAULT_3D = ProjectVault3D;
+
 document.addEventListener('DOMContentLoaded', () => {
-  initSkillBars();
-  new GlobalParticles(); // permanent environment
-  new NeuralCore3D();    // local about grid
-  new HUDCursor();       // interactive targeting
-  console.log('System initialized: 3D Layered Environment & HUD Online');
+  try {
+    initSkillBars();
+    new GlobalParticles();
+    new NeuralCore3D();
+    new PROJECT_VAULT_3D();
+    new HUDCursor();
+    console.log('SYSTEM_BOOT: All modules synchronized.');
+  } catch (e) {
+    console.error('CRITICAL_BOOT_FAILURE:', e);
+  }
 });
