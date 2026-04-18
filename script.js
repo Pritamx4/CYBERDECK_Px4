@@ -1015,11 +1015,11 @@ class GlobalParticles {
 
     this.isMobile = window.innerWidth <= 768;
     this.isVisible = true;
-    
+
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    
+
     this.init();
     this.setupVisibilityObserver();
   }
@@ -1047,12 +1047,12 @@ class GlobalParticles {
 
   createParticles() {
     // Optimization: Adaptive density for mobile
-    const particleCount = this.isMobile ? 150 : 400; 
+    const particleCount = this.isMobile ? 150 : 400;
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
 
     for (let i = 0; i < particleCount * 3; i++) {
-        positions[i] = (Math.random() - 0.5) * 50; 
+      positions[i] = (Math.random() - 0.5) * 50;
     }
 
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -1096,7 +1096,7 @@ class NeuralCore3D {
 
     this.isMobile = window.innerWidth <= 768;
     this.isVisible = false;
-    
+
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(75, this.container.offsetWidth / this.container.offsetHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -1125,8 +1125,8 @@ class NeuralCore3D {
     this.createCore();
     this.createNodes();
 
-    this.camera.position.z = 10; 
-    this.onResize(); 
+    this.camera.position.z = 10;
+    this.onResize();
     window.addEventListener('mousemove', (e) => this.onMouseMove(e));
     window.addEventListener('resize', () => this.onResize());
 
@@ -1198,7 +1198,7 @@ class NeuralCore3D {
     ];
 
     const loader = new THREE.TextureLoader();
-    
+
     // Optimization: Filter nodes if on low-end
     const iconsToRender = this.isMobile ? skillIcons.slice(0, 8) : skillIcons;
 
@@ -1293,7 +1293,7 @@ class NeuralCore3D {
     const width = this.container.offsetWidth;
     const height = this.container.offsetHeight;
     if (width === 0 || height === 0) return;
-    
+
     this.isMobile = window.innerWidth <= 768;
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
@@ -1381,7 +1381,7 @@ class HUDCursor {
       }
       this.cursor.classList.add('active');
       this.resetHideTimeout();
-      
+
       if (this.coordsX) this.coordsX.textContent = Math.round(x).toString().padStart(3, '0');
       if (this.coordsY) this.coordsY.textContent = Math.round(y).toString().padStart(3, '0');
     };
@@ -1419,9 +1419,9 @@ class HUDCursor {
     clearTimeout(this.hideTimeout);
     // On mobile, hide cursor after 3s of inactivity to keep space clean
     if (window.innerWidth <= 768) {
-        this.hideTimeout = setTimeout(() => {
-            if (!this.isLocked) this.cursor.classList.remove('active');
-        }, 3000);
+      this.hideTimeout = setTimeout(() => {
+        if (!this.isLocked) this.cursor.classList.remove('active');
+      }, 3000);
     }
   }
 
