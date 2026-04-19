@@ -244,7 +244,7 @@ class ProjectVault3DModel {
 
     this.projectsData.forEach((data, i) => {
       const angle = (i / count) * Math.PI * 2;
-      const radius = this.isMobile ? 12 : 16;
+      const radius = this.isMobile ? 14 : 18; // Restored and increased for massive scale
       const geometry = new THREE.CylinderGeometry(2.2, 2.2, 0.4, 6);
 
       loader.load(data.img, (texture) => {
@@ -668,7 +668,12 @@ class ProjectVault3DModel {
     this.renderer.setSize(this.container.offsetWidth, this.container.offsetHeight);
     this.camera.aspect = this.container.offsetWidth / this.container.offsetHeight;
     this.camera.updateProjectionMatrix();
-    this.camera.position.z = this.isMobile ? 25 : 22;
+    this.camera.position.z = this.isMobile ? 22 : 15; // Massive screen-filling zoom
+    
+    // Mathematically Centered in the 55vh container
+    if (this.group) {
+        this.group.position.y = 0;
+    }
   }
 
   animateProjectVault() {

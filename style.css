@@ -1253,6 +1253,16 @@ a {
   }
 }
 
+@media screen and (max-width: 768px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-visual {
+    display: none; /* User Request: Remove home image on mobile */
+  }
+}
+
 /* ========================================
    3. ABOUT SECTION - NEURAL_GRID
 ======================================== */
@@ -1542,6 +1552,21 @@ a {
   z-index: 1;
 }
 
+@media screen and (max-width: 768px) {
+  .neural-canvas-container {
+    position: relative; /* User Request: Position below operator card */
+    height: 380px; 
+    width: 100%;
+    margin-top: 2rem;
+    z-index: 5;
+    order: 2; /* Flow after content in flex column */
+  }
+  
+  .hero-visual, .portrait-container {
+    display: none;
+  }
+}
+
 canvas {
   width: 100% !important;
   height: 100% !important;
@@ -1585,18 +1610,22 @@ canvas {
 
 @media screen and (max-width: 768px) {
   .about-section {
-    min-height: 100vh;
+    min-height: auto;
     padding: var(--section-padding-y-mobile) var(--section-padding-x-mobile);
+    display: flex;
+    flex-direction: column;
   }
 
   .about-content {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 1.5rem;
+    display: flex;
   }
 
   .operator-card {
     padding: 1.5rem;
+    order: 1;
   }
 
   .operator-name {
@@ -1641,18 +1670,22 @@ canvas {
 
 .project-section,
 .section-project {
-  padding: var(--section-padding-y) var(--section-padding-x);
+  padding: 1.5rem 0; /* Reduced padding for compact centering */
   background: transparent;
   color: var(--color-text-primary);
   font-family: "Segoe UI", sans-serif;
-  min-height: 100vh;
+  min-height: 55vh; 
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Flow from top to bottom */
+  align-items: center;
 }
 
 .project-vault {
   width: 100%;
-  height: 100vh;
+  height: 55vh; /* Unified height with parent section */
   background-color: transparent;
   overflow: hidden;
   position: relative;
@@ -1684,7 +1717,7 @@ canvas {
   align-items: center;
   position: relative;
   z-index: 10;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: 0.5rem; /* Minimized gap */
   pointer-events: none;
 }
 
@@ -1908,10 +1941,10 @@ canvas {
 ======================================== */
 .project-canvas-container {
   position: absolute;
-  top: 5rem; /* Below heading */
+  top: 0;
   left: 0;
   width: 100%;
-  height: calc(100vh - 5rem);
+  height: 100%; /* Sync with section height */
   z-index: 5;
   cursor: grab;
 }
@@ -2180,8 +2213,48 @@ canvas {
 }
 
 @media screen and (max-width: 768px) {
-  .project-canvas-container { height: 60vh; }
-  .close-text { display: none; }
+  .project-canvas-container { 
+    height: 32vh; /* User Request: Decrease height further */
+    top: 3.5rem;
+  }
+  .project-heading {
+    margin-bottom: 0;
+  }
+  
+  .close-detail {
+    top: auto;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    z-index: 200;
+  }
+  
+  .close-text { display: inline-block; font-size: 0.75rem; }
+  
+  .detail-container {
+    width: 98%;
+    padding: 2rem 1.2rem 5rem; /* Bottom space for close button */
+    overflow-x: hidden;
+  }
+  
+  .detail-title {
+    font-size: 1.4rem;
+  }
+  
+  .detail-actions {
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .detail-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .detail-grid {
+    gap: 1rem;
+  }
 }
 
 /* ========================================
@@ -2196,11 +2269,14 @@ canvas {
   background: transparent;
   position: relative;
   overflow: hidden;
+  min-height: 55vh; /* Reduced height to half */
+  padding: 4rem var(--section-padding-x);
+  justify-content: center;
 }
 
 .fusion-header {
-  margin-bottom: var(--spacing-3xl);
-  text-align: center; /* Centered for impact like Skills/Projects */
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
 }
 
 .fusion-header-tag {
@@ -2225,7 +2301,7 @@ canvas {
 .fusion-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6rem;
+  gap: 3rem; /* Reduced gap */
   align-items: start;
 }
 
@@ -2321,7 +2397,7 @@ canvas {
   border: var(--glass-border);
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-  padding: 3.5rem;
+  padding: 2.5rem; /* Reduced padding */
   position: relative;
 }
 
@@ -2485,8 +2561,8 @@ canvas {
     padding: 2.5rem;
   }
 
-  .portrait-frame {
-    max-width: 500px;
+  .portrait-container {
+    display: none; /* User Request: Remove contact image on mobile */
   }
 }
 

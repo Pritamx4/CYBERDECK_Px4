@@ -247,8 +247,8 @@ class NeuralGrid3D {
       this.camera.position.z = 10;
     } else {
       this.group.position.x = 0;
-      this.group.position.y = 1.8;
-      this.camera.position.z = 14;
+      this.group.position.y = 0; // Centered for mobile block
+      this.camera.position.z = 15; // Adjusted for new layout
     }
   }
 
