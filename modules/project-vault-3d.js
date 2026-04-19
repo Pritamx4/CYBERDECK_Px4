@@ -69,31 +69,31 @@ class ProjectVault3DModel {
     return data;
   }
 
-  createLabelTexture(text) {
+  createBinaryStringTexture() {
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    canvas.width = 256;
-    canvas.height = 64;
+    canvas.width = 512;
+    canvas.height = 128;
+    ctx.clearRect(0, 0, 512, 128);
+    
+    // Choose a random bit string like "0101 01"
+    const bits = Array.from({ length: 4 + Math.floor(Math.random() * 6) }, () => 
+        (Math.random() > 0.5 ? '1' : '0') + (Math.random() > 0.8 ? ' ' : '')
+    ).join('');
 
-    ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.font = 'bold 24px "Space Mono", monospace';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-
-    ctx.shadowColor = '#00f0ff';
-    ctx.shadowBlur = 10;
+    ctx.font = 'bold 80px "Space Mono", monospace';
     ctx.fillStyle = '#00f0ff';
-    ctx.fillText(text.toUpperCase(), 128, 32);
-
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-    for (let i = 0; i < canvas.height; i += 4) {
-      ctx.fillRect(0, i, canvas.width, 1);
-    }
-
-    const texture = new THREE.CanvasTexture(canvas);
-    return texture;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'middle';
+    
+    // Intense Bloom/Glow
+    ctx.shadowColor = '#00f0ff';
+    ctx.shadowBlur = 15;
+    ctx.fillText(bits, 10, 64);
+    ctx.shadowBlur = 5;
+    ctx.fillText(bits, 10, 64);
+    
+    return new THREE.CanvasTexture(canvas);
   }
 
   initProjectVault() {
@@ -155,7 +155,6 @@ class ProjectVault3DModel {
       color: 0x07131a,
       transparent: true,
       opacity: 0.12,
-      wireframe: false,
       roughness: 0.15,
       metalness: 0.35,
       clearcoat: 1,
@@ -201,46 +200,20 @@ class ProjectVault3DModel {
     this.coreGlow = new THREE.Mesh(coreGlowGeometry, coreGlowMaterial);
     this.coreGroup.add(this.coreGlow);
 
-    const ringMaterialA = new THREE.MeshStandardMaterial({
-      color: 0x00f0ff,
-      emissive: 0x00f0ff,
-      emissiveIntensity: 0.7,
-      transparent: true,
-      opacity: 0.45,
-      metalness: 0.9,
-      roughness: 0.2
-    });
+    const ringMaterialA = new THREE.MeshStandardMaterial({ color: 0x00f0ff, emissive: 0x00f0ff, emissiveIntensity: 0.7, transparent: true, opacity: 0.45, metalness: 0.9, roughness: 0.2 });
     const ringGeometryA = new THREE.TorusGeometry(3.0, 0.08, 12, 96);
     this.coreRingA = new THREE.Mesh(ringGeometryA, ringMaterialA);
     this.coreRingA.rotation.x = Math.PI / 2;
     this.coreGroup.add(this.coreRingA);
 
-    const ringMaterialB = new THREE.MeshStandardMaterial({
-      color: 0xCCFF00,
-      emissive: 0xCCFF00,
-      emissiveIntensity: 0.6,
-      transparent: true,
-      opacity: 0.35,
-      metalness: 0.85,
-      roughness: 0.25
-    });
+    const ringMaterialB = new THREE.MeshStandardMaterial({ color: 0xCCFF00, emissive: 0xCCFF00, emissiveIntensity: 0.6, transparent: true, opacity: 0.35, metalness: 0.85, roughness: 0.25 });
     const ringGeometryB = new THREE.TorusGeometry(2.5, 0.06, 12, 96);
     this.coreRingB = new THREE.Mesh(ringGeometryB, ringMaterialB);
     this.coreRingB.rotation.x = Math.PI / 3;
-    this.coreRingB.rotation.z = Math.PI / 4;
     this.coreGroup.add(this.coreRingB);
 
     const spineGeometry = new THREE.CylinderGeometry(0.22, 0.22, 4.8, 12, 1, true);
-    const spineMaterial = new THREE.MeshStandardMaterial({
-      color: 0x08141f,
-      transparent: true,
-      opacity: 0.55,
-      side: THREE.DoubleSide,
-      emissive: 0x00f0ff,
-      emissiveIntensity: 0.15,
-      metalness: 0.65,
-      roughness: 0.3
-    });
+    const spineMaterial = new THREE.MeshStandardMaterial({ color: 0x08141f, transparent: true, opacity: 0.55, side: THREE.DoubleSide, emissive: 0x00f0ff, emissiveIntensity: 0.15, metalness: 0.65, roughness: 0.3 });
     this.coreSpine = new THREE.Mesh(spineGeometry, spineMaterial);
     this.coreSpine.rotation.z = Math.PI / 2;
     this.coreGroup.add(this.coreSpine);
@@ -289,16 +262,9 @@ class ProjectVault3DModel {
 
         shard.userData = data;
         shard.userData.angle = angle;
+        shard.userData.index = i;
         this.shards.push(shard);
         this.group.add(shard);
-
-        const labelMat = new THREE.SpriteMaterial({ map: this.createLabelTexture(data.title), transparent: true, opacity: 0 });
-        const label = new THREE.Sprite(labelMat);
-        label.scale.set(6, 1.5, 1);
-        label.position.copy(shard.position);
-        label.position.y += 3;
-        shard.userData.label = label;
-        this.group.add(label);
 
         const wireGeo = new THREE.CylinderGeometry(2.3, 2.3, 0.45, 6);
         const wireMat = new THREE.MeshStandardMaterial({ color: 0x00f0ff, wireframe: true, transparent: true, opacity: 0.2 });
@@ -323,23 +289,49 @@ class ProjectVault3DModel {
   spawnProjectVaultPulse() {
     if (!this.isVisible || this.shards.length === 0 || !window.gsap) return;
     const targetShard = this.shards[Math.floor(Math.random() * this.shards.length)];
+    const latticeIdx = targetShard.userData.index;
 
-    const pulseGeo = new THREE.SphereGeometry(0.15, 8, 8);
-    const pulseMat = new THREE.MeshStandardMaterial({ color: 0xCCFF00, emissive: 0xCCFF00, emissiveIntensity: 1 });
-    const pulse = new THREE.Mesh(pulseGeo, pulseMat);
-    this.group.add(pulse);
+    // Sequential Bit Stream (0101 strings) - KEPT FROM UPGRADE
+    const streamCount = 3;
+    const streamGroup = new THREE.Group();
+    this.group.add(streamGroup);
 
-    gsap.to(pulse.position, {
-      x: targetShard.position.x,
-      y: targetShard.position.y,
-      z: targetShard.position.z,
-      duration: 1.5,
-      ease: "power2.inOut",
-      onComplete: () => {
-        this.group.remove(pulse);
-        gsap.to(targetShard.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 0.1, yoyo: true, repeat: 1 });
-      }
-    });
+    // Core Flash Effect
+    gsap.to(this.coreGroup.scale, { x: 1.15, y: 1.15, z: 1.15, duration: 0.2, yoyo: true, repeat: 1 });
+    gsap.to(this.coreInner.material, { emissiveIntensity: 4, duration: 0.2, yoyo: true, repeat: 1 });
+
+    for (let i = 0; i < streamCount; i++) {
+        const bitTex = this.createBinaryStringTexture();
+        const bitMat = new THREE.SpriteMaterial({ map: bitTex, transparent: true, opacity: 0.9 });
+        const sprite = new THREE.Sprite(bitMat);
+        sprite.scale.set(3, 0.75, 1);
+        sprite.position.set(0, 0, 0);
+        streamGroup.add(sprite);
+
+        gsap.to(sprite.position, {
+            x: targetShard.position.x,
+            y: targetShard.position.y,
+            z: targetShard.position.z,
+            duration: 1.2,
+            delay: i * 0.25,
+            ease: "power2.in",
+            onStart: () => {
+                if (this.latticeLines[latticeIdx]) {
+                    gsap.to(this.latticeLines[latticeIdx].material, { opacity: 0.6, duration: 0.2, yoyo: true, repeat: 1 });
+                }
+            },
+            onComplete: () => {
+                streamGroup.remove(sprite);
+                if (i === streamCount - 1) {
+                    this.group.remove(streamGroup);
+                    gsap.to(targetShard.scale, { x: 1.25, y: 1.25, z: 1.25, duration: 0.1, yoyo: true, repeat: 1 });
+                    if (this.latticeLines[latticeIdx]) {
+                        gsap.to(this.latticeLines[latticeIdx].material, { opacity: 0.9, duration: 0.1, yoyo: true, repeat: 3 });
+                    }
+                }
+            }
+        });
+    }
   }
 
   updateProjectVaultLattice() {
@@ -614,22 +606,26 @@ class ProjectVault3DModel {
     this.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
     this.raycaster.setFromCamera(this.mouse, this.camera);
-    const intersects = this.raycaster.intersectObjects(this.shards);
+    const intersects = this.raycaster.intersectObjects(this.shards, true); // Recursive
 
     if (intersects.length > 0) {
       this.container.style.cursor = 'pointer';
-      const shard = intersects[0].object;
-      if (!shard.isAnimating) {
+      
+      // Find the parent shard in the shards array
+      let shard = intersects[0].object;
+      while (shard && !this.shards.includes(shard)) {
+        shard = shard.parent;
+      }
+
+      if (shard && !shard.isAnimating) {
         shard.isAnimating = true;
-        gsap.to(shard.rotation, { z: shard.rotation.z + 0.5, duration: 0.4, ease: "power2.out", onComplete: () => { shard.isAnimating = false; } });
-        gsap.to(shard.scale, { x: 1.1, y: 1.1, z: 1.1, duration: 0.3 });
-        if (shard.userData.label) gsap.to(shard.userData.label.material, { opacity: 1, duration: 0.3 });
+        gsap.to(shard.scale, { x: 1.15, y: 1.15, z: 1.15, duration: 0.3 });
       }
     } else {
       this.container.style.cursor = this.isDragging ? 'grabbing' : 'grab';
       this.shards.forEach(shard => {
+        shard.isAnimating = false;
         gsap.to(shard.scale, { x: 1, y: 1, z: 1, duration: 0.3 });
-        if (shard.userData.label) gsap.to(shard.userData.label.material, { opacity: 0, duration: 0.3 });
       });
     }
   }
@@ -641,22 +637,27 @@ class ProjectVault3DModel {
     this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
 
     this.raycaster.setFromCamera(this.mouse, this.camera);
-    const intersects = this.raycaster.intersectObjects(this.shards);
+    const intersects = this.raycaster.intersectObjects(this.shards, true); // Recursive
     
     if (intersects.length > 0) {
-      const shard = intersects[0].object;
-      // Get data directly from the master array by locating the shard in the shards list
-      const shardIndex = this.shards.indexOf(shard);
-      
-      if (shardIndex !== -1) {
-        const projectData = this.projectsData[shardIndex];
-        const sourceCard = document.querySelector(`.project-card[data-project-id="${projectData.id}"]`);
-        
-        console.log("VAULT_CLICK_SUCCESS:", projectData.title);
-        this.showProjectVaultDetail(projectData, sourceCard);
-        
-        if (window.gsap) {
-          gsap.to(shard.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.4, yoyo: true, repeat: 1, ease: "power2.inOut" });
+      // Traverse up to find the shard mesh with metadata
+      let shard = intersects[0].object;
+      while (shard && !this.shards.includes(shard)) {
+        shard = shard.parent;
+      }
+
+      if (shard) {
+        const shardIndex = shard.userData.index;
+        if (typeof shardIndex === 'number' && shardIndex !== -1) {
+          const projectData = this.projectsData[shardIndex];
+          const sourceCard = document.querySelector(`.project-card[data-project-id="${projectData.id}"]`);
+          
+          console.log("VAULT_CLICK_SUCCESS:", projectData.title);
+          this.showProjectVaultDetail(projectData, sourceCard);
+          
+          if (window.gsap) {
+            gsap.to(shard.scale, { x: 1.4, y: 1.4, z: 1.4, duration: 0.4, yoyo: true, repeat: 1, ease: "power2.inOut" });
+          }
         }
       }
     }
@@ -674,6 +675,7 @@ class ProjectVault3DModel {
     requestAnimationFrame(() => this.animateProjectVault());
     if (!this.isVisible) return;
     if (this.rotationEnabled && !this.isDragging) { this.group.rotation.y += 0.002; }
+    
     this.coreOuter.rotation.y += 0.01;
     this.coreInner.rotation.x -= 0.015;
     if (this.coreShell) this.coreShell.rotation.y += 0.004;
@@ -684,15 +686,16 @@ class ProjectVault3DModel {
     if (this.coreRingB) this.coreRingB.rotation.x += 0.004;
     if (this.coreSpine) this.coreSpine.rotation.y += 0.002;
     this.coreParticles.rotation.y += 0.005;
+    
     const time = Date.now() * 0.001;
     this.coreInner.scale.setScalar(1 + Math.sin(time * 3) * 0.1);
-    if (this.coreNucleus) this.coreNucleus.scale.setScalar(1 + Math.sin(time * 4) * 0.05);
+    
     this.shards.forEach(shard => {
       shard.lookAt(this.camera.position);
       shard.rotation.x = Math.PI / 2;
       shard.position.y += Math.sin(time * 0.5 + shard.userData.angle) * 0.01;
-      if (shard.userData.label) { shard.userData.label.position.copy(shard.position); shard.userData.label.position.y += 2.5; }
     });
+
     this.updateProjectVaultLattice();
     this.renderer.render(this.scene, this.camera);
   }
