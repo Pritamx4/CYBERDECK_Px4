@@ -2163,24 +2163,25 @@ canvas {
 
 .fusion-header {
   margin-bottom: var(--spacing-3xl);
-  text-align: left;
+  text-align: center; /* Centered for impact like Skills/Projects */
 }
 
-.tech-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--color-primary);
-  letter-spacing: 0.3rem;
-  text-transform: uppercase;
+.fusion-header-tag {
   display: block;
-  opacity: 0.7;
+  font-family: var(--font-glitch);
+  font-size: 0.7rem;
+  color: rgba(0, 255, 255, 0.5);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
 }
 
-.fusion-line {
-  width: 100px;
-  height: 1px;
-  background: var(--color-primary);
-  margin-top: 1.5rem;
+.fusion-header-line {
+  width: 200px;
+  height: 2px;
+  margin: 1.5rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--color-neon-cyan), var(--color-neon-purple), transparent);
+  border-radius: 2px;
   box-shadow: 0 0 10px rgba(0, 255, 209, 0.5);
 }
 
