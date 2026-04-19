@@ -97,6 +97,7 @@ html {
   --font-glitch: 'Major Mono Display', monospace;
   --font-retro: 'VT323', monospace;
   --font-details: 'Zen Dots', 'Michroma';
+  
   /* Colors - CHROME_CORE Palette */
   --color-primary: #00FFD1;      /* Electric Mint */
   --color-secondary: #CCFF00;    /* Phosphor Lime */
@@ -422,161 +423,58 @@ html {
   }
 }
 
-/* P - Glitch from left */
+/* Elegant Logo Glide (User Preferred) */
 .logo-p {
-  animation: glitchFromLeft 1s ease-out 0.5s forwards;
+  animation: logoGlideIn 1s ease-out 0.5s forwards;
 }
 
-@keyframes glitchFromLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-200px);
-    filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.8));
-  }
-  20% {
-    opacity: 1;
-    transform: translateX(10px) skew(-15deg);
-    filter: drop-shadow(5px 0 15px rgba(0, 255, 255, 1));
-  }
-  40% {
-    transform: translateX(-5px) skew(10deg);
-    filter: drop-shadow(-5px 0 15px rgba(255, 0, 110, 1));
-  }
-  60% {
-    transform: translateX(3px) skew(-5deg);
-  }
-  80% {
-    transform: translateX(-2px) skew(3deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0) skew(0);
-    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8));
-  }
-}
-
-/* X - Glitch from top */
 .logo-x {
-  animation: glitchFromTop 1s ease-out 1s forwards, xBounce 0.4s ease-out 2.3s;
+  animation: logoGlideIn 1s ease-out 0.8s forwards;
 }
 
-@keyframes glitchFromTop {
-  0% {
-    opacity: 0;
-    transform: translateY(-200px);
-    filter: drop-shadow(0 0 15px rgba(122, 0, 255, 0.8));
-  }
-  20% {
-    opacity: 1;
-    transform: translateY(10px) rotate(15deg);
-    filter: drop-shadow(0 5px 15px rgba(0, 255, 255, 1));
-  }
-  40% {
-    transform: translateY(-5px) rotate(-10deg);
-    filter: drop-shadow(0 -5px 15px rgba(255, 0, 110, 1));
-  }
-  60% {
-    transform: translateY(3px) rotate(5deg);
-  }
-  80% {
-    transform: translateY(-2px) rotate(-3deg);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) rotate(0);
-    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8));
-  }
-}
-
-/* X Bounce back when 4 arrives */
-@keyframes xBounce {
-  0%, 100% {
-    transform: translateX(0);
-  }
-  50% {
-    transform: translateX(-8px);
-  }
-}
-
-/* 4 - Magnet attraction from right */
 .logo-4 {
-  animation: magnetAttract 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
+  animation: logoGlideIn 1s ease-out 1.1s forwards;
 }
 
-@keyframes magnetAttract {
+@keyframes logoGlideIn {
   0% {
     opacity: 0;
-    transform: translateX(250px) rotate(180deg) scale(0.3);
-    filter: drop-shadow(0 0 30px rgba(255, 0, 110, 1)) brightness(1.5);
-  }
-  25% {
-    opacity: 0.7;
-    transform: translateX(150px) rotate(120deg) scale(0.6);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(60px) rotate(60deg) scale(0.85);
-    filter: drop-shadow(0 0 25px rgba(0, 255, 255, 1));
-  }
-  75% {
-    transform: translateX(10px) rotate(10deg) scale(0.98);
-  }
-  90% {
-    transform: translateX(-2px) rotate(-2deg) scale(1.02);
+    transform: translateY(20px);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
-    transform: translateX(0) rotate(0) scale(1);
-    filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8));
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
 
 .loading-screen .terminal-output {
-  font-family: 'Courier New', monospace;
-  font-size: 0.85rem;
-  color: var(--color-primary) !important;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary) !important;
   text-align: left;
   margin-bottom: 1.5rem;
   min-height: 120px;
   max-height: 120px;
   overflow: hidden;
   line-height: 1.6;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8), 0 0 20px rgba(0, 255, 209, 0.4);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
 }
 
 .loading-screen .terminal-output .line {
-  color: var(--color-primary) !important;
-  white-space: nowrap;
-  text-align: left;
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Responsive text size for mobile */
-@media screen and (max-width: 480px) {
-  .loading-screen .terminal-output {
-    font-size: 0.7rem;
-  }
-  
-  .loading-screen .terminal-output .line {
-    font-size: 0.7rem;
-  }
+  color: var(--color-text-secondary) !important;
+  opacity: 0.8;
 }
 
 .loading-screen .terminal-output .access-granted {
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
   font-weight: bold;
-  color: #00ff00 !important;
-  text-shadow: 0 0 15px rgba(0, 255, 0, 1), 0 0 30px rgba(0, 255, 0, 0.5);
-  letter-spacing: 0.2rem;
+  color: var(--color-primary) !important;
+  letter-spacing: 0.3rem;
   margin: auto;
+  text-transform: uppercase;
 }
 @keyframes fadeInLine {
   from {
@@ -3536,7 +3434,7 @@ img[loading="lazy"].loaded {
 
 /* ========================================
    HUD TARGETING CURSOR
- ======================================== */
+  ======================================== */
 .hud-cursor {
   position: fixed;
   top: 0;

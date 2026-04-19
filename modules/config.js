@@ -10,14 +10,14 @@ const APP_CONFIG = {
   // Loading Screen
   LOADING: {
     TERMINAL_LINES: [
-      '> $ git clone Pritamx4/CYBERDECK_Px4',
-      '> COMPILING SOURCE [██████████████] 100%',
-      '> DEPLOYING TO CYBERDECK_PX4...'
+      '> Initializing Pritamx4 Digital Archive...',
+      '> Fetching creative modules...',
+      '> Optimizing visual environment...'
     ],
     TYPE_SPEED: 25, // ms per character
     LINE_DELAY: 150, // ms between lines
     PROGRESS_DURATION: 1200, // ms for progress bar
-    ACCESS_TEXT: '> ACCESS GRANTED..',
+    ACCESS_TEXT: '> PREPARING VIEWPORT..',
     ACCESS_SPEED: 40, // ms per character
   },
 
