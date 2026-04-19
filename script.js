@@ -687,12 +687,23 @@ lazyImages.forEach(img => imageObserver.observe(img));
 // ========================================
 
 document.addEventListener('DOMContentLoaded', () => {
+  console.log('SYSTEM_UPLINK: Initializing neural grid...');
   try {
+    // 1. Core Background Environment (Highest Priority)
+    if (typeof GalaxyBackground === 'function') {
+      window.galaxy = new GalaxyBackground();
+      console.log('GALAXY_CORE: Active');
+    }
+
+    // 2. Data Rendering
     renderProjectCards();
     initSkillBars();
-    new NeuralGrid3D();
-    new ProjectVault3DModel();
-    new HUDCursor();
+    
+    // 3. 3D Module Injection
+    if (typeof NeuralGrid3D === 'function') new NeuralGrid3D();
+    if (typeof ProjectVault3DModel === 'function') new ProjectVault3DModel();
+    if (typeof HUDCursor === 'function') new HUDCursor();
+    
     console.log('SYSTEM_BOOT: All modules synchronized.');
   } catch (e) {
     console.error('CRITICAL_BOOT_FAILURE:', e);

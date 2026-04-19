@@ -21,7 +21,29 @@ html {
   min-height: 100vh;
   overflow-x: hidden;
   font-family: var(--font-body);
-  background: var(--color-background);
+  background: transparent;
+}
+
+html {
+  background: #000; /* Foundational solid black */
+}
+
+.scroll-container {
+  background: transparent !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Galaxy Background Container */
+.galaxy-bg-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background: #000;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -788,7 +810,9 @@ a {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #000000;
+  background: rgba(0, 0, 0, 0.7);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -967,7 +991,7 @@ a {
    2. HERO SECTION
 ======================================== */
 .hero-section {
-  background: #000;
+  background: transparent;
   min-height: 100vh;
   position: relative;
   padding: 140px 10%;
@@ -1225,7 +1249,7 @@ a {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: #000;
+  background: transparent;
   padding: var(--section-padding);
   position: relative;
   overflow: hidden;
@@ -1321,16 +1345,16 @@ a {
 /* Operator Profile Card */
 .operator-card {
   flex: 0 1 520px;
-  background: rgba(14, 14, 14, 0.45);
+  background: rgba(10, 10, 15, 0.4);
   border: 1px solid rgba(0, 240, 255, 0.2);
   border-top: 2px solid var(--color-neon-cyan);
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   pointer-events: auto; /* Re-enable for card interactions */
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
 }
 
 .operator-card::after {
@@ -1584,10 +1608,14 @@ canvas {
 /* ========================================
    4. PROJECTS SECTION
 ======================================== */
+.skills-section {
+  background: transparent;
+}
+
 .project-section,
 .section-project {
   padding: var(--section-padding-y) var(--section-padding-x);
-  background: #000;
+  background: transparent;
   color: var(--color-text-primary);
   font-family: "Segoe UI", sans-serif;
   min-height: 100vh;
@@ -1598,7 +1626,7 @@ canvas {
 .project-vault {
   width: 100%;
   height: 100vh;
-  background-color: #000;
+  background-color: transparent;
   overflow: hidden;
   position: relative;
 }
@@ -1696,9 +1724,11 @@ canvas {
 .project-card {
   width: var(--container-lg);
   height: var(--project-card-height);
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(15, 15, 20, 0.3);
   border: 1px solid rgba(0, 240, 255, 0.1);
   border-radius: var(--radius-md);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   clip-path: url(#folderClip);
   overflow: hidden;
   position: relative;
@@ -1876,9 +1906,9 @@ canvas {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.95);
-  -webkit-backdrop-filter: blur(25px);
-  backdrop-filter: blur(25px);
+  background: rgba(0, 0, 0, 0.85);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
   z-index: 9999;
   display: flex;
   justify-content: center;
@@ -1897,7 +1927,7 @@ canvas {
   width: 95%;
   max-width: 1100px;
   min-height: 500px;
-  background: rgba(5, 5, 8, 0.95);
+  background: rgba(10, 10, 15, 0.85);
   border: 1px solid rgba(0, 255, 247, 0.2);
   padding: 3rem;
   position: relative;
@@ -2112,7 +2142,7 @@ canvas {
 .contact-fusion {
   display: flex;
   flex-direction: column;
-  background: #000;
+  background: transparent;
   position: relative;
   overflow: hidden;
 }
@@ -2538,9 +2568,9 @@ canvas {
   width: 90%;
   max-width: 1200px;
   height: 35vh;
-  background: rgba(20, 20, 20, 0.75);
-  -webkit-backdrop-filter: blur(15px);
-  backdrop-filter: blur(15px);
+  background: rgba(15, 15, 15, 0.6);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
   border-radius: var(--radius-xl) var(--radius-xl) 0 0;
   box-shadow: var(--shadow-lg);
   z-index: 999;
@@ -2558,7 +2588,7 @@ canvas {
   left: 50%;
   transform: translateX(-50%);
   padding: var(--spacing-xs) 2rem;
-  background: rgba(20, 20, 20, 0.75);
+  background: rgba(15, 15, 15, 0.6);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   border: none;
@@ -2811,7 +2841,7 @@ canvas {
 ======================================== */
 .skills-section {
   padding: var(--section-padding-y) var(--section-padding-x);
-  background: var(--color-background);
+  background: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
