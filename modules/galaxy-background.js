@@ -95,8 +95,8 @@ class GalaxyBackground {
         positions[i * 3 + 2] = Math.sin(branchAngle + spinAngle) * r + randomZ;
 
         const mixedColor = cosmicColors[Math.floor(Math.random() * cosmicColors.length)].clone();
-        // Core is brighter and whiter
-        if (r < 150) mixedColor.lerp(new THREE.Color(0xffffff), 0.8);
+        // Core is more subtle
+        if (r < 150) mixedColor.lerp(new THREE.Color(0x333333), 0.4);
         
         colors[i * 3] = mixedColor.r;
         colors[i * 3 + 1] = mixedColor.g;
@@ -114,7 +114,7 @@ class GalaxyBackground {
       map: this.createStarTexture(),
       vertexColors: true,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.25,
       blending: THREE.AdditiveBlending,
       depthWrite: false
     });
@@ -148,7 +148,7 @@ class GalaxyBackground {
       size: 0.8,
       vertexColors: true,
       transparent: true,
-      opacity: 0.1,
+      opacity: 0.05,
       blending: THREE.AdditiveBlending
     });
 
@@ -176,7 +176,7 @@ class GalaxyBackground {
         map: texture,
         color: nebulaColors[Math.floor(Math.random() * nebulaColors.length)],
         transparent: true,
-        opacity: 0.08 + Math.random() * 0.12,
+        opacity: 0.04 + Math.random() * 0.06,
         blending: THREE.AdditiveBlending
       });
       const sprite = new THREE.Sprite(material);
@@ -233,7 +233,7 @@ class GalaxyBackground {
 
     // Pulsing Nebulae
     this.nebulae.forEach((neb) => {
-      neb.obj.material.opacity = 0.2 + Math.sin(time * 0.5 + neb.phase) * 0.1;
+      neb.obj.material.opacity = 0.05 + Math.sin(time * 0.5 + neb.phase) * 0.03;
       const angle = time * neb.speed + neb.phase;
       const r = Math.sqrt(neb.obj.position.x ** 2 + neb.obj.position.z ** 2);
       neb.obj.position.x = Math.cos(angle) * r;
