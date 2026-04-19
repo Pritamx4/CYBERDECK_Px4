@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 /**
  * GalaxyBackground - Premium 3D Cosmic Environment V3
  * Features volumetric starfields, spiral geometry, and a Bright Galactic Core that follows scroll depth.

@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 /**
  * Project Vault 3D - Three.js 3D orbital project showcase
  * Displays project cards in an orbital formation with interactive detail overlay

@@ -29,7 +29,22 @@
     
     <!-- External Typography, Icons & 3D Engine -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Major+Mono+Display&family=Oxanium:wght@300;400;700&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Zen+Dots&family=Michroma&family=VT323&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js" defer></script>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Debug Diagnostic -->
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('GLOBAL_ERROR:', e.message, 'at', e.filename, ':', e.lineno);
+      }, true);
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
     <script src="https://cdn.lordicon.com/lordicon.js" defer></script>
@@ -42,10 +57,11 @@
     <script src="modules/ui.js" defer></script>
     
     <!-- Class Definitions -->
-    <script src="modules/neural-core-3d.js" defer></script>
+    <script type="module" src="modules/hero-logo-3d.js"></script>
+    <script type="module" src="modules/neural-core-3d.js"></script>
     <script src="modules/hud-cursor.js" defer></script>
-    <script src="modules/project-vault-3d.js" defer></script>
-    <script src="modules/galaxy-background.js" defer></script>
+    <script type="module" src="modules/project-vault-3d.js"></script>
+    <script type="module" src="modules/galaxy-background.js"></script>
     
     <!-- Main Application Script -->
     <script src="script.js" defer></script>
@@ -134,7 +150,7 @@
           <div class="hero-visual reveal-right">
             <div class="hero-frame">
               <div class="retina-scan-line"></div>
-              <img src="images/robo.png" alt="Neural Interface Unit" class="hero-img" />
+              <div id="hero-logo-canvas" class="hero-logo-3d"></div>
               <div class="frame-bracket br-tl"></div>
               <div class="frame-bracket br-br"></div>
               <span class="frame-id">MODEL_PX4 // DESIGN_CORE</span>

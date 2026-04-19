@@ -1,3 +1,6 @@
+import * as THREE from 'three';
+window.THREE = THREE;
+
 /**
  * Neural Core 3D - Three.js 3D visualization of the cyberdeck neural interface
  * Displays an animated wireframe core with orbiting tech skill icons
