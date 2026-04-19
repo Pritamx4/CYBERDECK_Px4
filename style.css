@@ -1399,6 +1399,20 @@ a {
   border-left: 2px solid var(--color-neon-cyan);
 }
 
+.corner-tr {
+  top: 8px;
+  right: 8px;
+  border-top: 2px solid var(--color-neon-cyan);
+  border-right: 2px solid var(--color-neon-cyan);
+}
+
+.corner-bl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 2px solid var(--color-neon-cyan);
+  border-left: 2px solid var(--color-neon-cyan);
+}
+
 .corner-br {
   bottom: 8px;
   right: 8px;
