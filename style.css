@@ -96,6 +96,7 @@ html {
   --font-mono: 'Space Mono', monospace;
   --font-glitch: 'Major Mono Display', monospace;
   --font-retro: 'VT323', monospace;
+  --font-details: 'Zen Dots', 'Michroma';
   /* Colors - CHROME_CORE Palette */
   --color-primary: #00FFD1;      /* Electric Mint */
   --color-secondary: #CCFF00;    /* Phosphor Lime */
@@ -232,6 +233,18 @@ html {
 .toast-message {
   flex: 1;
   font-size: var(--font-sm);
+}
+
+/* Tech Labels & Systematic Annotations */
+.tech-label {
+  font-family: var(--font-glitch);
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  letter-spacing: 0.25rem;
+  text-transform: uppercase;
+  display: block;
+  opacity: 0.85;
+  margin-bottom: 0.5rem;
 }
 
 /* ========================================
@@ -735,7 +748,7 @@ a {
 
 .nav-links li a {
   color: rgba(0, 255, 247, 0.9);
-  font-family: var(--font-subheading);
+  font-family: var(--font-details);
   text-transform: uppercase;
   letter-spacing: 0.08rem;
   font-weight: 400;
@@ -2113,7 +2126,7 @@ canvas {
 }
 
 .detail-title {
-  font-family: "Major Mono Display", monospace;
+  font-family: var(--font-details);
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   color: #fff;
   text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
@@ -2915,7 +2928,7 @@ canvas {
 
 .skills-header-tag {
   display: block;
-  font-family: 'Courier New', monospace;
+  font-family: var(--font-glitch);
   font-size: 0.7rem;
   color: rgba(0, 255, 255, 0.5);
   letter-spacing: 0.25em;
