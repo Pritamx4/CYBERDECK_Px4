@@ -1062,7 +1062,8 @@ a {
 .hero-frame {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 340px;
+  height: 400px;
   background: rgba(99, 91, 255, 0.03);
   border: 1px solid rgba(99, 91, 255, 0.1);
   padding: 1rem;
@@ -1130,7 +1131,7 @@ a {
   }
 
   .hero-frame {
-    max-width: 400px;
+    max-width: 320px;
     margin: 0 auto;
   }
 }

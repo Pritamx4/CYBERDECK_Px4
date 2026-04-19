@@ -1,26 +1,30 @@
 import * as THREE from 'three';
 import { SVGLoader } from 'three/addons/loaders/SVGLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 
 /**
- * Hero Logo 3D - Bulletproof Module
- * Features: Instant Placeholder, ResizeObserver, and Refined SVG Extrusion
+ * Hero Logo 3D - Pure Silver Chrome Edition
+ * Features: High-Fidelity HDR Environment Reflections & Mirror Polish
  */
 
 class HeroLogo3D {
   constructor() {
-    console.log('PX4_3D_LOG: Constructor started.');
+    console.log('PX4_3D_LOG: Chrome Constructor started.');
     this.container = document.getElementById('hero-logo-canvas');
-    if (!this.container) {
-      console.error('PX4_3D_LOG: Container #hero-logo-canvas NOT FOUND.');
-      return;
-    }
+    if (!this.container) return;
 
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(45, 1, 1, 10000);
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     
+    // HDR-ready Tone Mapping
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.0;
+    this.renderer.useLegacyLights = false;
+
     this.logoGroup = new THREE.Group();
     this.placeholderGroup = new THREE.Group();
+    this.mainGroup = null;
     
     this.mouseX = 0;
     this.mouseY = 0;
@@ -33,15 +37,14 @@ class HeroLogo3D {
   init() {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.container.appendChild(this.renderer.domElement);
-    console.log('PX4_3D_LOG: Renderer appended.');
 
     this.camera.position.z = 1000;
 
     this.setupLighting();
+    this.setupEnvironment();
     this.createPlaceholder();
     this.loadLogoSVG();
     
-    // Dynamic Resizing via ResizeObserver (most robust)
     const resizeObserver = new ResizeObserver(() => this.handleResize());
     resizeObserver.observe(this.container);
 
@@ -50,29 +53,56 @@ class HeroLogo3D {
   }
 
   setupLighting() {
-    this.scene.add(new THREE.AmbientLight(0xffffff, 0.7));
+    // Subtle ambient for soft fill
+    this.scene.add(new THREE.AmbientLight(0xffffff, 0.5));
     
-    this.pointLight = new THREE.PointLight(0x00FFD1, 30, 2000);
-    this.pointLight.position.set(200, 200, 500);
+    // Sharp white point light for glints
+    this.pointLight = new THREE.PointLight(0xffffff, 10, 2000);
+    this.pointLight.position.set(200, 200, 800);
     this.scene.add(this.pointLight);
 
     const dirLight = new THREE.DirectionalLight(0xffffff, 2);
     dirLight.position.set(0, 500, 500);
     this.scene.add(dirLight);
+  }
 
-    const hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 1);
-    this.scene.add(hemiLight);
+  setupEnvironment() {
+    // CORS-Proof Procedural Environment Map
+    // Generates a high-contrast Studio Light texture using an offscreen canvas
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 256;
+    const ctx = canvas.getContext('2d');
+    
+    // High-contrast gradient for sharp chrome reflections
+    const grad = ctx.createLinearGradient(0, 0, 0, 256);
+    grad.addColorStop(0, '#ffffff');    // Sky/Light
+    grad.addColorStop(0.48, '#222222'); // Horizon line
+    grad.addColorStop(0.52, '#666666'); // Ground line
+    grad.addColorStop(1, '#000000');    // Floor
+    
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 512, 256);
+    
+    // Virtual 'Window' lights to create sharp metallic glints
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(80, 40, 120, 120);
+    ctx.fillRect(350, 80, 60, 100);
+    
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    
+    this.scene.environment = texture;
+    console.log('PX4_3D_LOG: Procedural Chrome Environment Active.');
   }
 
   createPlaceholder() {
-    // Instant feedback: A glowing wireframe box
-    console.log('PX4_3D_LOG: Creating placeholder.');
     const geometry = new THREE.BoxGeometry(100, 100, 100);
     const material = new THREE.MeshBasicMaterial({ 
       color: 0x00FFD1, 
       wireframe: true, 
       transparent: true, 
-      opacity: 0.3 
+      opacity: 0.2 
     });
     const box = new THREE.Mesh(geometry, material);
     this.placeholderGroup.add(box);
@@ -82,39 +112,35 @@ class HeroLogo3D {
   loadLogoSVG() {
     const loader = new SVGLoader();
     const svgPath = 'images/px4%20main%20logo.svg';
-    console.log('PX4_3D_LOG: Loading SVG:', svgPath);
 
     loader.load(
       svgPath,
       (data) => {
-        console.log('PX4_3D_LOG: SVG Data loaded. Paths:', data.paths.length);
-        
-        // Remove placeholder once data is ready
         this.scene.remove(this.placeholderGroup);
-        
         const paths = data.paths;
+        
         paths.forEach((path) => {
           const shapes = SVGLoader.createShapes(path);
           shapes.forEach((shape) => {
             const extrudeSettings = {
-              depth: 35,
+              depth: 40,
               bevelEnabled: true,
-              bevelThickness: 3,
-              bevelSize: 3,
+              bevelThickness: 4,
+              bevelSize: 4,
               bevelOffset: 0,
-              bevelSegments: 8
+              bevelSegments: 16 // High segment count for silky smooth chrome edges
             };
             const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-            
-            // Do not center individual paths, keep their SVG offsets
+
+            // PURE SILVER CHROME: Multi-layered physical material
             const material = new THREE.MeshPhysicalMaterial({
-              color: 0x00FFD1,
-              metalness: 0.9,
-              roughness: 0.1,
-              emissive: 0x00FFD1,
-              emissiveIntensity: 0.2,
-              clearcoat: 1.0,
-              clearcoatRoughness: 0.02,
+              color: 0xFFFFFF,      // Pure Silver/White base
+              metalness: 1.0,       // 100% Metallic
+              roughness: 0.0,       // Mirror Finish
+              ior: 2.5,             // High index of refraction for punchy reflections
+              envMapIntensity: 2.0, // Boost reflection brightness
+              clearcoat: 1.0,       // Extra layer of polish
+              clearcoatRoughness: 0.0,
               reflectivity: 1.0,
               side: THREE.DoubleSide
             });
@@ -123,26 +149,18 @@ class HeroLogo3D {
           });
         });
 
-        // Use a combined bounding box to find the exact center of all logo parts
+        // Center the entire group
         const box = new THREE.Box3().setFromObject(this.logoGroup);
         const center = new THREE.Vector3();
         box.getCenter(center);
         
-        // Use a pivot (mainGroup) for centered rotation
         this.mainGroup = new THREE.Group();
         this.mainGroup.add(this.logoGroup);
-        
-        // Offset the logoGroup so its collective center is at the mainGroup origin (0,0,0)
-        // We multiply Y by -1 because our group scale is inverted for SVG coordinates
         this.logoGroup.position.set(-center.x, -center.y, -center.z);
         
-        this.mainGroup.scale.set(0.65, -0.65, 0.65);
+        this.mainGroup.scale.set(0.55, -0.55, 0.55);
         this.scene.add(this.mainGroup);
-        console.log('PX4_3D_LOG: Logo mesh active and correctly aligned.');
-      },
-      undefined,
-      (error) => {
-        console.error('PX4_3D_LOG: SVG Load ERROR:', error);
+        console.log('PX4_3D_LOG: Chrome Logo Material Applied.');
       }
     );
   }
@@ -151,7 +169,6 @@ class HeroLogo3D {
     const width = this.container.offsetWidth;
     const height = this.container.offsetHeight;
     if (width === 0 || height === 0) return;
-
     this.renderer.setSize(width, height);
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
@@ -165,16 +182,14 @@ class HeroLogo3D {
 
   animate() {
     requestAnimationFrame(() => this.animate());
-
     const time = Date.now() * 0.001;
 
     if (this.placeholderGroup) {
       this.placeholderGroup.rotation.y += 0.01;
-      this.placeholderGroup.rotation.x += 0.005;
     }
 
     if (this.mainGroup) {
-      this.mainGroup.rotation.y += 0.003;
+      this.mainGroup.rotation.y += 0.001; // Slower, more cinematic rotation
       
       this.targetRotationX += (this.mouseY * 0.25 - this.targetRotationX) * 0.05;
       this.targetRotationY += (this.mouseX * 0.25 - this.targetRotationY) * 0.05;
@@ -184,13 +199,21 @@ class HeroLogo3D {
     }
 
     if (this.pointLight) {
+        // Move light for dynamic glints on the chrome surface
       this.pointLight.position.x = Math.sin(time) * 400;
-      this.pointLight.position.y = Math.cos(time * 0.5) * 300;
+      this.pointLight.position.z = Math.cos(time * 0.5) * 600;
     }
 
     this.renderer.render(this.scene, this.camera);
   }
 }
 
-// Global exposure
-window.HeroLogo3DInstance = new HeroLogo3D();
+const init = () => {
+  const container = document.getElementById('hero-logo-canvas');
+  if (container && container.offsetWidth > 0) {
+    window.heroLogo3DInstance = new HeroLogo3D();
+  } else {
+    setTimeout(init, 100);
+  }
+};
+init();
