@@ -395,9 +395,53 @@ class ProjectVault3DModel {
   }
 
   closeProjectVaultDetail() {
-    this.overlay.classList.remove('active');
     this.rotationEnabled = true;
     try { playDataGlitch(); } catch (e) { }
+
+    if (window.gsap) {
+      const container = this.overlay.querySelector('.detail-container');
+      const visual = this.overlay.querySelector('.detail-frame');
+      const content = this.overlay.querySelector('.detail-content');
+      const contentElements = content.querySelectorAll('.content-header, .content-body, .detail-actions');
+      const uiLayer = this.overlay.querySelector('.modal-ui-layer');
+      const closeBtn = this.overlay.querySelector('.close-detail');
+      const navBtn = this.overlay.querySelector('.detail-nav');
+
+      gsap.killTweensOf([this.overlay, container, visual, contentElements, uiLayer, closeBtn, navBtn]);
+
+      const tl = gsap.timeline({
+        onComplete: () => {
+          this.overlay.classList.remove('active');
+          gsap.set(this.overlay, { visibility: 'hidden' });
+        }
+      });
+
+      tl.to([contentElements, uiLayer, closeBtn, navBtn], {
+        opacity: 0,
+        y: -10,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power2.in"
+      })
+      .to(visual, {
+        scaleX: 0,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.in"
+      }, "-=0.1")
+      .to(container, {
+        scaleY: 0.005,
+        duration: 0.4,
+        ease: "expo.inOut"
+      }, "-=0.2")
+      .to(this.overlay, {
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in"
+      }, "-=0.2");
+    } else {
+      this.overlay.classList.remove('active');
+    }
 
     if (this.lastFocusedElement && typeof this.lastFocusedElement.focus === 'function') {
       setTimeout(() => this.lastFocusedElement.focus(), 0);
@@ -421,40 +465,146 @@ class ProjectVault3DModel {
   }
 
   showProjectVaultDetail(data, sourceElement) {
-    console.log("PROJECT_UPLINK_START:", data.title);
+    console.log("PROJECT_UPLINK_START:", data ? data.title : "NO_DATA");
     const title = document.getElementById('detail-title');
     const desc = document.getElementById('detail-description');
     const img = document.getElementById('detail-img');
     const code = document.getElementById('detail-code');
     const live = document.getElementById('detail-live');
 
-    if (!title || !desc || !img) return;
+    if (!title || !desc || !img || !data) return;
 
-    this.activeProjectIndex = this.projectsData.findIndex((project) => project.id === data.id);
+    const isAlreadyActive = this.overlay.classList.contains('active');
+    
+    // Ensure we have a valid index even if called with a data object from Three.js userData
+    this.activeProjectIndex = this.projectsData.findIndex((p) => p.title === data.title);
+    if (this.activeProjectIndex === -1 && typeof data.id !== 'undefined') {
+       this.activeProjectIndex = this.projectsData.findIndex((p) => p.id == data.id);
+    }
+
     if (sourceElement) {
       this.lastFocusedElement = sourceElement;
     } else if (document.activeElement && document.activeElement !== document.body) {
       this.lastFocusedElement = document.activeElement;
     }
 
-    title.textContent = data.title;
-    desc.textContent = data.description;
-    img.style.opacity = '0';
-    img.src = data.img;
-    img.onload = () => { img.style.opacity = '1'; };
+    const updateContent = () => {
+      title.textContent = data.title || 'UNKNOWN_MODULE';
+      desc.textContent = data.description || 'Data stream interrupted. No description available.';
+      
+      // Handle the image source and loading sequence properly
+      const newImgSrc = data.img || data.image || 'images/fallback.png';
+      if (img.src !== newImgSrc) {
+        img.style.opacity = '0';
+        img.onload = () => { img.style.opacity = '1'; };
+        img.src = newImgSrc;
+      } else {
+        img.style.opacity = '1';
+      }
 
-    if (code) { code.href = data.codeLink; code.style.display = data.codeLink === '#' ? 'none' : 'flex'; }
-    if (live) { live.href = data.liveLink; live.style.display = data.liveLink === '#' ? 'none' : 'flex'; }
+      if (code) { 
+        code.href = data.codeLink || '#'; 
+        code.style.display = (data.codeLink && data.codeLink !== '#') ? 'flex' : 'none'; 
+      }
+      if (live) { 
+        live.href = data.liveLink || '#'; 
+        live.style.display = (data.liveLink && data.liveLink !== '#') ? 'flex' : 'none'; 
+      }
+    };
 
+    if (window.gsap && isAlreadyActive) {
+      // Content-only transition for navigation
+      const visual = this.overlay.querySelector('.detail-frame');
+      const content = this.overlay.querySelector('.detail-content');
+      const contentElements = content.querySelectorAll('.content-header, .content-body, .detail-actions');
+
+      gsap.killTweensOf([visual, contentElements]);
+      const navTl = gsap.timeline();
+
+      navTl.to([contentElements, visual], {
+        opacity: 0,
+        y: 5,
+        duration: 0.25,
+        ease: "power2.in"
+      })
+      .add(() => {
+        updateContent();
+        gsap.set(visual, { scaleX: 0, transformOrigin: "left" });
+        try { playDataGlitch(); } catch (e) { }
+      })
+      .to(visual, {
+        scaleX: 1,
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out"
+      })
+      .to(contentElements, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.05,
+        ease: "power2.out"
+      }, "-=0.3");
+      
+      return; // Exit early as we don't need the full unfold
+    }
+
+    // Initial Full Unfold
     this.overlay.classList.add('active');
+    updateContent();
     this.rotationEnabled = false;
     try { playDataGlitch(); } catch (e) { }
 
     if (window.gsap) {
-      gsap.killTweensOf([title, desc, ".detail-frame"]);
-      gsap.set([title, desc], { opacity: 1, y: 0 });
-      gsap.from([title, desc], { opacity: 0, y: 20, duration: 0.5, stagger: 0.1, ease: "power2.out", clearProps: "all" });
-      gsap.fromTo(".detail-frame", { scaleX: 0, transformOrigin: "left", opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: "expo.out", delay: 0.2 });
+      const container = this.overlay.querySelector('.detail-container');
+      const visual = this.overlay.querySelector('.detail-frame');
+      const content = this.overlay.querySelector('.detail-content');
+      const contentElements = content.querySelectorAll('.content-header, .content-body, .detail-actions');
+      const uiLayer = this.overlay.querySelector('.modal-ui-layer');
+      const closeBtn = this.overlay.querySelector('.close-detail');
+      const navBtn = this.overlay.querySelector('.detail-nav');
+
+      // Kill any ongoing animations
+      gsap.killTweensOf([this.overlay, container, visual, contentElements, uiLayer, closeBtn, navBtn]);
+
+      const tl = gsap.timeline();
+
+      // Initial states
+      gsap.set(this.overlay, { opacity: 0, visibility: 'visible' });
+      gsap.set(container, { scaleY: 0.005, scaleX: 1, opacity: 1, transformOrigin: "center" });
+      gsap.set(visual, { scaleX: 0, transformOrigin: "left", opacity: 0 });
+      gsap.set(contentElements, { opacity: 0, y: 20 });
+      gsap.set([uiLayer, closeBtn, navBtn], { opacity: 0 });
+
+      tl.to(this.overlay, {
+        opacity: 1,
+        duration: 0.4,
+        ease: "power2.out"
+      })
+      .to(container, {
+        scaleY: 1,
+        duration: 0.6,
+        ease: "expo.inOut"
+      }, "-=0.2")
+      .to(visual, {
+        scaleX: 1,
+        opacity: 1,
+        duration: 0.7,
+        ease: "power4.out"
+      }, "-=0.1")
+      .to(contentElements, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: "power2.out"
+      }, "-=0.4")
+      .to([uiLayer, closeBtn, navBtn], {
+        opacity: 1,
+        duration: 0.4,
+        stagger: 0.1,
+        ease: "power2.out"
+      }, "-=0.3");
     }
   }
 
@@ -485,13 +635,30 @@ class ProjectVault3DModel {
   }
 
   onProjectVaultClick(e) {
+    // Update mouse coordinates immediately on click for precise raycasting
+    const rect = this.container.getBoundingClientRect();
+    this.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+
     this.raycaster.setFromCamera(this.mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.shards);
+    
     if (intersects.length > 0) {
-      const projectData = intersects[0].object.userData;
-      const sourceCard = document.querySelector(`.project-card[data-project-id="${projectData.id}"]`);
-      this.showProjectVaultDetail(projectData, sourceCard);
-      if (window.gsap) gsap.to(intersects[0].object.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.4, yoyo: true, repeat: 1, ease: "power2.inOut" });
+      const shard = intersects[0].object;
+      // Get data directly from the master array by locating the shard in the shards list
+      const shardIndex = this.shards.indexOf(shard);
+      
+      if (shardIndex !== -1) {
+        const projectData = this.projectsData[shardIndex];
+        const sourceCard = document.querySelector(`.project-card[data-project-id="${projectData.id}"]`);
+        
+        console.log("VAULT_CLICK_SUCCESS:", projectData.title);
+        this.showProjectVaultDetail(projectData, sourceCard);
+        
+        if (window.gsap) {
+          gsap.to(shard.scale, { x: 1.8, y: 1.8, z: 1.8, duration: 0.4, yoyo: true, repeat: 1, ease: "power2.inOut" });
+        }
+      }
     }
   }
 
