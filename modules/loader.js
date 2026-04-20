@@ -152,7 +152,7 @@ function initializePageLoader() {
     setTimeout(() => {
       console.log('Calling showLoadingScreen');
       showLoadingScreen();
-    }, 100);
+    }, 50);
   };
 
   const cancelFallback = () => {
