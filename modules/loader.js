@@ -8,110 +8,31 @@
  * Includes progress bar animation and "ACCESS GRANTED" sequence
  */
 function showLoadingScreen() {
-  const cfg = APP_CONFIG.LOADING;
-  const terminalOutput = document.getElementById('terminalOutput');
-  const progressBar = document.getElementById('progressBar');
-  const progressText = document.getElementById('progressText');
-  const progressContainer = document.querySelector('.progress-container');
-
-  if (!terminalOutput || !progressBar || !progressText || !progressContainer) {
-    console.error('Loading screen elements not found');
+  const loadingScreen = document.getElementById('loadingScreen');
+  
+  if (!loadingScreen) {
+    console.error('Loading screen element not found');
     hideLoadingScreen();
     return;
   }
 
-  console.log('Loading screen started');
+  console.log('Cinematic Loader sequence started');
 
   // Fail-safe: never allow permanent lock on loading overlay.
   setTimeout(() => {
-    const loadingScreen = document.getElementById('loadingScreen');
     if (loadingScreen && loadingScreen.style.display !== 'none') {
       console.warn('Loader fail-safe triggered, forcing hideLoadingScreen()');
       hideLoadingScreen();
     }
-  }, 8000);
+  }, 5000);
 
-  progressContainer.style.display = 'none';
-  progressText.style.display = 'none';
-
+  // The CSS animations handle the logo parts glide-in (staggered up to 1.1s).
+  // We simply wait for the assemble sequence to finish (~2.2s for impact) 
+  // and then trigger the exit.
   setTimeout(() => {
-    console.log('Starting terminal typing');
-    let lineIndex = 0;
-
-    function typeNextLine() {
-      if (lineIndex < cfg.TERMINAL_LINES.length) {
-        const line = document.createElement('div');
-        line.className = 'line';
-        terminalOutput.appendChild(line);
-
-        let charIndex = 0;
-        const currentText = cfg.TERMINAL_LINES[lineIndex];
-
-        function typeCharacter() {
-          if (charIndex < currentText.length) {
-            line.textContent += currentText.charAt(charIndex);
-            try { playTypingSound(); } catch (e) { }
-            charIndex++;
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            setTimeout(typeCharacter, cfg.TYPE_SPEED);
-          } else {
-            lineIndex++;
-            setTimeout(typeNextLine, cfg.LINE_DELAY);
-          }
-        }
-        typeCharacter();
-      } else {
-        console.log('All lines typed, clearing...');
-        setTimeout(() => {
-          terminalOutput.innerHTML = '';
-          setTimeout(() => {
-            const accessLine = document.createElement('div');
-            accessLine.className = 'line access-granted';
-            terminalOutput.appendChild(accessLine);
-
-            let accessCharIndex = 0;
-            const accessText = cfg.ACCESS_TEXT;
-
-            function typeAccessChar() {
-              if (accessCharIndex < accessText.length) {
-                accessLine.textContent += accessText.charAt(accessCharIndex);
-                try { playTypingSound(); } catch (e) { }
-                accessCharIndex++;
-                setTimeout(typeAccessChar, cfg.ACCESS_SPEED);
-              } else {
-                console.log('Starting progress bar');
-                setTimeout(() => {
-                  progressContainer.style.display = 'block';
-                  progressText.style.display = 'block';
-
-                  const progressDuration = cfg.PROGRESS_DURATION;
-                  const startTime = performance.now();
-
-                  function updateProgress(currentTime) {
-                    const elapsed = currentTime - startTime;
-                    const progressPercent = Math.min((elapsed / progressDuration) * 100, 100);
-
-                    progressBar.style.width = progressPercent + '%';
-                    progressText.textContent = Math.floor(progressPercent) + '%';
-
-                    if (progressPercent < 100) {
-                      requestAnimationFrame(updateProgress);
-                    } else {
-                      console.log('Loading complete');
-                      setTimeout(hideLoadingScreen, 200);
-                    }
-                  }
-                  requestAnimationFrame(updateProgress);
-                }, 400);
-              }
-            }
-            typeAccessChar();
-          }, 200);
-        }, 400);
-      }
-    }
-    typeNextLine();
-  }, 1000);
+    console.log('Brand Assembly complete, triggering exit sequence');
+    hideLoadingScreen();
+  }, 2200);
 }
 
 /**
