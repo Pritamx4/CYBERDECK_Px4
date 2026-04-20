@@ -444,37 +444,46 @@ function updateStatCapsule() {
 }
 
 /**
- * GSAP Expansion Orchestrator
+ * GSAP Morphing Orchestrator
+ * Expands the pill itself rather than showing a separate modal.
  */
-function toggleStatDrawer() {
-  const drawer = document.getElementById('statDrawer');
-  const toggle = document.getElementById('capsuleToggle');
-  if (!drawer || !toggle) return;
+function toggleStatPill() {
+  const capsule = document.getElementById('statCapsule');
+  const expandedSection = document.getElementById('statExpandedSection');
+  if (!capsule || !expandedSection) return;
 
-  const isOpen = drawer.classList.contains('open');
+  const isExpanded = capsule.classList.contains('expanded');
   
-  if (!isOpen) {
-    drawer.classList.add('open');
-    // GSAP Entry
-    gsap.fromTo(drawer, 
-      { opacity: 0, y: 20, scale: 0.95 },
-      { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power4.out" }
-    );
-    gsap.to(toggle.querySelector('.toggle-icon'), { 
-      rotate: 135, duration: 0.4, ease: "back.out(2)" 
+  if (!isExpanded) {
+    capsule.classList.add('expanded');
+    
+    // Animate Height Expansion
+    gsap.to(expandedSection, {
+      height: "auto",
+      opacity: 1,
+      duration: 0.6,
+      ease: "power3.inOut"
     });
-    // Stagger items
-    gsap.from(".drawer-item", {
-      y: 10, opacity: 0, duration: 0.3, stagger: 0.05, delay: 0.1, ease: "power2.out"
+    
+    // Stagger detail items
+    gsap.from("#statExpandedSection .drawer-item", {
+      y: 15,
+      opacity: 0,
+      duration: 0.4,
+      stagger: 0.05,
+      delay: 0.2,
+      ease: "back.out(1.4)"
     });
   } else {
-    // GSAP Exit
-    gsap.to(drawer, { 
-      opacity: 0, y: 10, scale: 0.98, duration: 0.3, ease: "power2.in",
-      onComplete: () => drawer.classList.remove('open')
-    });
-    gsap.to(toggle.querySelector('.toggle-icon'), { 
-      rotate: -45, duration: 0.4, ease: "power2.inOut" 
+    // Contract Pill
+    gsap.to(expandedSection, {
+      height: 0,
+      opacity: 0,
+      duration: 0.5,
+      ease: "power3.inOut",
+      onComplete: () => {
+        capsule.classList.remove('expanded');
+      }
     });
   }
 }

@@ -608,78 +608,79 @@
       </section>
     </main>
 
-    <!-- Stat Capsule (Stitch-Inspired HUD) -->
+    <!-- Stat Capsule (Morphed HUD) -->
     <div class="stat-capsule" id="statCapsule">
-      <!-- Floating Analytics Drawer (Modal Style) -->
-      <div class="stat-drawer" id="statDrawer">
-        <div class="drawer-header">
-          <span class="drawer-header-label">SYSTEM_ANALYTICS</span>
-          <span class="drawer-header-status" id="repo-status">SYNC_STABLE</span>
-        </div>
-        <div class="drawer-grid">
-          <div class="drawer-item">
-            <span class="d-label">FORKS</span>
-            <span class="d-value" id="val-forks">0</span>
-          </div>
-          <div class="drawer-item">
-            <span class="d-label">WATCHERS</span>
-            <span class="d-value" id="val-watchers">0</span>
-          </div>
-          <div class="drawer-item">
-            <span class="d-label">ISSUES</span>
-            <span class="d-value" id="val-issues">0</span>
-          </div>
-          <div class="drawer-item">
-            <span class="d-label">CONTRIB</span>
-            <span class="d-value" id="val-contributors">0</span>
-          </div>
-          <div class="drawer-item">
-            <span class="d-label">DISK_SIZE</span>
-            <span class="d-value" id="val-size">0 KB</span>
-          </div>
-          <div class="drawer-item">
-            <span class="d-label">UPTIME</span>
-            <span class="d-value">99.9%</span>
-          </div>
-        </div>
-        <div class="drawer-footer">
-          <span class="d-footer-label">LAST_UPDATE:</span>
-          <span class="d-footer-value" id="val-updated">NEVER</span>
-        </div>
-      </div>
-
       <div class="capsule-glass"></div>
-      <div class="capsule-content">
-        <!-- Commits Pulse -->
-        <div class="stat-pulse" id="pulse-commits" title="Total Commits">
-          <span class="pulse-label">CMD_COMMITS</span>
-          <span class="pulse-value" id="val-commits">---</span>
-          <div class="sparkline-container" id="spark-commits"></div>
+      
+      <div class="capsule-internal">
+        <!-- Expanded Analytics (Hidden by default) -->
+        <div class="capsule-expanded-section" id="statExpandedSection">
+          <div class="drawer-header">
+            <span class="drawer-header-label">SYSTEM_ANALYTICS</span>
+            <span class="drawer-header-status" id="repo-status">SYNC_STABLE</span>
+          </div>
+          <div class="drawer-grid">
+            <div class="drawer-item">
+              <span class="d-label">FORKS</span>
+              <span class="d-value" id="val-forks">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">WATCHERS</span>
+              <span class="d-value" id="val-watchers">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">ISSUES</span>
+              <span class="d-value" id="val-issues">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">CONTRIB</span>
+              <span class="d-value" id="val-contributors">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">DISK_SIZE</span>
+              <span class="d-value" id="val-size">0 KB</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">UPTIME</span>
+              <span class="d-value">99.9%</span>
+            </div>
+          </div>
+          <div class="drawer-footer">
+            <span class="d-footer-label">LAST_UPDATE:</span>
+            <span class="d-footer-value" id="val-updated">NEVER</span>
+          </div>
         </div>
-        
-        <div class="capsule-divider"></div>
-        
-        <!-- Stars Pulse -->
-        <div class="stat-pulse" id="pulse-stars" title="GitHub Stars">
-          <span class="pulse-label">CMD_STARS</span>
-          <span class="pulse-value" id="val-stars">---</span>
-          <div class="sparkline-container" id="spark-stars"></div>
-        </div>
-        
-        <div class="capsule-divider"></div>
-        
-        <!-- Language Pulse -->
-        <div class="stat-pulse" id="pulse-lang" title="Primary Language">
-          <span class="pulse-label">CMD_LANGUAGE</span>
-          <span class="pulse-value" id="val-lang">SYNCING..</span>
-          <div class="sparkline-progress">
-            <div class="spark-bar" id="val-lang-bar"></div>
+
+        <!-- Summary Bar (Always visible) -->
+        <div class="capsule-summary-bar">
+          <div class="stat-pulse" id="pulse-commits" title="Total Commits">
+            <span class="pulse-label">CMD_COMMITS</span>
+            <span class="pulse-value" id="val-commits">---</span>
+            <div class="sparkline-container" id="spark-commits"></div>
+          </div>
+          
+          <div class="capsule-divider"></div>
+          
+          <div class="stat-pulse" id="pulse-stars" title="GitHub Stars">
+            <span class="pulse-label">CMD_STARS</span>
+            <span class="pulse-value" id="val-stars">---</span>
+            <div class="sparkline-container" id="spark-stars"></div>
+          </div>
+          
+          <div class="capsule-divider"></div>
+          
+          <div class="stat-pulse" id="pulse-lang" title="Primary Language">
+            <span class="pulse-label">CMD_LANGUAGE</span>
+            <span class="pulse-value" id="val-lang">SYNCING..</span>
+            <div class="sparkline-progress">
+              <div class="spark-bar" id="val-lang-bar"></div>
+            </div>
           </div>
         </div>
       </div>
       
       <!-- Expansion Toggle (Subtle) -->
-      <button class="capsule-toggle" id="capsuleToggle" onclick="toggleStatDrawer()" aria-label="Toggle detailed metrics">
+      <button class="capsule-toggle" id="capsuleToggle" onclick="toggleStatPill()" aria-label="Toggle detailed metrics">
         <div class="toggle-icon"></div>
       </button>
     </div>
