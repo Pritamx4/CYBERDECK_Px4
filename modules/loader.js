@@ -119,13 +119,24 @@ function showLoadingScreen() {
  */
 function hideLoadingScreen() {
   const loadingScreen = document.getElementById('loadingScreen');
+  const logoParts = document.querySelectorAll('.logo-part');
+  
   if (loadingScreen) {
-    loadingScreen.classList.add('hidden');
+    // Stage 1: Trigger Glitch Slicer on Logo
+    logoParts.forEach(logo => {
+      logo.classList.add('logo-glitching');
+    });
+
+    // Stage 2: Wait for glitch oscillation, then fade out the whole screen
     setTimeout(() => {
-      loadingScreen.style.display = 'none';
-      document.body.style.overflow = 'auto';
-      animateNavbarEntry();
-    }, 600);
+      loadingScreen.classList.add('hidden');
+      
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        animateNavbarEntry();
+      }, 600);
+    }, 500); // Glitch duration before fade
   }
 }
 

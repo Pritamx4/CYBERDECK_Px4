@@ -529,6 +529,47 @@ html {
   text-shadow: 0 0 15px rgba(255, 77, 219, 0.9), 0 0 30px rgba(255, 77, 219, 0.5);
 }
 
+/* ========================================
+   GLITCH SLICER ANIMATIONS 
+   ======================================== */
+
+.logo-glitching {
+  position: relative;
+  animation: 
+    glitch-slicer 0.2s linear infinite,
+    glitch-color 0.1s linear infinite,
+    glitch-shatter 0.6s cubic-bezier(1, 0, 0, 1) forwards;
+  will-change: transform, clip-path, filter;
+  z-index: 100;
+}
+
+@keyframes glitch-slicer {
+  0%   { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(0); }
+  20%  { clip-path: polygon(0 15%, 100% 15%, 100% 15%, 0 15%); transform: translate(-5px); }
+  30%  { clip-path: polygon(0 10%, 100% 10%, 100% 20%, 0 20%); transform: translate(5px); }
+  40%  { clip-path: polygon(0 1%, 100% 1%, 100% 2%, 0 2%); transform: translate(-5px); }
+  50%  { clip-path: polygon(0 33%, 100% 33%, 100% 33%, 0 33%); transform: translate(0); }
+  55%  { clip-path: polygon(0 44%, 100% 44%, 100% 44%, 0 44%); transform: translate(10px); }
+  70%  { clip-path: polygon(0 50%, 100% 50%, 100% 20%, 0 20%); transform: translate(-10px); }
+  80%  { clip-path: polygon(0 70%, 100% 70%, 100% 70%, 0 70%); transform: translate(0); }
+  90%  { clip-path: polygon(0 80%, 100% 80%, 100% 80%, 0 80%); transform: translate(-5px); }
+  100% { clip-path: polygon(0 2%, 100% 2%, 100% 5%, 0 5%); transform: translate(0); }
+}
+
+@keyframes glitch-color {
+  0% { filter: drop-shadow(2px 0 0 #00f0ff) drop-shadow(-2px 0 0 #ff007a); }
+  25% { filter: drop-shadow(-3px 0 0 #00f0ff) drop-shadow(3px 0 0 #ff007a); }
+  50% { filter: drop-shadow(5px 0 0 #00f0ff) drop-shadow(-5px 0 0 #ff007a); }
+  75% { filter: drop-shadow(-1px 0 0 #00f0ff) drop-shadow(1px 0 0 #ff007a); }
+  100% { filter: drop-shadow(2px 0 0 #00f0ff) drop-shadow(-2px 0 0 #ff007a); }
+}
+
+@keyframes glitch-shatter {
+  0% { opacity: 1; transform: scale(1) rotate(0deg); }
+  30% { opacity: 1; transform: scale(1.1) rotate(2deg); }
+  100% { opacity: 0; transform: scale(3) rotate(-10deg) translate(100px, -50px); filter: blur(20px); }
+}
+
 /* Logo transition animation */
 @keyframes logoTransition {
   0% {
