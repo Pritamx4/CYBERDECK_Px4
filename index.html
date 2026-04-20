@@ -608,106 +608,42 @@
       </section>
     </main>
 
-    <!-- Bottom Stats Tab -->
-    <div class="bottom-tab" id="bottomTab">
-      <button type="button" class="tab-toggle" id="tabToggle" onclick="toggleBottomTab()" aria-label="Toggle repository stats panel" title="Toggle repository stats panel">
-        <lord-icon src="https://cdn.lordicon.com/lrzdmsmx.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-24"></lord-icon>
-      </button>
-      
-      <div class="tab-content">
-        <canvas id="sparkleCanvas" class="sparkle-canvas"></canvas>
-        <div class="terminal-output" id="terminalText"></div>
+    <!-- Stat Capsule (Stitch-Inspired HUD) -->
+    <div class="stat-capsule" id="statCapsule">
+      <div class="capsule-glass"></div>
+      <div class="capsule-content">
+        <!-- Commits Pulse -->
+        <div class="stat-pulse" id="pulse-commits">
+          <span class="pulse-label">CMD_COMMITS</span>
+          <span class="pulse-value" id="val-commits">---</span>
+          <div class="sparkline-container" id="spark-commits"></div>
+        </div>
         
-        <div class="stats-grid" id="statsGrid">
-          <!-- Stats Chart -->
-          <div class="stats-chart-container graph">
-            <canvas id="statsChart" width="700" height="350"></canvas>
-          </div>
-          
-          <!-- Language Stats -->
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvaxaowk.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">HTML</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="html"></div></div>
-            <span class="stat-percent" id="htmlPercent">0%</span>
-          </div>
-          
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/gvtjlyjf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">CSS</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="css"></div></div>
-            <span class="stat-percent" id="cssPercent">0%</span>
-          </div>
-          
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yraqammt.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">JavaScript</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="js"></div></div>
-            <span class="stat-percent" id="jsPercent">0%</span>
-          </div>
-          
-          <!-- GitHub Stats -->
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/exymduqj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Commits</span>
-            <span class="stat-value" id="commitCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvjimpju.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Repos</span>
-            <span class="stat-value" id="repoCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/cvwrvyjv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Stars</span>
-            <span class="stat-value" id="starCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Forks</span>
-            <span class="stat-value" id="forkCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Watchers</span>
-            <span class="stat-value" id="watcherCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yhtmwrae.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Issues</span>
-            <span class="stat-value" id="issueCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/jdgfsfzr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Contributors</span>
-            <span class="stat-value" id="contributorCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/xqdfobxg.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Size</span>
-            <span class="stat-value" id="repoSize">0 KB</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/okqjaags.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Updated</span>
-            <span class="stat-value" id="lastUpdated">-</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            <span class="stat-label">Branches</span>
-            <span class="stat-value" id="branchCount">0</span>
+        <div class="capsule-divider"></div>
+        
+        <!-- Stars Pulse -->
+        <div class="stat-pulse" id="pulse-stars">
+          <span class="pulse-label">CMD_STARS</span>
+          <span class="pulse-value" id="val-stars">---</span>
+          <div class="sparkline-container" id="spark-stars"></div>
+        </div>
+        
+        <div class="capsule-divider"></div>
+        
+        <!-- Language Pulse -->
+        <div class="stat-pulse" id="pulse-lang">
+          <span class="pulse-label">CMD_LANGUAGE</span>
+          <span class="pulse-value" id="val-lang">SYNCING..</span>
+          <div class="sparkline-progress">
+            <div class="spark-bar" id="val-lang-bar"></div>
           </div>
         </div>
       </div>
+      
+      <!-- Expansion Toggle (Subtle) -->
+      <button class="capsule-toggle" id="capsuleToggle" aria-label="Toggle detailed metrics">
+        <div class="toggle-icon"></div>
+      </button>
     </div>
 
 

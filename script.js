@@ -294,85 +294,9 @@ function typeEffect() {
 }
 
 function showStats() {
-  if (!statsGrid) {
-    statsGrid = document.getElementById('statsGrid');
-  }
-  if (!statsGrid) return;
-
-  statsGrid.style.opacity = '1';
-  statsGrid.style.transition = 'opacity 1s ease';
-
-  setTimeout(() => {
-    // Animate language bars
-    const htmlBar = document.querySelector('[data-lang="html"]');
-    const cssBar = document.querySelector('[data-lang="css"]');
-    const jsBar = document.querySelector('[data-lang="js"]');
-
-    const htmlPercent = document.getElementById('htmlPercent');
-    const cssPercent = document.getElementById('cssPercent');
-    const jsPercent = document.getElementById('jsPercent');
-
-    if (htmlBar && htmlPercent) {
-      htmlBar.style.width = repoData[0] + '%';
-      animateCounter(htmlPercent, 0, repoData[0], 1000);
-      setTimeout(() => createSparkle(htmlBar), 1000);
-    }
-
-    if (cssBar && cssPercent) {
-      cssBar.style.width = repoData[1] + '%';
-      animateCounter(cssPercent, 0, repoData[1], 1000);
-      setTimeout(() => createSparkle(cssBar), 1000);
-    }
-
-    if (jsBar && jsPercent) {
-      jsBar.style.width = repoData[2] + '%';
-      animateCounter(jsPercent, 0, repoData[2], 1000);
-      setTimeout(() => createSparkle(jsBar), 1000);
-    }
-
-    // Animate GitHub stats
-    setTimeout(() => {
-      const commitEl = document.getElementById('commitCount');
-      const repoEl = document.getElementById('repoCount');
-      const starEl = document.getElementById('starCount');
-      const forkEl = document.getElementById('forkCount');
-      const watcherEl = document.getElementById('watcherCount');
-      const issueEl = document.getElementById('issueCount');
-      const contributorEl = document.getElementById('contributorCount');
-      const sizeEl = document.getElementById('repoSize');
-      const updatedEl = document.getElementById('lastUpdated');
-      const branchEl = document.getElementById('branchCount');
-
-      if (commitEl) animateCounter(commitEl, 0, githubStats.commits, 1500, false);
-      if (repoEl) animateCounter(repoEl, 0, githubStats.repos, 1500, false);
-      if (starEl) animateCounter(starEl, 0, githubStats.stars, 1500, false);
-      if (forkEl) animateCounter(forkEl, 0, githubStats.forks, 1500, false);
-      if (watcherEl) animateCounter(watcherEl, 0, githubStats.watchers, 1500, false);
-      if (issueEl) animateCounter(issueEl, 0, githubStats.issues, 1500, false);
-      if (contributorEl) animateCounter(contributorEl, 0, githubStats.contributors, 1500, false);
-      if (branchEl) animateCounter(branchEl, 0, githubStats.branches, 1500, false);
-
-      // Format size
-      if (sizeEl) {
-        const sizeMB = (githubStats.size / 1024).toFixed(2);
-        sizeEl.textContent = githubStats.size > 1024 ? sizeMB + ' MB' : githubStats.size + ' KB';
-      }
-
-      // Format last updated
-      if (updatedEl && githubApiFallbackMessage) {
-        updatedEl.textContent = githubApiFallbackMessage;
-      } else if (updatedEl && githubStats.lastUpdated) {
-        const date = new Date(githubStats.lastUpdated);
-        const now = new Date();
-        const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
-        updatedEl.textContent = diffDays === 0 ? 'Today' : diffDays === 1 ? '1 day ago' : `${diffDays} days ago`;
-      }
-
-      // Draw stats chart
-      drawStatsChart();
-    }, 500);
-  }, 500);
+  updateStatCapsule();
 }
+
 
 // Animated Counter
 function animateCounter(element, start, end, duration, isPercentage = true) {
@@ -445,165 +369,55 @@ function createSparkle(barElement) {
   animateSparkles();
 }
 
-// Draw Stats Chart
-function drawStatsChart() {
-  const canvas = document.getElementById('statsChart');
-  if (!canvas) return;
+/**
+ * Stat Capsule Logic - Stitch Edition
+ * High-fidelity HUD metrics and SVG Sparkline engine.
+ */
 
-  const ctx = canvas.getContext('2d');
-  const width = canvas.width;
-  const height = canvas.height;
+function drawSparkline(containerId, data, color) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
 
-  // Clear canvas
-  ctx.clearRect(0, 0, width, height);
-
-  // Chart settings
-  const padding = { top: 30, right: 140, bottom: 50, left: 60 };
-  const chartWidth = width - padding.left - padding.right;
-  const chartHeight = height - padding.top - padding.bottom;
-
-  // Stats data with trends (simulated over 5 points)
-  const stats = [
-    {
-      label: 'Commits',
-      color: '#00fff7',
-      values: generateTrend(githubStats.commits, 5)
-    },
-    {
-      label: 'Stars',
-      color: '#ff4ddb',
-      values: generateTrend(githubStats.stars, 5)
-    },
-    {
-      label: 'Forks',
-      color: '#00ff88',
-      values: generateTrend(githubStats.forks, 5)
-    },
-    {
-      label: 'Watchers',
-      color: '#ffd700',
-      values: generateTrend(githubStats.watchers, 5)
-    },
-    {
-      label: 'Issues',
-      color: '#ff6b6b',
-      values: generateTrend(githubStats.issues, 5)
-    },
-    {
-      label: 'Contributors',
-      color: '#a78bfa',
-      values: generateTrend(githubStats.contributors, 5)
-    }
-  ];
-
-  // Find max value for scaling
-  const allValues = stats.flatMap(s => s.values);
-  const maxValue = Math.max(...allValues, 10);
-
-  // Draw grid
-  ctx.strokeStyle = 'rgba(0, 255, 247, 0.1)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 5; i++) {
-    const y = padding.top + (chartHeight / 5) * i;
-    ctx.beginPath();
-    ctx.moveTo(padding.left, y);
-    ctx.lineTo(padding.left + chartWidth, y);
-    ctx.stroke();
-  }
-
-  // Draw vertical grid
-  for (let i = 0; i <= 4; i++) {
-    const x = padding.left + (chartWidth / 4) * i;
-    ctx.beginPath();
-    ctx.moveTo(x, padding.top);
-    ctx.lineTo(x, padding.top + chartHeight);
-    ctx.stroke();
-  }
-
-  // Draw lines for each stat
-  stats.forEach((stat, index) => {
-    ctx.strokeStyle = stat.color;
-    ctx.lineWidth = 3;
-    ctx.shadowBlur = 10;
-    ctx.shadowColor = stat.color;
-
-    ctx.beginPath();
-    stat.values.forEach((value, i) => {
-      const x = padding.left + (chartWidth / (stat.values.length - 1)) * i;
-      const y = padding.top + chartHeight - (value / maxValue) * chartHeight;
-
-      if (i === 0) {
-        ctx.moveTo(x, y);
-      } else {
-        ctx.lineTo(x, y);
-      }
-    });
-    ctx.stroke();
-
-    // Draw points
-    stat.values.forEach((value, i) => {
-      const x = padding.left + (chartWidth / (stat.values.length - 1)) * i;
-      const y = padding.top + chartHeight - (value / maxValue) * chartHeight;
-
-      ctx.fillStyle = stat.color;
-      ctx.shadowBlur = 15;
-      ctx.shadowColor = stat.color;
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    ctx.shadowBlur = 0;
-
-    // Draw legend
-    const legendY = padding.top + index * 35;
-    const legendX = padding.left + chartWidth + 20;
-
-    // Legend line
-    ctx.strokeStyle = stat.color;
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(legendX, legendY);
-    ctx.lineTo(legendX + 20, legendY);
-    ctx.stroke();
-
-    // Legend circle
-    ctx.fillStyle = stat.color;
-    ctx.beginPath();
-    ctx.arc(legendX + 10, legendY, 3, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Legend text
-    ctx.fillStyle = stat.color;
-    ctx.font = 'bold 13px Orbitron';
-    ctx.textAlign = 'left';
-    ctx.fillText(stat.label, legendX + 25, legendY + 5);
-
-    // Current value
-    ctx.font = '11px Courier New';
-    ctx.fillText(stat.values[stat.values.length - 1], legendX + 25, legendY + 20);
+  const width = container.offsetWidth || 100;
+  const height = 20; // Fixed height for sparklines
+  const padding = 2;
+  
+  const maxValue = Math.max(...data, 10);
+  const points = data.map((val, i) => {
+    const x = (i / (data.length - 1)) * (width - padding * 2) + padding;
+    const y = height - (val / maxValue) * (height - padding * 2) - padding;
+    return `${x},${y}`;
   });
 
-  // Draw axes labels
-  ctx.fillStyle = 'rgba(0, 255, 247, 0.6)';
-  ctx.font = '12px Courier New';
-  ctx.textAlign = 'center';
-
-  // X-axis labels
-  const labels = ['Start', 'Q1', 'Q2', 'Q3', 'Now'];
-  labels.forEach((label, i) => {
-    const x = padding.left + (chartWidth / (labels.length - 1)) * i;
-    ctx.fillText(label, x, height - 15);
-  });
-
-  // Y-axis label
-  ctx.save();
-  ctx.translate(20, padding.top + chartHeight / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.textAlign = 'center';
-  ctx.fillText('Activity', 0, 0);
-  ctx.restore();
+  const pathData = `M ${points.join(' L ')}`;
+  
+  container.innerHTML = `
+    <svg width="${width}" height="${height}" class="sparkline-svg">
+      <path d="${pathData}" stroke="${color}" />
+    </svg>
+  `;
 }
+
+function updateStatCapsule() {
+  const commitVal = document.getElementById('val-commits');
+  const starVal = document.getElementById('val-stars');
+  const langVal = document.getElementById('val-lang');
+  const langBar = document.getElementById('val-lang-bar');
+
+  if (commitVal) animateCounter(commitVal, 0, githubStats.commits, 1500, false);
+  if (starVal) animateCounter(starVal, 0, githubStats.stars, 1500, false);
+  
+  // Highlight Top Language
+  const topLang = repoData[2] > repoData[0] && repoData[2] > repoData[1] ? 'JS' : 
+                   repoData[1] > repoData[0] ? 'CSS' : 'HTML';
+  if (langVal) langVal.textContent = `${topLang} ${Math.max(...repoData)}%`;
+  if (langBar) langBar.style.width = `${Math.max(...repoData)}%`;
+
+  // Draw Sparklines for Commits and Stars
+  drawSparkline('spark-commits', generateTrend(githubStats.commits, 8), '#ffffff');
+  drawSparkline('spark-stars', generateTrend(githubStats.stars, 8), '#ffffff');
+}
+
 
 // Generate trend data (simulate growth)
 function generateTrend(finalValue, points) {

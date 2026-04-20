@@ -2608,145 +2608,159 @@ canvas {
 /* ========================================
    6. BOTTOM TAB (TERMINAL)
 ======================================== */
-.bottom-tab {
+/* ========================================
+   6. STAT CAPSULE (STITCH-INSPIRED HUD)
+======================================== */
+.stat-capsule {
   position: fixed;
-  bottom: 0;
+  bottom: 2rem;
   left: 50%;
-  width: 90%;
-  max-width: 1200px;
-  height: 35vh;
-  background: rgba(15, 15, 15, 0.6);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-  box-shadow: var(--shadow-lg);
-  z-index: 999;
-  transform: translate(-50%, 100%);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.bottom-tab.open {
-  transform: translate(-50%, 0);
-}
-
-.tab-toggle {
-  position: absolute;
-  top: -2.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--color-neon-cyan);
-  background: rgba(15, 15, 15, 0.6);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
+  transform: translateX(-50%) translateY(0);
   z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  animation: capsuleFloat 6s ease-in-out infinite;
 }
 
+@keyframes capsuleFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
 
-.tab-content {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
-  padding: 2rem;
-  height: 100%;
+.capsule-glass {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.8);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.5),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  z-index: -1;
+}
+
+.capsule-content {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  gap: 2.5rem;
+}
+
+.stat-pulse {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 80px;
+  position: relative;
+}
+
+.pulse-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+}
+
+.pulse-value {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+.sparkline-container {
+  height: 20px;
+  width: 100%;
+  margin-top: 0.25rem;
+  opacity: 0.6;
+}
+
+.capsule-divider {
+  width: 1px;
+  height: 25px;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.sparkline-progress {
+  width: 60px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 0.5rem;
+  border-radius: 2px;
   overflow: hidden;
 }
 
-.tab-content .terminal-output {
-  font-family: var(--font-retro);
-  font-size: 0.85rem;
-  color: var(--color-primary);
-  line-height: 1.8;
-  overflow-y: auto;
-  padding-right: 1rem;
-  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+.spark-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  box-shadow: 0 0 10px var(--color-primary);
+  transition: width 1s ease-out;
 }
 
-.tab-content .terminal-output::-webkit-scrollbar {
-  width: 4px;
-}
-
-.tab-content .terminal-output::-webkit-scrollbar-thumb {
-  background: var(--color-neon-cyan);
-  border-radius: 2px;
-}
-
-.stats-grid {
-  display: grid;
-  opacity: 0;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  position: relative;
-  overflow-y: auto;
-  padding-right: 1rem;
-}
-
-.stats-grid::-webkit-scrollbar {
-  width: 4px;
-}
-
-.stats-grid::-webkit-scrollbar-thumb {
-  background: var(--color-neon-cyan);
-  border-radius: 2px;
-}
-
-/* Stats Chart */
-.stats-chart-container {
-  grid-column: span 2;
-  background: rgba(99, 91, 255, 0.03);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  border-radius: 8px;
-  padding: 1.5rem;
+.capsule-toggle {
+  width: 45px;
+  height: 45px;
+  margin-right: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.stats-chart-container.graph {
-  min-height: 400px;
-  height: auto;
-  padding: 2rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-.stats-chart-container::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(45deg, transparent, rgba(0, 255, 247, 0.1), transparent);
-  animation: chartGlow 3s linear infinite;
-}
-
-@keyframes chartGlow {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-#statsChart {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  min-height: 300px;
-}
-
-.graph #statsChart {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-}
-
-.stat-item {
-  background: rgba(0, 255, 247, 0.03);
-  border: 1px solid rgba(0, 255, 247, 0.2);
-  border-radius: 8px;
-  padding: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.capsule-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+.toggle-icon {
+  width: 12px;
+  height: 12px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translate(-2px, -2px);
+}
+
+/* Sparkline SVG styling */
+.sparkline-svg {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px var(--color-primary));
+}
+
+@media (max-width: 768px) {
+  .stat-capsule {
+    bottom: 1.5rem;
+    width: auto;
+    max-width: 95%;
+  }
+  
+  .capsule-content {
+    padding: 0.6rem 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .stat-pulse {
+    min-width: 60px;
+  }
+  
+  .pulse-value {
+    font-size: 0.9rem;
+  }
 }
 
 .stat-item:hover {
