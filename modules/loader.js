@@ -7,58 +7,97 @@
  * Display the loading screen with terminal typewriter effect
  * Includes progress bar animation and "ACCESS GRANTED" sequence
  */
+/**
+ * Display the loading screen with cinematic 'Quantum Trace' sequence
+ * Uses GSAP for high-fidelity path tracing and warp-speed transition
+ */
 function showLoadingScreen() {
   const loadingScreen = document.getElementById('loadingScreen');
-  
-  if (!loadingScreen) {
-    console.error('Loading screen element not found');
+  const logoContainer = document.querySelector('.loading-logo');
+  const paths = document.querySelectorAll('.logo-part path');
+  const logoParts = document.querySelectorAll('.logo-part');
+
+  if (!loadingScreen || !logoContainer) {
+    console.error('Loading elements not found');
     hideLoadingScreen();
     return;
   }
 
-  console.log('Cinematic Loader sequence started');
+  console.log('Quantum Trace sequence initialized');
 
-  // Fail-safe: never allow permanent lock on loading overlay.
-  setTimeout(() => {
-    if (loadingScreen && loadingScreen.style.display !== 'none') {
-      console.warn('Loader fail-safe triggered, forcing hideLoadingScreen()');
-      hideLoadingScreen();
+  // 1. Dynamic Path Length Calculation for "Perfect Trace"
+  paths.forEach(path => {
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length;
+    path.style.strokeDashoffset = length;
+  });
+
+  // 2. Setup GSAP Timeline
+  const tl = gsap.timeline({
+    onComplete: () => {
+      console.log('Cinematic Sequence Finalized');
     }
-  }, 5000);
+  });
 
-  // The CSS animations handle the logo parts glide-in (staggered up to 1.1s).
-  // We simply wait for the assemble sequence to finish (~2.2s for impact) 
-  // and then trigger the exit.
-  setTimeout(() => {
-    console.log('Brand Assembly complete, triggering exit sequence');
-    hideLoadingScreen();
-  }, 2200);
+  // 3. The Quantum Trace Entrance (Sequential)
+  tl.set(logoParts, { opacity: 0, scale: 0.85 })
+    .to(logoParts, {
+      opacity: 1,
+      scale: 1,
+      duration: 0.6,
+      stagger: 0.15,
+      ease: "power2.out"
+    }, 0.2)
+    .to(paths, {
+      strokeDashoffset: 0,
+      duration: 1.8,
+      stagger: 0.1,
+      ease: "power4.inOut"
+    }, "-=0.4")
+    // FILL ONLY AFTER STROKE IS COMPLETE
+    .to(logoParts, {
+      className: "+=filled",
+      duration: 0.4,
+      ease: "power1.inOut"
+    }, "+=0.1") 
+    // ZOOM ONLY AFTER FILL
+    .add(() => {
+      loadingScreen.classList.add('screen-shake');
+    }, "+=0.5")
+    .to(logoContainer, {
+      scale: 40,
+      opacity: 0,
+      duration: 0.8,
+      ease: "expo.in",
+      onStart: () => {
+        logoContainer.classList.add('warp-vision');
+      }
+    })
+    .to(loadingScreen, {
+      opacity: 0,
+      duration: 0.5,
+      onComplete: () => {
+        hideLoadingScreenFinal();
+      }
+    }, "-=0.3");
 }
 
 /**
- * Hide the loading screen and reveal main content
+ * Final steps for hiding the loader and revealing the main content
  */
-function hideLoadingScreen() {
+function hideLoadingScreenFinal() {
   const loadingScreen = document.getElementById('loadingScreen');
-  const logoParts = document.querySelectorAll('.logo-part');
-  
   if (loadingScreen) {
-    // Stage 1: Trigger Glitch Slicer on Logo
-    logoParts.forEach(logo => {
-      logo.classList.add('logo-glitching');
-    });
-
-    // Stage 2: Wait for glitch oscillation, then fade out the whole screen
-    setTimeout(() => {
-      loadingScreen.classList.add('hidden');
-      
-      setTimeout(() => {
-        loadingScreen.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        animateNavbarEntry();
-      }, 600);
-    }, 500); // Glitch duration before fade
+    loadingScreen.classList.remove('screen-shake');
+    loadingScreen.style.display = 'none';
+    document.body.style.overflow = 'auto';
+    if (window.animateNavbarEntry) window.animateNavbarEntry();
   }
+}
+
+// Keep the old function name for compatibility if needed, but redirects to new trace
+function hideLoadingScreen() {
+  // Now handled by the GSAP timeline in showLoadingScreen
 }
 
 /**
