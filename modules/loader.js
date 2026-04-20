@@ -54,20 +54,30 @@ function showLoadingScreen() {
       stagger: 0.1,
       ease: "power4.inOut"
     }, "-=0.4")
-    // FILL ONLY AFTER STROKE IS COMPLETE
+    // 2. MATERIALIZE INTO CHROME ONLY AFTER STROKE IS COMPLETE
     .to(logoParts, {
-      className: "+=filled",
-      duration: 0.4,
-      ease: "power1.inOut"
-    }, "+=0.1") 
-    // ZOOM ONLY AFTER FILL
+      opacity: 1,
+      fill: "#ffffff", // Initial flash target
+      duration: 0.1,
+      ease: "none"
+    }, "+=0.1")
+    .to(logoParts, {
+      fill: "url(#chrome-gradient)",
+      duration: 0.5,
+      ease: "power2.inOut",
+      onStart: () => {
+        logoParts.forEach(part => part.classList.add('filled'));
+      }
+    })
+    // 3. REMOVED CHROME SHINE FLASH PER USER REQUEST
+    // 4. ZOOM ONLY AFTER THE CHROME LOOK HAS SETTLED
     .add(() => {
       loadingScreen.classList.add('screen-shake');
-    }, "+=0.5")
+    }, "+=0.4")
     .to(logoContainer, {
-      scale: 40,
+      scale: 50,
       opacity: 0,
-      duration: 0.8,
+      duration: 0.9,
       ease: "expo.in",
       onStart: () => {
         logoContainer.classList.add('warp-vision');
@@ -75,7 +85,7 @@ function showLoadingScreen() {
     })
     .to(loadingScreen, {
       opacity: 0,
-      duration: 0.5,
+      duration: 0.6,
       onComplete: () => {
         hideLoadingScreenFinal();
       }

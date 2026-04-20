@@ -369,7 +369,6 @@ html {
 .logo-part {
   width: 100px;
   height: 100px;
-  filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8));
   opacity: 0;
   position: relative;
   fill: none; /* Prepare for tracing */
@@ -383,7 +382,8 @@ html {
 }
 
 .logo-part.filled {
-  fill: var(--color-primary) !important;
+  fill: url(#chrome-gradient) !important;
+  stroke: rgba(255, 255, 255, 0.4);
 }
 
 .logo-p {
