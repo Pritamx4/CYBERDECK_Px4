@@ -404,8 +404,33 @@ function updateStatCapsule() {
   const langVal = document.getElementById('val-lang');
   const langBar = document.getElementById('val-lang-bar');
 
+  // Drawer Elements
+  const forkVal = document.getElementById('val-forks');
+  const watcherVal = document.getElementById('val-watchers');
+  const issueVal = document.getElementById('val-issues');
+  const contribVal = document.getElementById('val-contributors');
+  const sizeVal = document.getElementById('val-size');
+  const updatedVal = document.getElementById('val-updated');
+
   if (commitVal) animateCounter(commitVal, 0, githubStats.commits, 1500, false);
   if (starVal) animateCounter(starVal, 0, githubStats.stars, 1500, false);
+  
+  if (forkVal) animateCounter(forkVal, 0, githubStats.forks, 1500, false);
+  if (watcherVal) animateCounter(watcherVal, 0, githubStats.watchers, 1500, false);
+  if (issueVal) animateCounter(issueVal, 0, githubStats.issues, 1500, false);
+  if (contribVal) animateCounter(contribVal, 0, githubStats.contributors, 1500, false);
+
+  if (sizeVal) {
+    const sizeMB = (githubStats.size / 1024).toFixed(2);
+    sizeVal.textContent = githubStats.size > 1024 ? sizeMB + ' MB' : githubStats.size + ' KB';
+  }
+
+  if (updatedVal && githubStats.lastUpdated) {
+    const date = new Date(githubStats.lastUpdated);
+    const now = new Date();
+    const diffDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+    updatedVal.textContent = diffDays === 0 ? 'TODAY' : diffDays === 1 ? 'YESTERDAY' : `${diffDays} DAYS AGO`;
+  }
   
   // Highlight Top Language
   const topLang = repoData[2] > repoData[0] && repoData[2] > repoData[1] ? 'JS' : 
@@ -416,6 +441,42 @@ function updateStatCapsule() {
   // Draw Sparklines for Commits and Stars
   drawSparkline('spark-commits', generateTrend(githubStats.commits, 8), '#ffffff');
   drawSparkline('spark-stars', generateTrend(githubStats.stars, 8), '#ffffff');
+}
+
+/**
+ * GSAP Expansion Orchestrator
+ */
+function toggleStatDrawer() {
+  const drawer = document.getElementById('statDrawer');
+  const toggle = document.getElementById('capsuleToggle');
+  if (!drawer || !toggle) return;
+
+  const isOpen = drawer.classList.contains('open');
+  
+  if (!isOpen) {
+    drawer.classList.add('open');
+    // GSAP Entry
+    gsap.fromTo(drawer, 
+      { opacity: 0, y: 20, scale: 0.95 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "power4.out" }
+    );
+    gsap.to(toggle.querySelector('.toggle-icon'), { 
+      rotate: 135, duration: 0.4, ease: "back.out(2)" 
+    });
+    // Stagger items
+    gsap.from(".drawer-item", {
+      y: 10, opacity: 0, duration: 0.3, stagger: 0.05, delay: 0.1, ease: "power2.out"
+    });
+  } else {
+    // GSAP Exit
+    gsap.to(drawer, { 
+      opacity: 0, y: 10, scale: 0.98, duration: 0.3, ease: "power2.in",
+      onComplete: () => drawer.classList.remove('open')
+    });
+    gsap.to(toggle.querySelector('.toggle-icon'), { 
+      rotate: -45, duration: 0.4, ease: "power2.inOut" 
+    });
+  }
 }
 
 
@@ -434,7 +495,8 @@ function generateTrend(finalValue, points) {
 
 window.addEventListener('load', () => {
   fetchGitHubStats().then(() => {
-    // Stats fetched, ready to display when tab opens
+    // Stats fetched, update the UI
+    updateStatCapsule();
   });
 
   // Initialize element references
