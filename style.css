@@ -1916,7 +1916,7 @@ canvas {
   background: rgba(0, 0, 0, 0.85);
   -webkit-backdrop-filter: blur(15px);
   backdrop-filter: blur(15px);
-  z-index: 9999;
+  z-index: 100000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -3641,7 +3641,7 @@ img[loading="lazy"].loaded {
   width: 40px;
   height: 40px;
   pointer-events: none;
-  z-index: 99999;
+  z-index: 110000;
   mix-blend-mode: screen;
   transform: translate(-50%, -50%);
   display: flex; /* Always flex, controlled by opacity */
