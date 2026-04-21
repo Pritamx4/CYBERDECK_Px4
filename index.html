@@ -57,9 +57,8 @@
     
     <!-- Class Definitions -->
     <script type="module" src="modules/hero-logo-3d.js"></script>
-    <script type="module" src="modules/neural-core-3d.js"></script>
     <script src="modules/hud-cursor.js" defer></script>
-    <script type="module" src="modules/project-vault-3d.js"></script>
+    <script type="module" src="modules/project-sphere-3d.js"></script>
     <script type="module" src="modules/galaxy-background.js"></script>
     
     <!-- Main Application Script -->
@@ -129,8 +128,7 @@
         <ul id="navLinks" class="nav-links" role="list">
           <li class="nav-item"><a href="#section-home" aria-label="Navigate to home section">HOME</a></li>
           <li class="nav-item"><a href="#section-about" aria-label="Navigate to about section">ABOUT</a></li>
-          <li class="nav-item"><a href="#section-skills" aria-label="Navigate to skills section">SKILLS</a></li>
-          <li class="nav-item"><a href="#section-projects" aria-label="Navigate to project gallery section">PROJECTS</a></li>
+          <li class="nav-item"><a href="#section-projects" aria-label="Navigate to projects section">PROJECTS</a></li>
           <li class="nav-item"><a href="#section-contact" aria-label="Navigate to contact section">CONTACT</a></li>
         </ul>
 
@@ -156,7 +154,7 @@
               <a href="#section-projects" class="btn-sleek">
                 <lord-icon src="https://cdn.lordicon.com/piurhpdv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" 
                 stroke="bold"
-                class="icon-24"></lord-icon>
+                class="icon-24" target="self"></lord-icon>
                 EXPLORE_WORK
               </a>
               <a href="#section-contact" class="btn-outline">
@@ -224,7 +222,6 @@
           <!-- Neural Data Visualizer (Legacy Spacer) -->
           <div class="neural-visualizer-spacer"></div>
         </div>
-        </div>
         <!-- Data Ticker -->
         <div class="data-ticker">
           <span>SYS_READY | PX4_ARCHITECT_MODE</span>
@@ -232,303 +229,60 @@
         </div>
       </section>
 
-      <!-- Skills Section -->
-      <section id="section-skills" class="skills-section">
-        <div class="skills-header reveal-up">
-          <span class="skills-header-tag">EXPERTISE_REPORT</span>
-          <h2 class="section-title glow-heading">SKILLS</h2>
-          <div class="skills-header-line"></div>
-        </div>
-        <div class="skills-grid">
-          <div class="skill-card reveal-up" data-module="MODULE_01">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-html5-plain"></i>
-              </div>
-              <span class="module-id">MODULE_01</span>
-            </div>
-            <h3>HTML5</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="95"></div>
-              </div>
-              <span class="skill-percentage">95%</span>
-            </div>
-          </div>
 
-          <div class="skill-card reveal-up" data-module="MODULE_02">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-css3-plain"></i>
-              </div>
-              <span class="module-id">MODULE_02</span>
-            </div>
-            <h3>CSS3</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="90"></div>
-              </div>
-              <span class="skill-percentage">90%</span>
-            </div>
-          </div>
 
-          <div class="skill-card reveal-up" data-module="MODULE_03">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-javascript-plain"></i>
-              </div>
-              <span class="module-id">MODULE_03</span>
-            </div>
-            <h3>JavaScript</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_04">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-tailwindcss-original"></i>
-              </div>
-              <span class="module-id">MODULE_04</span>
-            </div>
-            <h3>Tailwind CSS</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="88"></div>
-              </div>
-              <span class="skill-percentage">88%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_05">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-nodejs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_05</span>
-            </div>
-            <h3>Node.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="80"></div>
-              </div>
-              <span class="skill-percentage">80%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_06">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-git-plain"></i>
-              </div>
-              <span class="module-id">MODULE_06</span>
-            </div>
-            <h3>Git</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_07">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-github-original"></i>
-              </div>
-              <span class="module-id">MODULE_07</span>
-            </div>
-            <h3>GitHub</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_08">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-vitejs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_08</span>
-            </div>
-            <h3>Vite</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="100"></div>
-              </div>
-              <span class="skill-percentage">100%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_09">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-react-original"></i>
-              </div>
-              <span class="module-id">MODULE_09</span>
-            </div>
-            <h3>React</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="60"></div>
-              </div>
-              <span class="skill-percentage">60%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_10">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-nextjs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_10</span>
-            </div>
-            <h3>Next.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="50"></div>
-              </div>
-              <span class="skill-percentage">50%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_11">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-threejs-original"></i>
-              </div>
-              <span class="module-id">MODULE_11</span>
-            </div>
-            <h3>Three.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="45"></div>
-              </div>
-              <span class="skill-percentage">45%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_12">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-java-plain"></i>
-              </div>
-              <span class="module-id">MODULE_12</span>
-            </div>
-            <h3>Java</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="55"></div>
-              </div>
-              <span class="skill-percentage">55%</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="section-projects" class="section-project">
-        <svg
-          width="0"
-          height="0"
-          viewBox="0 0 400 270"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <clipPath id="folderClip" clipPathUnits="objectBoundingBox">
-              <path
-                transform="scale(0.0025 0.0037)"
-                d="
-          M 0 0
-          L 110 0
-          Q 120 0 128 8
-          L 162 32
-          Q 170 40 180 40
-          L 390 40
-          Q 400 40 400 50
-          L 400 270
-          L 0 270
-          Z
-        "
-              />
-            </clipPath>
-          </defs>
-        </svg>
-        <div class="project-heading reveal-up">
-          <h1 class="glow-heading">PROJECTS</h1>
-          <span class="tech-label">[ MODE: INTERACTIVE_GALLERY ]</span>
+      <section id="section-projects" class="project-sphere-section">
+        <div class="section-header reveal-up">
+          <span class="tech-tag">DATA_CORE_v4.0</span>
+          <h2 class="section-title glow-heading">PROJECT_HUB</h2>
+          <div class="header-line"></div>
         </div>
 
-        <!-- 3D PROJECT ENGINE CONTAINER -->
-        <div id="project-canvas-container" class="project-canvas-container"></div>
+        <!-- 3D ORBITAL CANVAS -->
+        <div id="project-canvas-container" class="project-canvas-container">
+          <div class="canvas-instructions">
+            <span class="ui-glitch" data-text="DRAG_TO_ROTATE">DRAG_TO_ROTATE</span>
+            <span class="ui-glitch" data-text="CLICK_SHARD_FOR_DATA">CLICK_SHARD_FOR_DATA</span>
+          </div>
+        </div>
 
-        <!-- PROJECT DETAIL OVERLAY (Hidden by default) -->
+        <!-- PROJECT DETAIL OVERLAY -->
         <div id="project-detail-overlay" class="project-detail-overlay">
           <div class="detail-container glass-morphic">
-            <!-- Decorative Brackets -->
-            <div class="modal-corner target-tl"></div>
-            <div class="modal-corner target-tr"></div>
-            <div class="modal-corner target-bl"></div>
-            <div class="modal-corner target-br"></div>
-            
-            <div class="modal-ui-layer">
-              <span class="ui-coord">X: 192.44 | Y: 88.102</span>
-              <span class="ui-mode">MODE: ENCRYPTED_VAULT</span>
-            </div>
-
             <button class="close-detail" aria-label="Close project detail">
               <span class="close-text">DISCONNECT</span>
-              <lord-icon src="https://cdn.lordicon.com/ebyacdql.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-24"></lord-icon>
+              <lord-icon src="https://cdn.lordicon.com/ebyacdql.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-30"></lord-icon>
             </button>
+
+            <!-- Decorative Corners -->
+            <div class="corner tl"></div><div class="corner tr"></div>
+            <div class="corner bl"></div><div class="corner br"></div>
 
             <div class="detail-grid">
               <div class="detail-visual">
-                <div class="detail-frame">
-                  <div class="scanline-modal"></div>
+                <div class="visual-frame">
+                  <div class="scanline"></div>
                   <img id="detail-img" src="" alt="Project Preview" />
-                  <div class="frame-bracket br-tl"></div>
-                  <div class="frame-bracket br-br"></div>
-                </div>
-                <div class="detail-nav" role="group" aria-label="Project navigation">
-                  <button type="button" class="detail-nav-btn" id="detail-prev" aria-label="View previous project">PREV</button>
-                  <button type="button" class="detail-nav-btn" id="detail-next" aria-label="View next project">NEXT</button>
                 </div>
               </div>
               <div class="detail-content">
-                <div class="content-header">
-                  <span class="tech-label">[ DATA_MODULE: RESOLVED ]</span>
-                  <h2 id="detail-title" class="detail-title glow-text">PROJECT_NAME</h2>
-                </div>
-                
-                <div class="content-body">
-                  <p id="detail-description" class="detail-description">
-                    Initializing neural uplink...
-                  </p>
-                </div>
-
+                <span class="tech-label">[ MODULE_READY ]</span>
+                <h3 id="detail-title">PROJECT_TITLE</h3>
+                <p id="detail-description">Initialising neural link...</p>
                 <div class="detail-actions">
                   <a id="detail-code" href="#" class="btn-sleek" target="_blank">
                     <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-                    SOURCE_CODE
+                    GET_CODE
                   </a>
                   <a id="detail-live" href="#" class="btn-outline" target="_blank">
                     <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-                    LIVE_DEPLOY
+                    LIVE_PREVIEW
                   </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="cards-container" id="projectCardsContainer"></div>
       </section>
 
       <section id="section-contact" class="contact-fusion">

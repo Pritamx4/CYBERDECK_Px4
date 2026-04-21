@@ -152,5 +152,57 @@ const DOM_SELECTORS = {
   HUD_CURSOR: '#hud-cursor',
 };
 
+const PROJECT_CARD_DATA = [
+  {
+    title: 'Scroll Trigger',
+    description: 'A scroll-triggered animation built with native JavaScript.',
+    image: 'images/scrolltrigger.png',
+    alt: 'Scroll Trigger project preview',
+    codeLink: 'https://github.com/Pritamx4/Scroll-trigger-effect/archive/refs/heads/main.zip',
+    liveLink: 'https://pritamx4.github.io/Scroll-trigger-effect/'
+  },
+  {
+    title: 'To-Do List',
+    description: 'A to-do list application built with Next.js.',
+    image: 'images/todolist.png',
+    alt: 'To-Do List project preview',
+    codeLink: 'https://github.com/Pritamx4/todolist/archive/refs/heads/main.zip',
+    liveLink: 'https://to-do-list-delta-amber-46.vercel.app/'
+  },
+  {
+    title: 'Tic Tac Toe',
+    description: 'Classic Tic Tac Toe using HTML, CSS, and JavaScript.',
+    image: 'images/tictactoe.png',
+    alt: 'Tic Tac Toe project preview',
+    codeLink: 'https://github.com/Pritamx4/tic-tac-toe/archive/refs/heads/main.zip',
+    liveLink: 'https://pritamx4.github.io/tic-tac-toe/'
+  },
+  {
+    title: 'Memory Management Simulator',
+    description: 'Operating system memory management simulator.',
+    image: 'images/memorymanagementsimulator.png',
+    alt: 'Memory Management Simulator project preview',
+    codeLink: 'https://github.com/Pritamx4/os-project/archive/refs/heads/master.zip',
+    liveLink: 'https://pritamx4.github.io/os-project/'
+  },
+  {
+    title: 'Snake Game',
+    description: 'A classic snake game with responsive controls.',
+    image: 'images/snakegame.png',
+    alt: 'Snake Game project preview',
+    codeLink: 'https://github.com/Pritamx4/snake-game/archive/refs/heads/main.zip',
+    liveLink: 'https://pritamx4.github.io/snake-game/'
+  },
+  {
+    title: 'Drivemate',
+    description: 'Car rental app using React.',
+    image: 'images/drivemate.png',
+    alt: 'Drivemate project preview',
+    codeLink: 'https://github.com/Pritamx4/drivemate/archive/refs/heads/main.zip',
+    liveLink: 'https://drivemate-eight.vercel.app/'
+  }
+];
+
 window.APP_CONFIG = APP_CONFIG;
 window.DOM_SELECTORS = DOM_SELECTORS;
+window.PROJECT_CARD_DATA = PROJECT_CARD_DATA;

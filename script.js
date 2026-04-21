@@ -32,93 +32,6 @@ if (typeof initializeUI === 'function') {
   initializeUI();
 }
 
-const PROJECT_CARD_DATA = [
-  {
-    title: 'Scroll Trigger',
-    description: 'A scroll-triggered animation built with native JavaScript.',
-    image: 'images/scrolltrigger.png',
-    alt: 'Scroll Trigger project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/Scroll-trigger-effect/archive/refs/heads/main.zip',
-    liveLink: 'https://pritamx4.github.io/Scroll-trigger-effect/'
-  },
-  {
-    title: 'To-Do List',
-    description: 'A to-do list application built with Next.js.',
-    image: 'images/todolist.png',
-    alt: 'To-Do List project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/todolist/archive/refs/heads/main.zip',
-    liveLink: 'https://to-do-list-delta-amber-46.vercel.app/'
-  },
-  {
-    title: 'Tic Tac Toe',
-    description: 'Classic Tic Tac Toe using HTML, CSS, and JavaScript.',
-    image: 'images/tictactoe.png',
-    alt: 'Tic Tac Toe project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/tic-tac-toe/archive/refs/heads/main.zip',
-    liveLink: 'https://pritamx4.github.io/tic-tac-toe/'
-  },
-  {
-    title: 'Memory Management Simulator',
-    description: 'Operating system memory management simulator.',
-    image: 'images/memorymanagementsimulator.png',
-    alt: 'Memory Management Simulator project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/os-project/archive/refs/heads/master.zip',
-    liveLink: 'https://pritamx4.github.io/os-project/'
-  },
-  {
-    title: 'Snake Game',
-    description: 'A classic snake game with responsive controls.',
-    image: 'images/snakegame.png',
-    alt: 'Snake Game project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/snake-game/archive/refs/heads/main.zip',
-    liveLink: 'https://pritamx4.github.io/snake-game/'
-  },
-  {
-    title: 'Drivemate',
-    description: 'Car rental app using React.',
-    image: 'images/drivemate.png',
-    alt: 'Drivemate project preview',
-    imageWidth: 1200,
-    imageHeight: 675,
-    codeLink: 'https://github.com/Pritamx4/drivemate/archive/refs/heads/main.zip',
-    liveLink: 'https://drivemate-eight.vercel.app/'
-  }
-];
-
-function renderProjectCards() {
-  const cardsContainer = document.getElementById('projectCardsContainer');
-  if (!cardsContainer) return;
-
-  cardsContainer.innerHTML = PROJECT_CARD_DATA.map((project, index) => `
-    <div class="project-card reveal-scale" data-project-id="${index}" tabindex="0" aria-label="${project.title} project card">
-      <img src="${project.image}" alt="${project.alt}" loading="lazy" decoding="async" width="${project.imageWidth}" height="${project.imageHeight}" />
-      <div class="card-info">
-        <h3>${project.title}</h3>
-        <p>${project.description}</p>
-        <div class="links">
-          <a href="${project.codeLink}">
-            <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
-            Get Code
-          </a>
-          <a href="${project.liveLink}">
-            <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" stroke="bold" class="icon-20"></lord-icon>
-            Live Review
-          </a>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
 
 // Terminal Repo Stats
 let terminalElement;
@@ -132,7 +45,7 @@ const messages = [
   '> CALCULATING REPO STATISTICS...',
   '> RETRIEVING COMMIT HISTORY...',
   '> SCANNING REPOSITORY METRICS...',
-  '> DEPLOYING SKILL METRICS... [COMPLETE]',
+  '> SYNCHRONIZING ORBITAL CORE... [READY]',
 ];
 
 let msgIndex = 0;
@@ -535,40 +448,7 @@ window.addEventListener('load', () => {
   statsGrid = document.getElementById('statsGrid');
 });
 
-// Skills animation using native IntersectionObserver
-function initSkillBars() {
-  const skillCards = document.querySelectorAll('.skill-card');
-  if (!skillCards.length) return;
 
-  if (!('IntersectionObserver' in window) || window.innerWidth <= 768) {
-    skillCards.forEach((card) => {
-      const progressBar = card.querySelector('.skill-progress');
-      if (!progressBar) return;
-      const targetWidth = progressBar.getAttribute('data-progress') || '0';
-      progressBar.style.width = `${targetWidth}%`;
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-    });
-    return;
-  }
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const card = entry.target;
-      const progressBar = card.querySelector('.skill-progress');
-      if (progressBar) {
-        const targetWidth = progressBar.getAttribute('data-progress') || '0';
-        progressBar.style.width = `${targetWidth}%`;
-      }
-      card.style.opacity = '1';
-      card.style.transform = 'translateY(0)';
-      observer.unobserve(card);
-    });
-  }, { threshold: 0.2, rootMargin: '0px 0px -10% 0px' });
-
-  skillCards.forEach((card) => observer.observe(card));
-}
 
 // ========================================
 // LAZY LOADING IMAGES
@@ -602,15 +482,8 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('GALAXY_CORE: Active');
     }
 
-    // 2. Data Rendering
-    renderProjectCards();
-    initSkillBars();
-
     // 3. 3D Module Injection
-    if (typeof NeuralGrid3D === 'function') new NeuralGrid3D();
-    if (typeof ProjectVault3DModel === 'function') new ProjectVault3DModel();
-    if (typeof HUDCursor === 'function') new HUDCursor();
-
+    
     console.log('SYSTEM_BOOT: All modules synchronized.');
   } catch (e) {
     console.error('CRITICAL_BOOT_FAILURE:', e);

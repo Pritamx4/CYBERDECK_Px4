@@ -4,24 +4,15 @@
  */
 
 class HUDCursor {
-/**
- * HUD Cursor - Custom cyberpunk-style cursor tracking and locking system
- * @class HUDCursor
- * @description Implements smooth cursor following with LERP interpolation,
- *              interactive element locking, click-pulse effects, and auto-hide timeout.
- *              Mobile optimization: Disabled on devices ≤1024px width
- */
   constructor() {
-  /**
-   * Initialize HUD Cursor instance and register event listeners
-   * Disabled on mobile (≤1024px) for better UX
-   * @constructor
-   */
     this.cursor = document.getElementById('hud-cursor');
     if (!this.cursor) return;
 
-    this.isMobileDevice = window.innerWidth <= 1024;
-    if (this.isMobileDevice) return;
+    this.isMobileDevice = ('ontouchstart' in window) || (window.innerWidth <= 768);
+    if (this.isMobileDevice) {
+      console.log('HUD_CURSOR: Touch device or small screen detected. HUD disabled.');
+      return;
+    }
 
     this.dot = this.cursor.querySelector('.cursor-dot');
     this.coordsX = this.cursor.querySelector('.x');
@@ -40,14 +31,10 @@ class HUDCursor {
     this.sizeAnimation = null;
 
     this.init();
+    console.log('HUD_CURSOR: Initialized.');
   }
 
   init() {
-    /**
-     * Set up mouse/touch listeners, click-pulse handler, and animation loop
-     * Updates cursor position from mouse events; handles locking to interactive elements
-     * @method init
-     */
     const updatePosition = (x, y) => {
       if (!this.isLocked) {
         this.pos.x = x;
@@ -60,24 +47,11 @@ class HUDCursor {
       if (this.coordsY) this.coordsY.textContent = Math.round(y).toString().padStart(3, '0');
     };
 
-    // Mouse Listeners
     window.addEventListener('mousemove', (e) => updatePosition(e.clientX, e.clientY));
 
-    // Touch Listeners for Mobile Compatibility
-    window.addEventListener('touchstart', (e) => {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    });
-
-    window.addEventListener('touchmove', (e) => {
-      const touch = e.touches[0];
-      updatePosition(touch.clientX, touch.clientY);
-    });
-
     window.addEventListener('mousedown', () => {
-      const cursorCfg = APP_CONFIG.CURSOR;
       this.cursor.classList.add('click-pulse');
-      setTimeout(() => this.cursor.classList.remove('click-pulse'), cursorCfg.CLICK_PULSE_MS);
+      setTimeout(() => this.cursor.classList.remove('click-pulse'), 300);
     });
 
     window.addEventListener('resize', () => {
@@ -92,7 +66,6 @@ class HUDCursor {
 
   resetHideTimeout() {
     clearTimeout(this.hideTimeout);
-    // On mobile, hide cursor after 3s of inactivity to keep space clean
     if (window.innerWidth <= 768) {
       this.hideTimeout = setTimeout(() => {
         if (!this.isLocked) this.cursor.classList.remove('active');
@@ -101,7 +74,6 @@ class HUDCursor {
   }
 
   lockOn(el) {
-    const cursorCfg = APP_CONFIG.CURSOR;
     const rect = el.getBoundingClientRect();
     const padding = 12;
     this.isLocked = true;
@@ -109,16 +81,15 @@ class HUDCursor {
     this.cursor.classList.add('locked', 'active');
     this.pos.x = rect.left + rect.width / 2;
     this.pos.y = rect.top + rect.height / 2;
-    this.animateSizeTo(rect.width + padding * 2, rect.height + padding * 2, cursorCfg.LOCK_TRANSITION_MS);
+    this.animateSizeTo(rect.width + padding * 2, rect.height + padding * 2, 300);
     this.resetHideTimeout();
   }
 
   unlock() {
-    const cursorCfg = APP_CONFIG.CURSOR;
     this.isLocked = false;
     this.lockTarget = null;
     this.cursor.classList.remove('locked');
-    this.animateSizeTo(40, 40, cursorCfg.LOCK_TRANSITION_MS);
+    this.animateSizeTo(40, 40, 300);
     this.resetHideTimeout();
   }
 
@@ -140,8 +111,6 @@ class HUDCursor {
     interactables.forEach(el => {
       el.addEventListener('mouseenter', () => this.lockOn(el));
       el.addEventListener('mouseleave', () => this.unlock());
-      // For mobile: trigger lock on tap
-      el.addEventListener('touchstart', () => this.lockOn(el));
     });
   }
 
@@ -170,4 +139,19 @@ class HUDCursor {
 
     requestAnimationFrame(() => this.animate());
   }
+}
+
+window.HUDCursor = HUDCursor;
+
+// Self-initialization
+const initHUD = () => {
+  if (typeof window.HUDCursorInstance === 'undefined') {
+    window.HUDCursorInstance = new HUDCursor();
+  }
+};
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initHUD);
+} else {
+  initHUD();
 }
