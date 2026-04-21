@@ -137,6 +137,7 @@ const DOM_SELECTORS = {
   
   SEND_BTN: '.send-btn',
   MESSAGE_INPUT: '.message-input',
+  MESSAGE_COUNT: '#messageCount',
   MESSAGE_ERROR: '#messageError',
   TOAST: '#toast',
   TOAST_MESSAGE: '.toast-message',

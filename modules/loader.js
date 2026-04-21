@@ -7,6 +7,40 @@
  * Display the loading screen with terminal typewriter effect
  * Includes progress bar animation and "ACCESS GRANTED" sequence
  */
+
+let loadingScrollLocked = false;
+const blockedScrollKeys = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
+
+function preventScrollInteraction(event) {
+  if (!loadingScrollLocked) return;
+
+  if (event.type === 'keydown' && !blockedScrollKeys.has(event.key)) {
+    return;
+  }
+
+  event.preventDefault();
+}
+
+function setLoadingScrollLock(shouldLock) {
+  loadingScrollLocked = shouldLock;
+
+  if (shouldLock) {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    window.scrollTo(0, 0);
+    window.addEventListener('wheel', preventScrollInteraction, { passive: false });
+    window.addEventListener('touchmove', preventScrollInteraction, { passive: false });
+    window.addEventListener('keydown', preventScrollInteraction, { passive: false });
+    return;
+  }
+
+  window.removeEventListener('wheel', preventScrollInteraction);
+  window.removeEventListener('touchmove', preventScrollInteraction);
+  window.removeEventListener('keydown', preventScrollInteraction);
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = '';
+}
+
 /**
  * Display the loading screen with cinematic 'Quantum Trace' sequence
  * Uses GSAP for high-fidelity path tracing and warp-speed transition
@@ -100,7 +134,7 @@ function hideLoadingScreenFinal() {
   if (loadingScreen) {
     loadingScreen.classList.remove('screen-shake');
     loadingScreen.style.display = 'none';
-    document.body.style.overflow = 'auto';
+    setLoadingScrollLock(false);
     if (window.animateNavbarEntry) window.animateNavbarEntry();
   }
 }
@@ -140,6 +174,22 @@ function animateNavbarEntry() {
 function initializePageLoader() {
   console.log('Setting up window load event');
 
+  // On reload, always boot from home/top instead of restoring prior section/hash.
+  const navigationEntry = performance.getEntriesByType('navigation')[0];
+  const isReload = navigationEntry && navigationEntry.type === 'reload';
+  if (isReload) {
+    if (window.history && typeof window.history.replaceState === 'function') {
+      window.history.replaceState({}, '', `${window.location.pathname}${window.location.search}`);
+    }
+    window.scrollTo(0, 0);
+  }
+
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  setLoadingScrollLock(true);
+
   // Make sure loading starts even if images fail to load
   let loadingStarted = false;
   let fallbackTimer;
@@ -147,7 +197,7 @@ function initializePageLoader() {
   const startLoading = () => {
     if (loadingStarted) return;
     loadingStarted = true;
-    document.body.style.overflow = 'hidden';
+    setLoadingScrollLock(true);
     console.log('Starting loader sequence');
     setTimeout(() => {
       console.log('Calling showLoadingScreen');

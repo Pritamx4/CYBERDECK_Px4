@@ -18,7 +18,6 @@
     <meta name="twitter:description" content="Explore the digital portfolio of Pritam Singh." />
     <link rel="canonical" href="https://pritamx4.github.io/CYBERDECK_Px4/">
     <!-- Preload critical assets -->
-    <link rel="preload" href="images/robo.png" as="image">
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -544,7 +543,7 @@
           <div class="portrait-container reveal-up">
             <div class="portrait-frame">
               <div class="scan-line"></div>
-              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" loading="lazy" decoding="async" width="400" height="500" />
+              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" loading="lazy" decoding="async" width="400" height="500" onerror="this.onerror=null;this.src='images/px4 main logo.svg';this.alt='Operator Portrait (Fallback Logo)';" />
               <div class="frame-decal bracket-tl"></div>
               <div class="frame-decal bracket-br"></div>
               <div class="frame-label">OPERATOR // PX4</div>
@@ -595,6 +594,7 @@
                 <div class="terminal-prefix">>></div>
                 <label for="messageInput" class="message-label"></label>
                 <input type="text" id="messageInput" class="message-input" placeholder="inject_message..." aria-describedby="messageError" aria-invalid="false" />
+                <p id="messageCount" class="message-count" aria-live="polite">0 / 240</p>
                 <p id="messageError" class="message-error" role="alert" aria-live="polite"></p>
                 <button class="send-btn" aria-label="Send Message">
                   <lord-icon src="https://cdn.lordicon.com/vpbspaec.json" trigger="hover" colors="primary:#000000,secondary:#00f0ff"

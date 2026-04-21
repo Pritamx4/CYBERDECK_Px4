@@ -21,12 +21,29 @@ function initializeEmailJS() {
 function initializeContactForm() {
   const sendBtn = document.querySelector(DOM_SELECTORS.SEND_BTN);
   const messageInput = document.querySelector(DOM_SELECTORS.MESSAGE_INPUT);
+  const messageCount = document.querySelector(DOM_SELECTORS.MESSAGE_COUNT);
   const messageError = document.querySelector(DOM_SELECTORS.MESSAGE_ERROR);
+  const maxLength = 240;
+  const minLength = APP_CONFIG.CONTACT.MIN_MESSAGE_LENGTH;
 
   if (!sendBtn || !messageInput) {
     console.warn('Contact form elements not found');
     return;
   }
+
+  messageInput.maxLength = maxLength;
+
+  const updateMessageFeedback = () => {
+    const trimmedLength = messageInput.value.trim().length;
+
+    if (messageCount) {
+      messageCount.textContent = `${trimmedLength} / ${maxLength}`;
+      messageCount.classList.toggle('warning', trimmedLength > maxLength * 0.85);
+      messageCount.classList.toggle('invalid', trimmedLength > 0 && trimmedLength < minLength);
+    }
+  };
+
+  updateMessageFeedback();
 
   /**
    * Handle send button click
@@ -47,6 +64,18 @@ function initializeContactForm() {
 
   messageInput.addEventListener('input', () => {
     messageInput.setAttribute('aria-invalid', 'false');
+    updateMessageFeedback();
+
+    const trimmedLength = messageInput.value.trim().length;
+
+    if (messageError && trimmedLength > 0 && trimmedLength < minLength) {
+      messageError.textContent = `Minimum ${minLength} characters required.`;
+      if (messageCount) {
+        messageCount.classList.add('invalid');
+      }
+      return;
+    }
+
     if (messageError) {
       messageError.textContent = '';
     }
@@ -108,6 +137,11 @@ async function sendMessage(inputElement, errorElement) {
     showToast('✓ Signal synchronized. Message sent.', 'success');
     inputElement.value = '';
     inputElement.setAttribute('aria-invalid', 'false');
+    const messageCount = document.querySelector(DOM_SELECTORS.MESSAGE_COUNT);
+    if (messageCount) {
+      messageCount.textContent = '0 / 240';
+      messageCount.classList.remove('warning', 'invalid');
+    }
     if (errorElement) {
       errorElement.textContent = '';
     }
