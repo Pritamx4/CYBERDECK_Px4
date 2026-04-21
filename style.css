@@ -2318,6 +2318,18 @@ canvas {
   backdrop-filter: blur(15px);
   padding: 2.5rem; /* Reduced padding */
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.panel-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .connect-description {
@@ -2345,6 +2357,13 @@ canvas {
     transform: translateX(50px) rotate(45deg) scale(0.5);
     opacity: 0;
   }
+}
+
+.social-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: flex-start;
 }
 
 .social-item {
@@ -2465,18 +2484,26 @@ canvas {
   .fusion-grid {
     grid-template-columns: 1fr;
     gap: 4rem;
+    margin: 0 auto;
+    place-items: center;
+    width: 100%;
   }
 
   .connect-panel {
     padding: 2.5rem;
     order: 2;
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   .portrait-container {
     display: flex;
     justify-content: center;
+    align-items: center;
     order: 1;
     margin-bottom: 2rem;
+    width: 100%;
   }
   
   .portrait-frame {
@@ -2486,15 +2513,30 @@ canvas {
 }
 
 @media (max-width: 600px) {
+  .fusion-grid {
+    margin: 0 auto;
+    place-items: center;
+  }
+
   .fusion-header {
     text-align: center;
+    width: 100%;
   }
+
   .fusion-line {
     margin-left: auto;
     margin-right: auto;
   }
+
   .connect-panel {
     padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .portrait-container {
+    width: 100%;
   }
 }
 
@@ -3474,6 +3516,29 @@ canvas {
     max-width: 16rem;
     padding: 0.9rem 0.8rem;
   }
+
+  /* Fusion Grid Contact Section - Extra small mobile */
+  .fusion-grid {
+    margin: 0 auto;
+    place-items: center;
+    width: 100%;
+  }
+
+  .connect-panel {
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
+  .portrait-container {
+    width: 100%;
+  }
+
+  .portrait-frame {
+    max-width: 280px;
+    height: 350px;
+  }
+}
 
   .speech-bubble-contact h2 {
     font-size: 1.2rem;
