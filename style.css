@@ -35,6 +35,10 @@ html {
   z-index: 1;
 }
 
+.svg-defs {
+  position: absolute;
+}
+
 /* Galaxy Background Container */
 .galaxy-bg-container {
   position: fixed;
@@ -1566,7 +1570,7 @@ canvas {
 
 @media screen and (max-width: 768px) {
   .about-section {
-    min-height: auto;
+    min-height: 0;
     padding: var(--section-padding-y-mobile) var(--section-padding-x-mobile);
     display: flex;
     flex-direction: column;
@@ -2570,6 +2574,65 @@ canvas {
 
   .portrait-container {
     width: 100%;
+  }
+}
+
+@media (max-width: 430px) {
+  .connect-panel {
+    max-width: 360px;
+    padding: 1.35rem;
+  }
+
+  .message-count {
+    right: 3.8rem;
+  }
+
+  .nav-links li a {
+    font-size: clamp(1.05rem, 5.2vw, 1.45rem);
+    letter-spacing: 0.14rem;
+    padding: 0.9rem 1.4rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .connect-panel {
+    max-width: 340px;
+    padding: 1.2rem;
+  }
+
+  .terminal-input-wrapper {
+    gap: 0.7rem;
+  }
+
+  .message-count {
+    right: 3.5rem;
+    font-size: 0.62rem;
+  }
+
+  .nav-links li a {
+    font-size: clamp(1rem, 5vw, 1.35rem);
+    letter-spacing: 0.12rem;
+    padding: 0.8rem 1.2rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .connect-panel {
+    max-width: 320px;
+    padding: 1rem;
+  }
+
+  .message-count {
+    right: 3.1rem;
+  }
+
+  .nav-links {
+    gap: 1.4rem;
+  }
+
+  .nav-links li a {
+    font-size: 0.96rem;
+    letter-spacing: 0.1rem;
   }
 }
 
