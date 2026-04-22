@@ -3170,10 +3170,10 @@ img[loading="lazy"].loaded {
   width: 100vw;
   height: 100vh;
   background:
-    radial-gradient(circle at 20% 18%, rgba(102, 242, 255, 0.24), transparent 28%),
-    radial-gradient(circle at 78% 22%, rgba(255, 122, 198, 0.2), transparent 26%),
-    radial-gradient(circle at 50% 78%, rgba(178, 109, 255, 0.16), transparent 30%),
-    linear-gradient(145deg, #08101f 0%, #141b37 44%, #341d46 74%, #f08fa5 100%);
+    radial-gradient(circle at 14% 18%, rgba(99, 228, 255, 0.24), transparent 26%),
+    radial-gradient(circle at 80% 20%, rgba(255, 87, 226, 0.2), transparent 30%),
+    radial-gradient(circle at 52% 84%, rgba(120, 160, 255, 0.18), transparent 36%),
+    linear-gradient(145deg, #050a19 0%, #0b1433 40%, #2a1c4f 72%, #0c1f3f 100%);
   z-index: 10005;
   opacity: 0;
   visibility: hidden;
@@ -3206,20 +3206,20 @@ img[loading="lazy"].loaded {
   font-weight: 700;
   font-size: 0.9rem;
   letter-spacing: 0.4rem;
-  background: #ff7e5f;
+  background: linear-gradient(90deg, #3f70ff, #48d9ff);
   border: none;
   color: #fff;
   cursor: pointer;
   transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 10px 20px rgba(255, 126, 95, 0.3);
+  box-shadow: 0 10px 24px rgba(72, 217, 255, 0.34);
   text-transform: uppercase;
   border-radius: 2px;
 }
 
 .timeline-btn:hover {
-  background: #feb47b;
+  background: linear-gradient(90deg, #5f8dff, #73e9ff);
   letter-spacing: 0.5rem;
-  box-shadow: 0 15px 30px rgba(254, 180, 123, 0.5);
+  box-shadow: 0 15px 32px rgba(95, 141, 255, 0.45);
   transform: translateY(-5px) scale(1.05);
 }
 
@@ -3227,9 +3227,9 @@ img[loading="lazy"].loaded {
   position: absolute;
   top: 40px;
   right: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: rgba(9, 16, 40, 0.52);
+  border: 1px solid rgba(109, 182, 255, 0.35);
+  color: #dff2ff;
   padding: 12px 24px;
   display: flex;
   align-items: center;
@@ -3246,8 +3246,8 @@ img[loading="lazy"].loaded {
 }
 
 .exit-btn:hover {
-  background: #fff;
-  color: #1e2a44;
+  background: rgba(18, 34, 74, 0.86);
+  color: #7fe7ff;
 }
 
 .timeline-hud {
@@ -3263,16 +3263,16 @@ img[loading="lazy"].loaded {
 .hud-line {
   width: 150px;
   height: 3px;
-  background: #feb47b;
+  background: linear-gradient(90deg, rgba(99, 228, 255, 0.12), rgba(99, 228, 255, 0.95), rgba(99, 228, 255, 0.12));
   margin: 0 auto 12px;
-  box-shadow: 0 0 15px #feb47b;
+  box-shadow: 0 0 14px rgba(99, 228, 255, 0.46);
 }
 
 .hud-label {
   font-family: "JetBrains Mono", monospace;
   font-weight: 700;
   font-size: 0.7rem;
-  color: #fff;
+  color: rgba(218, 242, 255, 0.92);
   letter-spacing: 0.6rem;
   text-transform: uppercase;
   text-shadow: 0 2px 10px rgba(0,0,0,0.5);
