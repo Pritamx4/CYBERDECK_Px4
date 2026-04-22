@@ -60,6 +60,7 @@
     <script src="modules/hud-cursor.js" defer></script>
     <script type="module" src="modules/project-sphere-3d.js"></script>
     <script type="module" src="modules/galaxy-background.js"></script>
+    <script type="module" src="modules/journey-timeline-3d.js"></script>
     
     <!-- Main Application Script -->
     <script src="script.js" defer></script>
@@ -218,6 +219,13 @@
             <!-- Corner brackets decoration -->
             <div class="corner-bracket corner-tl"></div>
             <div class="corner-bracket corner-br"></div>
+            
+            <div class="timeline-trigger-wrapper">
+              <button id="enter-timeline-btn" class="btn-sleek timeline-btn">
+                <lord-icon src="https://cdn.lordicon.com/uvvbewxh.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" stroke="bold" class="icon-24"></lord-icon>
+                ENTER_TIMELINE
+              </button>
+            </div>
           </div>
           <!-- Neural Data Visualizer (Legacy Spacer) -->
           <div class="neural-visualizer-spacer"></div>
@@ -467,6 +475,44 @@
         <span class="y">000</span>
       </div>
     </div>
+
+    <!-- Journey Timeline Experience Overlay -->
+    <div id="journey-timeline-container" class="journey-timeline-overlay">
+      <button id="exit-timeline-btn" class="exit-btn">
+        <span class="exit-text">EXIT_TIMELINE</span>
+        <lord-icon src="https://cdn.lordicon.com/nhfyvxhf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" stroke="bold" class="icon-24"></lord-icon>
+      </button>
+      <div class="timeline-hud">
+        <div class="hud-line"></div>
+        <div class="hud-label">NEURAL_PATH_SYNC: ACTIVE</div>
+      </div>
+    </div>
+
+    <script type="module">
+      import JourneyTimeline from './modules/journey-timeline-3d.js';
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const timeline = new JourneyTimeline();
+        
+        const enterBtn = document.getElementById('enter-timeline-btn');
+        const exitBtn = document.getElementById('exit-timeline-btn');
+        const overlay = document.getElementById('journey-timeline-container');
+
+        if (enterBtn) {
+          enterBtn.addEventListener('click', () => {
+            timeline.activate();
+            document.body.classList.add('timeline-active');
+          });
+        }
+
+        if (exitBtn) {
+          exitBtn.addEventListener('click', () => {
+            timeline.deactivate();
+            document.body.classList.remove('timeline-active');
+          });
+        }
+      });
+    </script>
 
   </body>
 </html>
