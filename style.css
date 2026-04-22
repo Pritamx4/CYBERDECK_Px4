@@ -3169,12 +3169,25 @@ img[loading="lazy"].loaded {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(to bottom, #1e2a44 0%, #ff7e5f 60%, #feb47b 100%);
+  background:
+    radial-gradient(circle at 20% 18%, rgba(102, 242, 255, 0.24), transparent 28%),
+    radial-gradient(circle at 78% 22%, rgba(255, 122, 198, 0.2), transparent 26%),
+    radial-gradient(circle at 50% 78%, rgba(178, 109, 255, 0.16), transparent 30%),
+    linear-gradient(145deg, #08101f 0%, #141b37 44%, #341d46 74%, #f08fa5 100%);
   z-index: 10005;
   opacity: 0;
   visibility: hidden;
   transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 1.5s linear;
   overflow: hidden;
+  -webkit-backdrop-filter: blur(10px) saturate(125%);
+  backdrop-filter: blur(10px) saturate(125%);
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.journey-timeline-overlay canvas {
+  touch-action: none;
 }
 
 .journey-timeline-overlay.active {
@@ -3228,6 +3241,7 @@ img[loading="lazy"].loaded {
   cursor: pointer;
   z-index: 10006;
   transition: all 0.4s ease;
+  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
 }
 
@@ -3266,5 +3280,38 @@ img[loading="lazy"].loaded {
 
 body.timeline-active {
   overflow: hidden !important;
+}
+
+@media (max-width: 768px) {
+  .journey-timeline-overlay {
+    -webkit-backdrop-filter: blur(8px) saturate(115%);
+    backdrop-filter: blur(8px) saturate(115%);
+  }
+
+  .exit-btn {
+    top: 16px;
+    right: 16px;
+    padding: 10px 14px;
+    gap: 8px;
+    font-size: 0.62rem;
+    letter-spacing: 0.12rem;
+  }
+
+  .timeline-hud {
+    bottom: 18px;
+    width: min(92vw, 320px);
+  }
+
+  .hud-line {
+    width: 108px;
+    height: 2px;
+    margin-bottom: 10px;
+  }
+
+  .hud-label {
+    font-size: 0.56rem;
+    letter-spacing: 0.26rem;
+    line-height: 1.35;
+  }
 }
 
