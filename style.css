@@ -1330,6 +1330,15 @@ a {
   pointer-events: none; /* Allow mouse interaction with canvas through container */
 }
 
+.neural-visualizer-spacer {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  min-height: 200px;
+}
+
 /* Operator Profile Card */
 .operator-card {
   flex: 0 1 520px;
@@ -1584,6 +1593,13 @@ canvas {
     background: rgba(10, 10, 15, 0.45); /* More transparent for visibility */
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+  }
+
+  .neural-visualizer-spacer {
+    width: 100%;
+    min-height: auto;
+    margin-top: 2rem;
+    order: 3; /* Position after operator card on mobile */
   }
 }
 
@@ -3166,9 +3182,9 @@ img[loading="lazy"].loaded {
 }
 
 .timeline-trigger-wrapper {
-  margin-top: var(--spacing-xl);
   display: flex;
   justify-content: center;
+  width: 100%;
 }
 
 .timeline-btn {
