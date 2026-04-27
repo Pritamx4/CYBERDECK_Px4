@@ -199,7 +199,7 @@ const PROJECT_CARD_DATA = [
     image: 'images/drivemate.png',
     alt: 'Drivemate project preview',
     codeLink: 'https://github.com/Pritamx4/drivemate/archive/refs/heads/main.zip',
-    liveLink: 'https://drivemate-eight.vercel.app/'
+    liveLink: 'https://drivemate-jet.vercel.app/'
   }
 ];
 
