@@ -1,263 +1,103 @@
 <div align="center">
 
-```
-   ▄████████ ▄██   ▄   ▀█████████▄     ▄████████    ▄████████ ████████▄     ▄████████  ▄████████    ▄█   ▄█▄ 
-  ███    ███ ███   ██▄   ███    ███   ███    ███   ███    ███ ███   ▀███   ███    ███ ███    ███   ███ ▄███▀ 
-  ███    █▀  ███▄▄▄███   ███    ███   ███    █▀    ███    ███ ███    ███   ███    █▀  ███    █▀    ███▐██▀   
-  ███        ▀▀▀▀▀▀███  ▄███▄▄▄██▀   ▄███▄▄▄      ▄███▄▄▄▄██▀ ███    ███  ▄███▄▄▄     ███         ▄█████▀    
-  ███        ▄██   ███ ▀▀███▀▀▀██▄  ▀▀███▀▀▀     ▀▀███▀▀▀▀▀   ███    ███ ▀▀███▀▀▀     ███        ▀▀█████▄    
-  ███    █▄  ███   ███   ███    ██▄   ███    █▄  ▀███████████ ███    ███   ███    █▄  ███    █▄    ███▐██▄   
-  ███    ███ ███   ███   ███    ███   ███    ███   ███    ███ ███   ▄███   ███    ███ ███    ███   ███ ▀███▄ 
-  ████████▀   ▀█████▀  ▄█████████▀    ██████████   ███    ███ ████████▀    ██████████ ████████▀    ███   ▀█▀ 
-                                                    ███    ███                                       ▀         
+# 🌌 CYBERDECK_Px4
+### [ // NEURAL INTERFACE PROTOCOL v1.0 ]
+
+[![NEURAL-LINK: STABLE](https://img.shields.io/badge/NEURAL--LINK-STABLE-00f0ff?style=for-the-badge&logo=target&logoColor=black)](https://pritamx4.github.io/CYBERDECK_Px4/)
+[![CPU: OVERCLOCKED](https://img.shields.io/badge/CPU-OVERCLOCKED-FF003C?style=for-the-badge&logo=cpu-filler&logoColor=white)]()
+[![CORE: ONLINE](https://img.shields.io/badge/CORE-ONLINE-39FF14?style=for-the-badge&logo=statuspage&logoColor=black)]()
+
+---
+
+```text
+   ____ _   _ ____  _____ ____  ____  _____ ____ _  __
+  / ___| | | | __ )| ____|  _ \|  _ \| ____/ ___| |/ /
+ | |   | | | |  _ \|  _| | |_) | | | |  _|| |   | ' / 
+ | |___| |_| | |_) | |___|  _ <| |_| | |__| |___| . \ 
+  \____|\___/|____/|_____|_| \_\____/|_____\____|_|\_\
+                                  P X 4 _ S Y S T E M
 ```
 
-# CYBERDECK_Px4
+---
 
-[🌟 Live Demo](https://pritamx4.github.io/CYBERDECK_Px4/) • [📖 Documentation](#-getting-started) • [🐛 Report Bug](https://github.com/Pritamx4/CYBERDECK_Px4/issues) • [💡 Request Feature](https://github.com/Pritamx4/CYBERDECK_Px4/issues)
+[ 🚀 BOOT SYSTEM ](https://pritamx4.github.io/CYBERDECK_Px4/) • [ 📡 COMM LINK ](#-uplink-frequencies) • [ 💾 DATA ARCHIVE ](#-hardware-modules) • [ ✨ LIVE DEMO ](https://pritamx4.github.io/CYBERDECK_Px4/)
 
 </div>
 
 ---
 
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║                    >>> SYSTEM CAPABILITIES <<<                         ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
+## ◢ SYSTEM DIAGNOSTICS
 
-## 🖥️ SYSTEM CAPABILITIES
+> **"Architecting high-performance digital ecosystems with a focus on immersive UX and hardware-level precision. Bridging the void between brutalist structures and fluid interactivity."**
 
-<table>
-<tr>
-<td width="50%">
-
-### 🔮 **VISUAL PROTOCOLS**
-- ✨ **Glassmorphism Matrix** - Holographic UI components
-- 🎭 **3D Neural Cubes** - Quantum-state rotations
-- 🌈 **Neon Overlays** - Cyberpunk color gradients
-- 📱 **Adaptive Interface** - Multi-device sync enabled
-
-</td>
-<td width="50%">
-
-<<<<<<< HEAD
-### ⚡ **Interactive Elements**
-- ⌨️ **Typewriter Animation** - Dynamic text effects
-- 🎯 **Smooth Scroll Snap** - Seamless section navigation
-- 🎪 **Native Scroll Animations** - Lightweight motion graphics
-- 🎨 **Font Awesome Icons** - Beautiful iconography
-=======
-### ⚡ **REACTIVE SYSTEMS**
-- ⌨️ **Terminal Typewriter** - Real-time data stream
-- 🎯 **Smooth Navigation** - Zero-latency scroll protocol
-- 🎪 **GSAP Engine** - Advanced motion algorithms
-- 🎨 **Icon Matrix** - Font Awesome arsenal
->>>>>>> origin/main
-
-</td>
-</tr>
-</table>
-
-<<<<<<< HEAD
-### 🛠️ **Tech Stack**
-- **Frontend**: HTML5, CSS3 (Advanced), Vanilla JavaScript
-- **Animations**: CSS Keyframes, Transform3D, Native JavaScript
-- **Design**: Glassmorphism, Neumorphism, Gradient Design
-- **Fonts**: Orbitron, Space Age, Audiowide, Rajdhani
-=======
-### 💾 **CORE STACK**
-- **Neural Layer**: HTML5, CSS3 (Advanced), Vanilla JavaScript
-- **Animation Engine**: GSAP, CSS Keyframes, Transform3D
-- **Visual Design**: Glassmorphism, Neumorphism, Gradient Matrix
-- **Font Systems**: Orbitron, Space Age, Audiowide, Rajdhani
->>>>>>> origin/main
+| MODULE | STATUS | LATENCY | DESCRIPTION |
+| :--- | :--- | :--- | :--- |
+| **NEURAL_GRID** | `ACTIVE` | 0.4ms | 3D Neural connectivity matrix using Three.js |
+| **PROJECT_VAULT** | `SYNCED` | 1.2ms | Orbital project archive with kinetic interaction |
+| **SKILL_MATRIX** | `LOADED` | 0.1ms | Real-time tech stack proficiency visualization |
+| **CONTACT_FUSION**| `ENCRYPTED` | 2.5ms | Secure signal transmission via EmailJS |
 
 ---
 
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║                    >>> BOOT SEQUENCE <<<                               ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
+## ◢ HARDWARE MODULES
 
-## ⚡ BOOT SEQUENCE
+### 🧬 [CORE_SYNTAX]
+The underlying framework of the Cyberdeck, optimized for high-frequency rendering and neural response.
 
-### 💾 SYSTEM REQUIREMENTS
-- 🖥️ Neural browser interface (Chrome/Firefox/Safari/Edge)
-- 📝 Code editor or IDE terminal
-- 🔧 Live server protocol (optional but recommended for optimal performance)
+*   **HTML5 / CSS3 (Advanced)**: The brutalist structural framework.
+*   **Vanilla JavaScript**: The neural pathways and logical core.
+*   **Tailwind CSS**: Rapid styling protocols for sleek interfaces.
+*   **Three.js**: Real-time 3D rendering for the Void.
 
-### 💻 DEPLOYMENT PROTOCOL
+### 🌀 [MOTION_ENGINES]
+Kinetic feedback systems that make the deck feel alive.
 
-1. **Initialize Clone Sequence**
-   ```bash
-<<<<<<< HEAD
-   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
-   cd CYBERDECK_Px4
-=======
-   # >> Establishing connection to mainframe...
-   git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
-   cd CYBERDECK_Px4
-   # >> Neural link established
->>>>>>> origin/main
-   ```
-
-2. **Execute Launch Protocol**
-   ```bash
-   # Option 1: Direct neural interface
-   open index.html
-   
-   # Option 2: Live Server Protocol (VS Code)
-   # Install Live Server extension and right-click index.html → "Open with Live Server"
-   
-   # Option 3: Python Server Matrix (if Python installed)
-   python -m http.server 8000
-   # >> Navigate to: http://localhost:8000
-   # >> System online at port 8000
-   ```
-
-3. **Enter The Grid 🔮**
-   - Navigate cyberspace via neural navbar
-   - Experience real-time typewriter data streams
-   - Interact with quantum-state 3D cubes
-   - Explore the project matrix
+*   **GSAP (GreenSock)**: Professional-grade animation sequencing.
+*   **ScrollTrigger**: Deep link between scroll-depth and UI state.
+*   **LordIcon**: Animated interactive system vectors.
+*   **Retina Scan FX**: Custom visual shaders and filters.
 
 ---
 
-```
-<<<<<<< HEAD
-CYBERDECK_Px4/
-├── 🏠 index.html              # Main HTML structure
-├── 🎨 style.css               # Stylesheet with animations
-├── ⚡ script.js               # Interactive functionality
-├── 📄 README.md               # Project documentation
-├── 🖼️ images/                 # Image assets
-│   ├── 🤖 robo.png            # Hero section robot
-│   ├── 🎯 px4logo.png         # Brand logo
-│   ├── 📋 todolist.png        # Project thumbnails
-│   ├── 🌀 scrolltrigger.png   # Animation demos
-│   └── 🎨 *.jpg/*.png         # Additional assets
-└── 📋 .gitattributes          # Git configuration
-=======
-╔════════════════════════════════════════════════════════════════════════╗
-║                 >>> VISUAL DATA STREAMS <<<                            ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
+## ◢ DEPLOYMENT PROTOCOLS
 
-## 📸 INTERFACE PREVIEW
+```bash
+# >> INITIATING CLONE SEQUENCE
+git clone https://github.com/Pritamx4/CYBERDECK_Px4.git
 
-### 🖥️ Neural Hub
-> Done✅
+# >> ENTERING MAIN FRAME
+cd CYBERDECK_Px4
 
-### 🔮 Quantum Cubes
-> Done✅
-
-### 💼 Project Matrix
-> Done✅
-
-### 📡 Uplink Terminal
-> Done✅
-
----
-
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║              >>> FILE SYSTEM ARCHITECTURE <<<                          ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
-
-## 📂 FILE SYSTEM ARCHITECTURE
-
-```
-CYBERDECK_Px4/
-├── 🖥️ index.html              # Core neural structure
-├── 🔮 style.css               # Visual matrix & animations
-├── ⚡ script.js               # Interactive protocol engine
-├── 📡 README.md               # System documentation
-├── 💾 images/                 # Asset storage
-│   ├── 🤖 robo.png            # Neural hub avatar
-│   ├── 🎯 px4logo.png         # System identifier
-│   ├── 📋 todolist.png        # Project interfaces
-│   ├── 🌀 scrolltrigger.png   # Animation modules
-│   └── 🎨 *.jpg/*.png         # Additional resources
-└── 📋 .gitattributes          # Repository config
->>>>>>> origin/main
+# >> INJECTING LOCAL SERVER
+# Ensure you have Live Server installed or use:
+python -m http.server 8080
 ```
 
 ---
 
+## ◢ SYSTEM ARCHITECTURE
+
+```text
+📦 CYBERDECK_Px4
+ ┣ 📂 modules/                # Neural Logic Subsystems
+ ┃ ┣ 📜 neural-core-3d.js     # 3D Matrix Engine
+ ┃ ┣ 📜 project-vault-3d.js   # Orbital Archive Engine
+ ┃ ┗ 📜 galaxy-background.js  # Void Simulation
+ ┣ 📂 images/                 # Asset Cache
+ ┣ 📜 index.html              # System Entry Point
+ ┣ 📜 style.css               # Visual Matrix Protocols
+ ┗ 📜 script.js               # Main Execution Logic
 ```
-╔════════════════════════════════════════════════════════════════════════╗
-║                   >>> JOIN THE NETWORK <<<                             ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
-
-## 🌐 JOIN THE NETWORK
-
-Incoming transmissions welcomed! 💚 Here's how you can upgrade the mainframe:
-
-### 🔮 Network Protocols
-- ⚠️ **Bug Reports**: Detected an anomaly? Transmit data!
-- 💡 **Feature Requests**: Have a neural upgrade? Share the code!
-- 🎨 **Visual Enhancements**: Make the interface even more cyberpunk
-- 📚 **Documentation**: Help other netrunners decode the system
-- 🔧 **Code Optimization**: Boost performance or deploy new modules
-
-### 📝 Connection Process
-1. 🍴 Fork the mainframe repository
-2. 🌿 Create your feature branch (`git checkout -b feature/QuantumUpgrade`)
-3. 💾 Commit your neural data (`git commit -m 'Add QuantumUpgrade module'`)
-4. 📤 Push to the network (`git push origin feature/QuantumUpgrade`)
-5. 🎯 Initiate Pull Request protocol
 
 ---
 
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║                     >>> LICENSE PROTOCOL <<<                           ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
-
-## 📄 LICENSE PROTOCOL
-
-This system operates under **MIT License** - access [LICENSE](LICENSE) for full protocol.
-
-📋 **Access Permissions:**
-- ✅ Commercial deployment authorized
-- ✅ Modification protocols enabled
-- ✅ Distribution rights granted
-- ✅ Private use permitted
-- ❗ License and copyright notice required for all forks
-
----
-
-```
-╔════════════════════════════════════════════════════════════════════════╗
-║                   >>> UPLINK CHANNELS <<<                              ║
-╚════════════════════════════════════════════════════════════════════════╝
-```
-
-## 📡 UPLINK CHANNELS
+## ◢ UPLINK FREQUENCIES
 
 <div align="center">
 
-### 👨‍💻 **Pritam Singh (Pritamx4) - System Architect**
-
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Pritamx4)
-[![YouTube](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@Pritamx4-Studio?sub_confirmation=1)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/smile._.only__/)
-
-**💾 "Think. Code. Create. Repeat."**  
-**⚡ Netrunner | Digital Architect | Neural UI Engineer**
-
----
-
-### 💌 Establish Connection
-- 📧 **Direct Link**: Open an issue for secure transmission
-- 🌟 **Collaborations**: Neural network always open to new protocols!
-- 🎓 **Knowledge Transfer**: Ready to assist fellow netrunners
-- 🎮 **Let's hack the matrix together!**
+| [ 👨‍💻 GITHUB ] | [ 📸 INSTAGRAM ] | [ 💼 LINKEDIN ] | [ 📺 YOUTUBE ] |
+| :---: | :---: | :---: | :---: |
+| [@Pritamx4](https://github.com/Pritamx4) | [@pritamxfour](https://www.instagram.com/pritamxfour/) | [Pritam Singh](https://www.linkedin.com/in/pritamx4/) | [@Pritamx4](https://www.youtube.com/@Pritamx4) |
 
 </div>
 
@@ -265,18 +105,20 @@ This system operates under **MIT License** - access [LICENSE](LICENSE) for full 
 
 <div align="center">
 
-```
-╔═══════════════════════════════════════════════════════════════════╗
-║  ⭐ STAR THIS REPO IF YOU FOUND IT USEFUL ⭐                       ║
-║                                                                   ║
-║  >> System Status: Fully Operational                             ║
-║  >> Neural Link: Stable                                          ║
-║  >> Uptime: 99.9%                                                ║
-╚═══════════════════════════════════════════════════════════════════╝
+```text
+  [!] WARNING: Unauthorized access to high-fidelity UI is encouraged.
+  [+] Status: Fully Operational
+  [+] Neural Link: Stable
+  [+] Uptime: 99.9%
+  [+] Model: PX4-ARCHITECT-v1
 ```
 
-*Crafted with 💚 and quantum processors by [Pritamx4](https://github.com/Pritamx4)*
+**`[ CYBERDECK_Px4 v1.0 ]`**  
+Crafted with 💚 and High-Energy Electrons by **[Pritam Singh](https://github.com/Pritamx4)**
 
-**`[ CYBERDECK_Px4 v1.0 ]`** **`[ ALL SYSTEMS NOMINAL ]`**
+---
+
+⭐ **Star this repo to establish a permanent connection to the Grid.** establishment . . . **[ SUCCESS ]**
 
 </div>
+

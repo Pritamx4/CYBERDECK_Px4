@@ -3,48 +3,113 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="CYBERDECK_Px4 - Neural interface for digital exploration. Frontend experiments, interactive UI, and cyberpunk aesthetics by Pritam Singh." />
-    <meta name="keywords" content="Pritam Singh, Pritamx4, CYBERDECK, Frontend Developer, Interactive UI, Cyberpunk, Web Experiments, CSS Animations, Three.js" />
+    <meta name="description" content="Pritamx4 - Digital Portfolio. Frontend development, interactive UI, and elegant digital experiences by Pritam Singh." />
+    <meta name="p:domain_verify" content="071586d542de83c09dc53a8415c530b4"/>
+    <meta name="keywords" content="Pritam Singh, Pritamx4, Frontend Developer, Interactive UI, Web Portfolio, CSS Animations, Three.js" />
     <meta name="author" content="Pritam Singh" />
-    <meta property="og:title" content="CYBERDECK_PX4 | SYSTEM ONLINE" />
-    <meta property="og:description" content="Neural interface for digital exploration. Jack in to the grid." />
+    <meta property="og:title" content="Pritamx4" />
+    <meta property="og:description" content="Building high-performance digital ecosystems with a focus on immersive UX." />
     <meta name="google-site-verification" content="p8UOK504pYEThuvuJi2X8lOGNO5gBkvOQh8LsRrsO60" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://pritamx4.github.io/CYBERDECK_Px4/" />
     <meta property="og:image" content="https://pritamx4.github.io/CYBERDECK_Px4/images/px4%20main%20logo.svg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CYBERDECK_Px4 | SYSTEM ONLINE" />
-    <meta name="twitter:description" content="Neural interface for digital exploration. Enter the digital realm." />
+    <meta name="twitter:title" content="Pritamx4" />
+    <meta name="twitter:description" content="Explore the digital portfolio of Pritam Singh." />
     <link rel="canonical" href="https://pritamx4.github.io/CYBERDECK_Px4/">
     <!-- Preload critical assets -->
-    <link rel="preload" href="images/robo.png" as="image">
     <link rel="preload" href="style.css" as="style">
     <link rel="preload" href="script.js" as="script">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdn.lordicon.com" crossorigin>
+    <link rel="preconnect" href="https://media.lordicon.com" crossorigin>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.lordicon.com/lordicon.js"></script>
-    
-    <!-- External Typography & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     
-    <title>CYBERDECK_Px4 | SYSTEM ONLINE</title>
+    <!-- External Typography, Icons & 3D Engine -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=JetBrains+Mono:wght@400;700&family=Major+Mono+Display&family=Oxanium:wght@300;400;700&family=Plus+Jakarta+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&family=Zen+Dots&family=Michroma&family=VT323&display=swap" rel="stylesheet">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Debug Diagnostic -->
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('GLOBAL_ERROR:', e.message, 'at', e.filename, ':', e.lineno);
+      }, true);
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="https://cdn.lordicon.com/lordicon.js" defer></script>
+
+    <!-- Utility Modules -->
+    <script src="modules/config.js" defer></script>
+    <script src="modules/loader.js" defer></script>
+    <script src="modules/audio.js" defer></script>
+    <script src="modules/contact.js" defer></script>
+    <script src="modules/ui.js" defer></script>
+    
+    <!-- Class Definitions -->
+    <script type="module" src="modules/hero-logo-3d.js"></script>
+    <script src="modules/hud-cursor.js" defer></script>
+    <script type="module" src="modules/project-sphere-3d.js"></script>
+    <script type="module" src="modules/galaxy-background.js"></script>
+    <script type="module" src="modules/journey-timeline-3d.js"></script>
+    
+    <!-- Main Application Script -->
+    <script src="script.js" defer></script>
+    
+    <title>Pritamx4</title>
     <link rel="icon" href="images/px4 main logo.svg" />
   </head>
   <body>
+    <!-- Galaxy Background Container -->
+    <div id="galaxy-bg-container" class="galaxy-bg-container"></div>
+
+    <!-- Skip-to-Content Link for Accessibility -->
+    <a href="#section-home" class="skip-to-content">SKIP TO CONTENT</a>
+
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
       <div class="particles" id="particles"></div>
-      <div class="loading-container">
-        <div class="loading-logo">
-          <img src="images/P.svg" alt="P" class="logo-part logo-p" id="logoP" />
-          <img src="images/x.svg" alt="X" class="logo-part logo-x" id="logoX" />
-          <img src="images/4.svg" alt="4" class="logo-part logo-4" id="logo4" />
-        </div>
-        <div class="terminal-output" id="terminalOutput"></div>
-        <div class="progress-container">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
-        <div class="progress-text" id="progressText">0%</div>
+      <div class="loading-logo">
+        <!-- Defined Chrome Gradient for the Loader -->
+        <svg width="0" height="0" class="svg-defs" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="chrome-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+              <stop offset="20%" stop-color="#a1a1a1" stop-opacity="1" />
+              <stop offset="40%" stop-color="#ffffff" stop-opacity="1" />
+              <stop offset="60%" stop-color="#d1d1d1" stop-opacity="1" />
+              <stop offset="80%" stop-color="#717171" stop-opacity="1" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="1" />
+            </linearGradient>
+          </defs>
+        </svg>
+        
+        <!-- P Logo Part -->
+        <svg width="620" height="705" viewBox="0 0 620 705" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-part logo-p" id="logoP">
+          <path d="M72.4605 93.74L1.01306 0.5H62.2538L130.129 74.5V130.74L88.2811 178.1H72.4605V93.74Z" />
+          <path d="M618.013 0.5H97.9775L161.77 74.5V148.007L118.901 203.753H72.4605L71.4399 703.5L184.225 567.34V83.38H337.837L457.767 203.753L618.013 0.5Z" />
+          <path d="M332.733 136.167L287.313 196.353H301.603L346.002 148.007L332.733 136.167Z" />
+          <path d="M323.547 217.567C328.311 210.496 344.471 188.953 371.009 159.353L429.188 217.567L371.009 293.047H208.211L263.327 217.567H323.547Z" />
+        </svg>
+
+        <!-- x Logo Part -->
+        <svg width="368" height="531" viewBox="0 0 368 531" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-part logo-x" id="logoX">
+          <path d="M0.63385 210.528L165.563 0.5H292.314L129.93 226.798L366.634 530.5H248.027L0.63385 210.528Z" />
+        </svg>
+
+        <!-- 4 Logo Part -->
+        <svg width="264" height="689" viewBox="0 0 264 689" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo-part logo-4" id="logo4">
+          <path d="M86.3011 265.141H1.01062L202.235 1.47929V483.464H263.011L141.459 688.479H113.88V568.722H1.01062V483.464H113.88V227.687L86.3011 265.141Z" />
+        </svg>
       </div>
     </div>
 
@@ -62,11 +127,10 @@
         </div>
 
         <ul id="navLinks" class="nav-links" role="list">
-          <li class="nav-item"><a href="#section-home" aria-label="Navigate to home section">SYSTEM_BOOT</a></li>
-          <li class="nav-item"><a href="#section-about" aria-label="Navigate to neural grid section">NEURAL_GRID</a></li>
-          <li class="nav-item"><a href="#section-skills" aria-label="Navigate to skill matrix section">SKILL_MATRIX</a></li>
-          <li class="nav-item"><a href="#section-projects" aria-label="Navigate to project vault section">PROJECT_VAULT</a></li>
-          <li class="nav-item"><a href="#section-contact" aria-label="Navigate to comm link section">COMM_LINK</a></li>
+          <li class="nav-item"><a href="#section-home" aria-label="Navigate to home section">HOME</a></li>
+          <li class="nav-item"><a href="#section-about" aria-label="Navigate to about section">ABOUT</a></li>
+          <li class="nav-item"><a href="#section-projects" aria-label="Navigate to projects section">PROJECTS</a></li>
+          <li class="nav-item"><a href="#section-contact" aria-label="Navigate to contact section">CONTACT</a></li>
         </ul>
 
         <div class="menu-icon" onclick="toggleMenu()" onkeydown="handleMenuKeydown(event)" role="button" aria-label="Toggle mobile menu" aria-expanded="false" tabindex="0">
@@ -81,43 +145,46 @@
       <section id="section-home" class="hero-section">
         <div class="hero-grid">
           <div class="hero-content reveal-left">
-            <span class="tech-label">[ STATUS: NEURAL_LINK_STABLE ]</span>
-            <h1 class="hero-title">CYBERDECK<br><span class="pulse-text">PX4</span></h1>
+            <span class="tech-label">[ STATUS: ONLINE ]</span>
+            <h1 class="hero-title">Pritamx4</h1>
             <p class="hero-description">
               Architecting high-performance digital ecosystems with a focus on 
-              immersive UX and hardware-level precision. Entering the digital void.
+              immersive UX and design precision. Bringing ideas to life.
             </p>
             <div class="hero-actions">
               <a href="#section-projects" class="btn-sleek">
                 <lord-icon src="https://cdn.lordicon.com/piurhpdv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" 
                 stroke="bold"
-                style="width:24px;height:24px"></lord-icon>
-                EXPLORE_VAULT
+                class="icon-24" target="self"></lord-icon>
+                EXPLORE_WORK
               </a>
               <a href="#section-contact" class="btn-outline">
                 <lord-icon src="https://cdn.lordicon.com/motnbmtz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
                 stroke="bold"
-                style="width:24px;height:24px" target="self"></lord-icon>
-                INITIATE_SYNC
+                class="icon-24" target="self"></lord-icon>
+                GET_IN_TOUCH
               </a>
             </div>
           </div>
           <div class="hero-visual reveal-right">
             <div class="hero-frame">
               <div class="retina-scan-line"></div>
-              <img src="images/robo.png" alt="Neural Interface Unit" class="hero-img" />
+              <div id="hero-logo-canvas" class="hero-logo-3d"></div>
               <div class="frame-bracket br-tl"></div>
               <div class="frame-bracket br-br"></div>
-              <span class="frame-id">MODEL_PX4 // NEURAL_CORE</span>
+              <span class="frame-id">MODEL_PX4 // DESIGN_CORE</span>
             </div>
           </div>
         </div>
       </section>
       <!-- About Section - NEURAL_GRID -->
       <section id="section-about" class="about-section">
+        <!-- Three.js Canvas Container (Background) -->
+        <div id="neural-canvas-container" class="neural-canvas-container"></div>
+
         <div class="about-header reveal-up">
-          <span class="about-header-tag">STATUS: NEURAL_LINK_STABLE</span>
-          <h2 class="about-title glow-heading">NEURAL_GRID</h2>
+          <span class="about-header-tag">STATUS: ONLINE</span>
+          <h2 class="about-title glow-heading">ABOUT_ME</h2>
           <div class="about-header-line"></div>
         </div>
         <div class="about-content">
@@ -140,12 +207,12 @@
               </div>
               <div class="stat-block">
                 <span class="stat-label">DATA_DEPLOYED</span>
-                <span class="stat-value">20+</span>
+                <span class="stat-value">5+</span>
                 <span class="stat-unit">PROJ</span>
               </div>
               <div class="stat-block">
                 <span class="stat-label">TOOL_STACK</span>
-                <span class="stat-value">10+</span>
+                <span class="stat-value">4+</span>
                 <span class="stat-unit">SKILLS</span>
               </div>
             </div>
@@ -153,65 +220,13 @@
             <div class="corner-bracket corner-tl"></div>
             <div class="corner-bracket corner-br"></div>
           </div>
-          <!-- Right: Neural Data Flow Visualization -->
-          <div class="neural-visualizer reveal-scale">
-            <!-- Connection lines (SVG) -->
-            <svg class="neural-connections" viewBox="0 0 400 400">
-              <!-- Lines from nodes to center -->
-              <line class="data-line" x1="200" y1="50" x2="200" y2="200" />
-              <line class="data-line" x1="350" y1="110" x2="200" y2="200" />
-              <line class="data-line" x1="350" y1="290" x2="200" y2="200" />
-              <line class="data-line" x1="200" y1="350" x2="200" y2="200" />
-              <line class="data-line" x1="50" y1="290" x2="200" y2="200" />
-              <line class="data-line" x1="50" y1="110" x2="200" y2="200" />
-              <!-- Data particles on lines -->
-              <circle class="data-particle dp1" r="3"><animateMotion dur="2s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
-              <circle class="data-particle dp2" r="3"><animateMotion dur="2.5s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
-              <circle class="data-particle dp3" r="3"><animateMotion dur="1.8s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
-              <circle class="data-particle dp4" r="3"><animateMotion dur="2.2s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
-              <circle class="data-particle dp5" r="3"><animateMotion dur="2.8s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
-              <circle class="data-particle dp6" r="3"><animateMotion dur="2.1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
-              <!-- Second wave particles (offset) -->
-              <circle class="data-particle dp1" r="2"><animateMotion dur="2s" begin="1s" repeatCount="indefinite" path="M200,50 L200,200" /></circle>
-              <circle class="data-particle dp2" r="2"><animateMotion dur="2.5s" begin="1.2s" repeatCount="indefinite" path="M350,110 L200,200" /></circle>
-              <circle class="data-particle dp3" r="2"><animateMotion dur="1.8s" begin="0.9s" repeatCount="indefinite" path="M350,290 L200,200" /></circle>
-              <circle class="data-particle dp4" r="2"><animateMotion dur="2.2s" begin="1.1s" repeatCount="indefinite" path="M200,350 L200,200" /></circle>
-              <circle class="data-particle dp5" r="2"><animateMotion dur="2.8s" begin="1.4s" repeatCount="indefinite" path="M50,290 L200,200" /></circle>
-              <circle class="data-particle dp6" r="2"><animateMotion dur="2.1s" begin="1s" repeatCount="indefinite" path="M50,110 L200,200" /></circle>
-            </svg>
-            <!-- Central Core -->
-            <div class="neural-core">
-              <div class="core-hexagon">
-                <img src="images/px4 main logo.svg" alt="Px4 Logo" class="core-logo" />
-              </div>
-              <div class="core-ring core-ring-1"></div>
-              <div class="core-ring core-ring-2"></div>
-              <div class="core-ring core-ring-3"></div>
-            </div>
-            <!-- Orbiting Nodes -->
-            <div class="neural-node node-1">
-              <div class="node-dot"></div>
-              <span class="node-label">HTML/CSS</span>
-            </div>
-            <div class="neural-node node-2">
-              <div class="node-dot"></div>
-              <span class="node-label">JAVASCRIPT</span>
-            </div>
-            <div class="neural-node node-3">
-              <div class="node-dot"></div>
-              <span class="node-label">REACT</span>
-            </div>
-            <div class="neural-node node-4">
-              <div class="node-dot"></div>
-              <span class="node-label">NODE.JS</span>
-            </div>
-            <div class="neural-node node-5">
-              <div class="node-dot"></div>
-              <span class="node-label">THREE.JS</span>
-            </div>
-            <div class="neural-node node-6">
-              <div class="node-dot"></div>
-              <span class="node-label">DESIGN</span>
+          <!-- Neural Data Visualizer (Legacy Spacer) -->
+          <div class="neural-visualizer-spacer">
+            <div class="timeline-trigger-wrapper">
+              <button id="enter-timeline-btn" class="btn-sleek timeline-btn">
+                <lord-icon src="https://cdn.lordicon.com/uvvbewxh.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" stroke="bold" class="icon-24"></lord-icon>
+                ENTER_TIMELINE
+              </button>
             </div>
           </div>
         </div>
@@ -222,350 +237,56 @@
         </div>
       </section>
 
-      <!-- Skills Section -->
-      <section id="section-skills" class="skills-section">
-        <div class="skills-header reveal-up">
-          <span class="skills-header-tag">SYSTEM_CAPABILITIES_REPORT</span>
-          <h2 class="section-title glow-heading">SKILL_MATRIX</h2>
-          <div class="skills-header-line"></div>
+
+
+      <section id="section-projects" class="project-sphere-section">
+        <div class="section-header reveal-up">
+          <span class="tech-tag">DATA_CORE_v4.0</span>
+          <h2 class="section-title glow-heading">PROJECT_HUB</h2>
+          <div class="header-line"></div>
         </div>
-        <div class="skills-grid">
-          <div class="skill-card reveal-up" data-module="MODULE_01">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-html5-plain"></i>
-              </div>
-              <span class="module-id">MODULE_01</span>
-            </div>
-            <h3>HTML5</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="95"></div>
-              </div>
-              <span class="skill-percentage">95%</span>
-            </div>
-          </div>
 
-          <div class="skill-card reveal-up" data-module="MODULE_02">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-css3-plain"></i>
-              </div>
-              <span class="module-id">MODULE_02</span>
-            </div>
-            <h3>CSS3</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="90"></div>
-              </div>
-              <span class="skill-percentage">90%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_03">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-javascript-plain"></i>
-              </div>
-              <span class="module-id">MODULE_03</span>
-            </div>
-            <h3>JavaScript</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_04">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-tailwindcss-original"></i>
-              </div>
-              <span class="module-id">MODULE_04</span>
-            </div>
-            <h3>Tailwind CSS</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="88"></div>
-              </div>
-              <span class="skill-percentage">88%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_05">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-nodejs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_05</span>
-            </div>
-            <h3>Node.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="80"></div>
-              </div>
-              <span class="skill-percentage">80%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_06">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-git-plain"></i>
-              </div>
-              <span class="module-id">MODULE_06</span>
-            </div>
-            <h3>Git</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_07">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-github-original"></i>
-              </div>
-              <span class="module-id">MODULE_07</span>
-            </div>
-            <h3>GitHub</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="85"></div>
-              </div>
-              <span class="skill-percentage">85%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_08">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-vitejs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_08</span>
-            </div>
-            <h3>Vite</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="100"></div>
-              </div>
-              <span class="skill-percentage">100%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_09">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-react-original"></i>
-              </div>
-              <span class="module-id">MODULE_09</span>
-            </div>
-            <h3>React</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="60"></div>
-              </div>
-              <span class="skill-percentage">60%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_10">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-nextjs-plain"></i>
-              </div>
-              <span class="module-id">MODULE_10</span>
-            </div>
-            <h3>Next.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="50"></div>
-              </div>
-              <span class="skill-percentage">50%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_11">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-threejs-original"></i>
-              </div>
-              <span class="module-id">MODULE_11</span>
-            </div>
-            <h3>Three.js</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="45"></div>
-              </div>
-              <span class="skill-percentage">45%</span>
-            </div>
-          </div>
-
-          <div class="skill-card reveal-up" data-module="MODULE_12">
-            <div class="skill-card-header">
-              <div class="skill-icon">
-                <i class="devicon-java-plain"></i>
-              </div>
-              <span class="module-id">MODULE_12</span>
-            </div>
-            <h3>Java</h3>
-            <div class="skill-bar-container">
-              <div class="skill-bar">
-                <div class="skill-progress" data-progress="55"></div>
-              </div>
-              <span class="skill-percentage">55%</span>
-            </div>
+        <!-- 3D ORBITAL CANVAS -->
+        <div id="project-canvas-container" class="project-canvas-container">
+          <div class="canvas-instructions">
+            <span class="ui-glitch" data-text="DRAG_TO_ROTATE">DRAG_TO_ROTATE</span>
+            <span class="ui-glitch" data-text="CLICK_SHARD_FOR_DATA">CLICK_SHARD_FOR_DATA</span>
           </div>
         </div>
-      </section>
 
-      <section id="section-projects" class="section-project">
-        <svg
-          width="0"
-          height="0"
-          viewBox="0 0 400 270"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            <clipPath id="folderClip" clipPathUnits="objectBoundingBox">
-              <path
-                transform="scale(0.0025 0.0037)"
-                d="
-          M 0 0
-          L 110 0
-          Q 120 0 128 8
-          L 162 32
-          Q 170 40 180 40
-          L 390 40
-          Q 400 40 400 50
-          L 400 270
-          L 0 270
-          Z
-        "
-              />
-            </clipPath>
-          </defs>
-        </svg>
-        <div class="project-heading reveal-up">
-          <h1 class="glow-heading">PROJECT_VAULT</h1>
-        </div>
-        <div class="cards-container">
-          <div class="project-card reveal-scale">
-            <img src="images/scrolltrigger.png" alt="Scroll Trigger project preview"/>
-            <div class="card-info">
-              <h3>Scroll Trigger</h3>
-              <p>A scroll-triggered animation built with native JavaScript.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/Scroll-trigger-effect/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/Scroll-trigger-effect/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
+        <!-- PROJECT DETAIL OVERLAY -->
+        <div id="project-detail-overlay" class="project-detail-overlay">
+          <div class="detail-container glass-morphic">
+            <button class="close-detail" aria-label="Close project detail">
+              <span class="close-text">DISCONNECT</span>
+              <lord-icon src="https://cdn.lordicon.com/ebyacdql.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-30"></lord-icon>
+            </button>
+
+            <!-- Decorative Corners -->
+            <div class="corner tl"></div><div class="corner tr"></div>
+            <div class="corner bl"></div><div class="corner br"></div>
+
+            <div class="detail-grid">
+              <div class="detail-visual">
+                <div class="visual-frame">
+                  <div class="scanline"></div>
+                  <img id="detail-img" src="" alt="Project Preview" />
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/todolist.png" alt="To-Do List project preview"/>
-            <div class="card-info">
-              <h3>To-Do List</h3>
-              <p>A to-do list application built with Next.js</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/todolist/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://to-do-list-delta-amber-46.vercel.app/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/tictactoe.png" alt="Tic Tac Toe project preview"/>
-            <div class="card-info">
-              <h3>Tic Tac Toe</h3>
-              <p>by using HTML, CSS and JS.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/tic-tac-toe/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/tic-tac-toe/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/memorymanagementsimulator.png" alt="Memory Management Simulator project preview" />
-            <div class="card-info">
-              <h3>Memory Management simulator</h3>
-              <p>by using HTML CSS JS.</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/os-project/archive/refs/heads/master.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/os-project/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" 
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/snakegame.png" alt="Snake Game project preview" />
-            <div class="card-info">
-              <h3>Snake Game</h3>
-              <p>A classic snake game</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/snake-game/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://pritamx4.github.io/snake-game/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="project-card reveal-scale">
-            <img src="images/drivemate.png" alt="Drivemate project preview" />
-            <div class="card-info">
-              <h3>Drivemate</h3>
-              <p>Car rental app using React</p>
-              <div class="links">
-                <a href="https://github.com/Pritamx4/drivemate/archive/refs/heads/main.zip">
-                  <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-                  Get Code
-                </a>
-                <a href="https://drivemate-eight.vercel.app/">
-                  <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
-                  stroke="bold"
-                  style="width:20px;height:20px"></lord-icon>
-                  Live Review
-                </a>
+              <div class="detail-content">
+                <span class="tech-label">[ MODULE_READY ]</span>
+                <h3 id="detail-title">PROJECT_TITLE</h3>
+                <p id="detail-description">Initialising neural link...</p>
+                <div class="detail-actions">
+                  <a id="detail-code" href="#" class="btn-sleek" target="_blank">
+                    <lord-icon src="https://cdn.lordicon.com/lrubprlz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
+                    GET_CODE
+                  </a>
+                  <a id="detail-live" href="#" class="btn-outline" target="_blank">
+                    <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" class="icon-20"></lord-icon>
+                    LIVE_PREVIEW
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -574,9 +295,9 @@
 
       <section id="section-contact" class="contact-fusion">
         <div class="fusion-header reveal-up">
-          <span class="tech-label">[ INITIATE_SIGNAL ]</span>
-          <h2 class="section-title">CONTACT_FUSION</h2>
-          <div class="fusion-line"></div>
+          <span class="fusion-header-tag">GET_IN_TOUCH</span>
+          <h2 class="section-title glow-heading">CONTACT</h2>
+          <div class="fusion-header-line"></div>
         </div>
 
         <div class="fusion-grid">
@@ -584,7 +305,7 @@
           <div class="portrait-container reveal-up">
             <div class="portrait-frame">
               <div class="scan-line"></div>
-              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" />
+              <img src="images/contact.png" alt="Operator Portrait" class="portrait-img" loading="lazy" decoding="async" width="400" height="500" onerror="this.onerror=null;this.src='images/px4 main logo.svg';this.alt='Operator Portrait (Fallback Logo)';" />
               <div class="frame-decal bracket-tl"></div>
               <div class="frame-decal bracket-br"></div>
               <div class="frame-label">OPERATOR // PX4</div>
@@ -593,6 +314,10 @@
 
           <!-- Right: Connect Panel -->
           <div class="connect-panel reveal-up">
+            <div class="corner-bracket corner-tl"></div>
+            <div class="corner-bracket corner-tr"></div>
+            <div class="corner-bracket corner-bl"></div>
+            <div class="corner-bracket corner-br"></div>
             <div class="panel-content">
               <span class="tech-label">[ CHANNEL: ENCRYPTED ]</span>
               <p class="connect-description">
@@ -602,38 +327,41 @@
 
               <div class="social-matrix">
                 <a href="https://github.com/Pritamx4" target="_blank" rel="noopener noreferrer" class="social-item">
-                  <lord-icon src="https://cdn.lordicon.com/jjxzcivr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
+                  <lord-icon src="https://cdn.lordicon.com/jjxzcivr.json" trigger="hover" colors="primary:#ffffff,secondary:#00FFD1"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">GITHUB // SOURCE</span>
                 </a>
                 <a href="https://www.instagram.com/pritamxfour/" target="_blank" rel="noopener noreferrer" class="social-item">
-                  <lord-icon src="https://cdn.lordicon.com/tgyvxauj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
+                  <lord-icon src="https://cdn.lordicon.com/tgyvxauj.json" trigger="hover" colors="primary:#ffffff,secondary:#00FFD1"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">INSTAGRAM // INTEL</span>
                 </a>
                 <a href="https://www.linkedin.com/in/pritamx4/" target="_blank" rel="noopener noreferrer" class="social-item">
-                  <lord-icon src="https://cdn.lordicon.com/dsdlqjde.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
+                  <lord-icon src="https://cdn.lordicon.com/dsdlqjde.json" trigger="hover" colors="primary:#ffffff,secondary:#00FFD1"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">LINKEDIN // NETWORK</span>
                 </a>
                 <a href="https://www.youtube.com/@Pritamx4" target="_blank" rel="noopener noreferrer" class="social-item">
-                  <lord-icon src="https://cdn.lordicon.com/lyjuidpq.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
+                  <lord-icon src="https://cdn.lordicon.com/lyjuidpq.json" trigger="hover" colors="primary:#ffffff,secondary:#00FFD1"
                   stroke="bold"
-                  style="width:30px;height:30px"></lord-icon>
+                  class="icon-30"></lord-icon>
                   <span class="social-label">YOUTUBE // BROADCAST</span>
                 </a>
               </div>
 
               <div class="terminal-input-wrapper">
                 <div class="terminal-prefix">>></div>
-                <input type="text" class="message-input" placeholder="inject_message..." />
+                <label for="messageInput" class="message-label"></label>
+                <input type="text" id="messageInput" class="message-input" placeholder="inject_message..." aria-describedby="messageError" aria-invalid="false" />
+                <p id="messageCount" class="message-count" aria-live="polite">0 / 240</p>
+                <p id="messageError" class="message-error" role="alert" aria-live="polite"></p>
                 <button class="send-btn" aria-label="Send Message">
-                  <lord-icon src="https://cdn.lordicon.com/vpbspaec.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff"
+                  <lord-icon src="https://cdn.lordicon.com/vpbspaec.json" trigger="hover" colors="primary:#000000,secondary:#00f0ff"
                   stroke="bold"
-                  style="width:24px;height:24px"></lord-icon>
+                  class="icon-24"></lord-icon>
                 </button>
               </div>
             </div>
@@ -642,108 +370,199 @@
       </section>
     </main>
 
-    <!-- Bottom Stats Tab -->
-    <div class="bottom-tab" id="bottomTab">
-      <button type="button" class="tab-toggle" id="tabToggle" onclick="toggleBottomTab()" aria-label="Toggle repository stats panel" title="Toggle repository stats panel">
-        <lord-icon src="https://cdn.lordicon.com/lrzdmsmx.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:24px;height:24px"></lord-icon>
-      </button>
+    <!-- Stat Capsule (Morphed HUD) -->
+    <div class="stat-capsule" id="statCapsule" onclick="toggleStatPill(event)">
+      <div class="capsule-glass"></div>
       
-      <div class="tab-content">
-        <canvas id="sparkleCanvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></canvas>
-        <div class="terminal-output" id="terminalText"></div>
-        
-        <div class="stats-grid" id="statsGrid">
-          <!-- Stats Chart -->
-          <div class="stats-chart-container graph">
-            <canvas id="statsChart" width="700" height="350"></canvas>
+      <div class="capsule-internal">
+        <!-- Expanded Analytics (Hidden by default) -->
+        <div class="capsule-expanded-section" id="statExpandedSection">
+          <div class="drawer-header">
+            <span class="drawer-header-label">SYSTEM_ANALYTICS</span>
+            <span class="drawer-header-status" id="repo-status">SYNC_STABLE</span>
+          </div>
+
+          <!-- Technical DNA (Housed in Drawer) -->
+          <div class="technical-row">
+            <div class="tech-item">
+              <span class="tech-label">HTML</span>
+              <span class="tech-value" id="val-html">0%</span>
+            </div>
+            <div class="tech-divider"></div>
+            <div class="tech-item">
+              <span class="tech-label">CSS</span>
+              <span class="tech-value" id="val-css">0%</span>
+            </div>
+            <div class="tech-divider"></div>
+            <div class="tech-item">
+              <span class="tech-label">JS</span>
+              <span class="tech-value" id="val-js">0%</span>
+            </div>
+          </div>
+
+          <div class="drawer-grid">
+            <div class="drawer-item">
+              <span class="d-label">FORKS</span>
+              <span class="d-value" id="val-forks">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">WATCHERS</span>
+              <span class="d-value" id="val-watchers">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">ISSUES</span>
+              <span class="d-value" id="val-issues">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">DISK_SIZE</span>
+              <span class="d-value" id="val-size">0 KB</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">TOTAL_REPOS</span>
+              <span class="d-value" id="val-repos">0</span>
+            </div>
+            <div class="drawer-item">
+              <span class="d-label">UPTIME</span>
+              <span class="d-value">99.9%</span>
+            </div>
+          </div>
+          <div class="drawer-footer">
+            <span class="d-footer-label">LAST_UPDATE:</span>
+            <span class="d-footer-value" id="val-updated">NEVER</span>
+          </div>
+        </div>
+
+        <!-- Summary Bar (Always visible) -->
+        <div class="capsule-summary-bar">
+          <div class="stat-pulse" id="pulse-commits" title="Total Commits">
+            <span class="pulse-label">CMD_COMMITS</span>
+            <span class="pulse-value" id="val-commits">---</span>
+            <div class="sparkline-container" id="spark-commits"></div>
           </div>
           
-          <!-- Language Stats -->
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvaxaowk.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">HTML</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="html"></div></div>
-            <span class="stat-percent" id="htmlPercent">0%</span>
+          <div class="capsule-divider"></div>
+          
+          <div class="stat-pulse" id="pulse-stars" title="GitHub Stars">
+            <span class="pulse-label">CMD_STARS</span>
+            <span class="pulse-value" id="val-stars">---</span>
+            <div class="sparkline-container" id="spark-stars"></div>
           </div>
           
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/gvtjlyjf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">CSS</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="css"></div></div>
-            <span class="stat-percent" id="cssPercent">0%</span>
-          </div>
+          <div class="capsule-divider"></div>
           
-          <div class="stat-item language-stat">
-            <lord-icon src="https://cdn.lordicon.com/yraqammt.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">JavaScript</span>
-            <div class="stat-bar-bg"><div class="stat-bar" data-lang="js"></div></div>
-            <span class="stat-percent" id="jsPercent">0%</span>
-          </div>
-          
-          <!-- GitHub Stats -->
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/exymduqj.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Commits</span>
-            <span class="stat-value" id="commitCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yvjimpju.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Repos</span>
-            <span class="stat-value" id="repoCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/cvwrvyjv.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Stars</span>
-            <span class="stat-value" id="starCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Forks</span>
-            <span class="stat-value" id="forkCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/dicvhxpz.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Watchers</span>
-            <span class="stat-value" id="watcherCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/yhtmwrae.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Issues</span>
-            <span class="stat-value" id="issueCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/jdgfsfzr.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Contributors</span>
-            <span class="stat-value" id="contributorCount">0</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/xqdfobxg.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Size</span>
-            <span class="stat-value" id="repoSize">0 KB</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/okqjaags.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Updated</span>
-            <span class="stat-value" id="lastUpdated">-</span>
-          </div>
-          
-          <div class="stat-item github-stat">
-            <lord-icon src="https://cdn.lordicon.com/ubpgwkmy.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" style="width:20px;height:20px"></lord-icon>
-            <span class="stat-label">Branches</span>
-            <span class="stat-value" id="branchCount">0</span>
+          <div class="stat-pulse" id="pulse-contributors" title="Total Contributors">
+            <span class="pulse-label">CMD_CONTRIBS</span>
+            <span class="pulse-value" id="val-contributors">---</span>
+            <div class="sparkline-container" id="spark-contributors"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="script.js?v=1768418744"></script>
+
+    <!-- HUD Targeting Cursor -->
+    <div id="hud-cursor" class="hud-cursor">
+      <div class="cursor-dot"></div>
+      <div class="cursor-ring"></div>
+      <div class="cursor-brackets">
+        <div class="bracket br-tl"></div>
+        <div class="bracket br-tr"></div>
+        <div class="bracket br-bl"></div>
+        <div class="bracket br-br"></div>
+      </div>
+      <div class="cursor-coords">
+        <span class="x">000</span>
+        <span class="y">000</span>
+      </div>
+    </div>
+
+    <!-- Timeline Under Construction Overlay -->
+    <div id="journey-timeline-container" class="journey-timeline-overlay" aria-hidden="true">
+      <div class="construction-shell" role="dialog" aria-modal="true" aria-labelledby="construction-title" aria-describedby="construction-copy">
+        <div class="construction-ribbon">ACCESS RESTRICTED</div>
+        <div class="construction-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <p class="construction-kicker">NEURAL SUBSYSTEM</p>
+        <h2 id="construction-title" class="construction-title">UNDER CONSTRUCTION</h2>
+        <p id="construction-copy" class="construction-copy">
+          The timeline experience is currently being rebuilt. Public access is disabled while the new version is in progress.
+        </p>
+        <div class="construction-status">
+          <div class="status-chip">LOCKED</div>
+          <div class="status-chip">NO PUBLIC ACCESS</div>
+          <div class="status-chip">UPGRADE IN PROGRESS</div>
+        </div>
+        <div class="construction-meter" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <button id="exit-timeline-btn" class="exit-btn construction-exit" type="button">
+          <span class="exit-text">RETURN_HOME</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const enterBtn = document.getElementById('enter-timeline-btn');
+        const exitBtn = document.getElementById('exit-timeline-btn');
+        const overlay = document.getElementById('journey-timeline-container');
+        let savedScrollY = 0;
+
+        const lockScroll = () => {
+          savedScrollY = window.scrollY || window.pageYOffset || 0;
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+          document.documentElement.style.overscrollBehavior = 'none';
+          document.body.style.overscrollBehavior = 'none';
+          document.body.classList.add('timeline-active');
+        };
+
+        const unlockScroll = () => {
+          document.body.style.overflow = '';
+          document.documentElement.style.overflow = '';
+          document.documentElement.style.overscrollBehavior = '';
+          document.body.style.overscrollBehavior = '';
+          document.body.classList.remove('timeline-active');
+          window.scrollTo(0, savedScrollY);
+        };
+
+        const openConstructionOverlay = () => {
+          if (!overlay) return;
+          overlay.classList.add('active');
+          overlay.setAttribute('aria-hidden', 'false');
+          lockScroll();
+        };
+
+        const closeConstructionOverlay = () => {
+          if (!overlay) return;
+          overlay.classList.remove('active');
+          overlay.setAttribute('aria-hidden', 'true');
+          unlockScroll();
+        };
+
+        if (enterBtn) {
+          enterBtn.addEventListener('click', openConstructionOverlay);
+        }
+
+        if (exitBtn) {
+          exitBtn.addEventListener('click', closeConstructionOverlay);
+        }
+
+        if (overlay) {
+          overlay.addEventListener('click', (event) => {
+            if (event.target === overlay) {
+              closeConstructionOverlay();
+            }
+          });
+        }
+      });
+    </script>
+
   </body>
 </html>

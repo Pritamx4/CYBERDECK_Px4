@@ -584,3 +584,22 @@ skillCards.forEach(card => {
   skillsObserver.observe(card);
 });
 
+
+folder style design clip path 
+            <clipPath id="folderClip" clipPathUnits="objectBoundingBox">
+              <path
+                transform="scale(0.0025 0.0037)"
+                d="
+          M 0 0
+          L 110 0
+          Q 120 0 128 8
+          L 162 32
+          Q 170 40 180 40
+          L 390 40
+          Q 400 40 400 50
+          L 400 270
+          L 0 270
+          Z
+        "
+              />
+            </clipPath>

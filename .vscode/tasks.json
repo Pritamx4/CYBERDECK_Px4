@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Minify CSS and JS",
+			"type": "shell",
+			"command": "npx",
+			"args": [
+				"--yes",
+				"clean-css-cli",
+				"-o",
+				"style.min.css",
+				"style.css",
+				"&&",
+				"npx",
+				"--yes",
+				"terser",
+				"script.js",
+				"-c",
+				"-m",
+				"-o",
+				"script.min.js"
+			]
+		}
+	]
+}
