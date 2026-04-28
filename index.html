@@ -476,39 +476,89 @@
       </div>
     </div>
 
-    <!-- Journey Timeline Experience Overlay -->
-    <div id="journey-timeline-container" class="journey-timeline-overlay">
-      <button id="exit-timeline-btn" class="exit-btn">
-        <span class="exit-text">EXIT_TIMELINE</span>
-        <lord-icon src="https://cdn.lordicon.com/nhfyvxhf.json" trigger="hover" colors="primary:#ffffff,secondary:#00f0ff" stroke="bold" class="icon-24"></lord-icon>
-      </button>
-      <div class="timeline-hud">
-        <div class="hud-line"></div>
-        <div class="hud-label">NEURAL_PATH_SYNC: ACTIVE</div>
+    <!-- Timeline Under Construction Overlay -->
+    <div id="journey-timeline-container" class="journey-timeline-overlay" aria-hidden="true">
+      <div class="construction-shell" role="dialog" aria-modal="true" aria-labelledby="construction-title" aria-describedby="construction-copy">
+        <div class="construction-ribbon">ACCESS RESTRICTED</div>
+        <div class="construction-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <p class="construction-kicker">NEURAL SUBSYSTEM</p>
+        <h2 id="construction-title" class="construction-title">UNDER CONSTRUCTION</h2>
+        <p id="construction-copy" class="construction-copy">
+          The timeline experience is currently being rebuilt. Public access is disabled while the new version is in progress.
+        </p>
+        <div class="construction-status">
+          <div class="status-chip">LOCKED</div>
+          <div class="status-chip">NO PUBLIC ACCESS</div>
+          <div class="status-chip">UPGRADE IN PROGRESS</div>
+        </div>
+        <div class="construction-meter" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <button id="exit-timeline-btn" class="exit-btn construction-exit" type="button">
+          <span class="exit-text">RETURN_HOME</span>
+        </button>
       </div>
     </div>
 
-    <script type="module">
-      import JourneyTimeline from './modules/journey-timeline-3d.js';
-
+    <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const timeline = new JourneyTimeline();
-        
         const enterBtn = document.getElementById('enter-timeline-btn');
         const exitBtn = document.getElementById('exit-timeline-btn');
         const overlay = document.getElementById('journey-timeline-container');
+        let savedScrollY = 0;
+
+        const lockScroll = () => {
+          savedScrollY = window.scrollY || window.pageYOffset || 0;
+          document.body.style.overflow = 'hidden';
+          document.documentElement.style.overflow = 'hidden';
+          document.documentElement.style.overscrollBehavior = 'none';
+          document.body.style.overscrollBehavior = 'none';
+          document.body.classList.add('timeline-active');
+        };
+
+        const unlockScroll = () => {
+          document.body.style.overflow = '';
+          document.documentElement.style.overflow = '';
+          document.documentElement.style.overscrollBehavior = '';
+          document.body.style.overscrollBehavior = '';
+          document.body.classList.remove('timeline-active');
+          window.scrollTo(0, savedScrollY);
+        };
+
+        const openConstructionOverlay = () => {
+          if (!overlay) return;
+          overlay.classList.add('active');
+          overlay.setAttribute('aria-hidden', 'false');
+          lockScroll();
+        };
+
+        const closeConstructionOverlay = () => {
+          if (!overlay) return;
+          overlay.classList.remove('active');
+          overlay.setAttribute('aria-hidden', 'true');
+          unlockScroll();
+        };
 
         if (enterBtn) {
-          enterBtn.addEventListener('click', () => {
-            timeline.activate();
-            document.body.classList.add('timeline-active');
-          });
+          enterBtn.addEventListener('click', openConstructionOverlay);
         }
 
         if (exitBtn) {
-          exitBtn.addEventListener('click', () => {
-            timeline.deactivate();
-            document.body.classList.remove('timeline-active');
+          exitBtn.addEventListener('click', closeConstructionOverlay);
+        }
+
+        if (overlay) {
+          overlay.addEventListener('click', (event) => {
+            if (event.target === overlay) {
+              closeConstructionOverlay();
+            }
           });
         }
       });

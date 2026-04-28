@@ -114,6 +114,7 @@ class JourneyTimeline {
         document.body.style.right = '0';
         document.body.style.width = '100%';
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
         document.documentElement.style.overscrollBehavior = 'none';
         document.body.style.overscrollBehavior = 'none';
     }
@@ -125,9 +126,19 @@ class JourneyTimeline {
         document.body.style.right = '';
         document.body.style.width = '';
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
         document.documentElement.style.overscrollBehavior = '';
         document.body.style.overscrollBehavior = '';
-        window.scrollTo(0, this.savedScrollY);
+
+        const restoreScroll = () => {
+            const scrollingElement = document.scrollingElement || document.documentElement;
+            scrollingElement.scrollTop = this.savedScrollY;
+            window.scrollTo(0, this.savedScrollY);
+        };
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(restoreScroll);
+        });
     }
 
     setTargetProgress(nextProgress) {
@@ -917,6 +928,7 @@ class JourneyTimeline {
     activate() {
         this.isActive = true;
         this.container.classList.add('active');
+        this.container.style.pointerEvents = 'auto';
         this.lockPageScroll();
         this.targetProgress = Math.max(this.targetProgress, 0.03);
 
@@ -933,13 +945,15 @@ class JourneyTimeline {
     deactivate() {
         this.isActive = false;
         this.pointerState.active = false;
+        this.container.style.pointerEvents = 'none';
+
+        this.unlockPageScroll();
 
         gsap.killTweensOf([this.container, this.exitBtn, this.hud]);
         gsap.timeline({
             defaults: { ease: 'power4.inOut' },
             onComplete: () => {
                 this.container.classList.remove('active');
-                this.unlockPageScroll();
             }
         })
             .to(this.hud, { y: 14, opacity: 0, duration: 0.45 }, 0)

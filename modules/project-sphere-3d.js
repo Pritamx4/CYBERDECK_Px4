@@ -19,6 +19,10 @@ class ProjectSphere3D {
     this.shards = [];
     this.isDragging = false;
     this.previousMousePosition = { x: 0, y: 0 };
+    this.activePointerId = null;
+    this.dragStart = { x: 0, y: 0 };
+    this.dragDistance = 0;
+    this.suppressNextClick = false;
     
     this.init();
   }
@@ -27,6 +31,7 @@ class ProjectSphere3D {
     this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.container.appendChild(this.renderer.domElement);
+    this.container.style.touchAction = 'none';
 
     this.camera.position.z = 15;
 
@@ -173,35 +178,75 @@ class ProjectSphere3D {
   }
 
   addEventListeners() {
-    this.container.addEventListener('mousedown', (e) => {
+    this.container.addEventListener('pointerdown', (e) => {
       this.isDragging = true;
+      this.activePointerId = e.pointerId;
+      this.dragStart = { x: e.clientX, y: e.clientY };
       this.previousMousePosition = { x: e.clientX, y: e.clientY };
+      this.dragDistance = 0;
+
+      if (this.container.setPointerCapture) {
+        this.container.setPointerCapture(e.pointerId);
+      }
     });
 
-    window.addEventListener('mouseup', () => {
+    window.addEventListener('pointerup', (e) => {
+      if (this.activePointerId !== null && e.pointerId !== this.activePointerId) {
+        return;
+      }
+
       this.isDragging = false;
+
+      if (this.container.releasePointerCapture && this.activePointerId !== null) {
+        try {
+          this.container.releasePointerCapture(this.activePointerId);
+        } catch (error) {
+          // Ignore capture release issues when the browser already cleared it.
+        }
+      }
+
+      this.activePointerId = null;
+      this.suppressNextClick = this.dragDistance > 8;
+      if (this.suppressNextClick) {
+        window.setTimeout(() => {
+          this.suppressNextClick = false;
+        }, 0);
+      }
     });
 
-    this.container.addEventListener('mousemove', (e) => {
-      if (this.isDragging) {
+    window.addEventListener('pointercancel', () => {
+      this.isDragging = false;
+      this.activePointerId = null;
+      this.suppressNextClick = false;
+    });
+
+    this.container.addEventListener('pointermove', (e) => {
+      const rect = this.container.getBoundingClientRect();
+      this.mouse.x = ((e.clientX - rect.left) / this.container.clientWidth) * 2 - 1;
+      this.mouse.y = -((e.clientY - rect.top) / this.container.clientHeight) * 2 + 1;
+
+      if (this.isDragging && (this.activePointerId === null || e.pointerId === this.activePointerId)) {
         const deltaMove = {
           x: e.clientX - this.previousMousePosition.x,
           y: e.clientY - this.previousMousePosition.y
         };
+
+        this.dragDistance += Math.abs(deltaMove.x) + Math.abs(deltaMove.y);
         this.scene.rotation.y += deltaMove.x * 0.005;
         this.scene.rotation.x += deltaMove.y * 0.005;
         this.previousMousePosition = { x: e.clientX, y: e.clientY };
       }
-
-      const rect = this.container.getBoundingClientRect();
-      this.mouse.x = ((e.clientX - rect.left) / this.container.clientWidth) * 2 - 1;
-      this.mouse.y = -((e.clientY - rect.top) / this.container.clientHeight) * 2 + 1;
 
       this.tooltip.style.left = `${e.clientX + 20}px`;
       this.tooltip.style.top = `${e.clientY + 20}px`;
     });
 
     this.container.addEventListener('click', () => {
+      if (this.suppressNextClick) {
+        this.suppressNextClick = false;
+        return;
+      }
+
       this.raycaster.setFromCamera(this.mouse, this.camera);
       const intersects = this.raycaster.intersectObjects(this.shards.map(s => s.core));
       if (intersects.length > 0) {
