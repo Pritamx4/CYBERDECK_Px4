@@ -107,7 +107,7 @@ class HUDCursor {
   }
 
   addInteractions() {
-    const interactables = document.querySelectorAll('a, button, .project-card, .social-item, .tab-toggle, .skill-card, .btn-sleek, .btn-outline');
+    const interactables = document.querySelectorAll('a, button, .project-card, .social-item, .skill-card, .btn-sleek, .btn-outline');
     interactables.forEach(el => {
       el.addEventListener('mouseenter', () => this.lockOn(el));
       el.addEventListener('mouseleave', () => this.unlock());

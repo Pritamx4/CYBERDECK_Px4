@@ -986,8 +986,7 @@ a {
 .btn-outline,
 .detail-nav-btn,
 .send-btn,
-.close-detail,
-.tab-toggle {
+.close-detail {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1012,8 +1011,7 @@ a {
 .btn-outline::after,
 .detail-nav-btn::after,
 .send-btn::after,
-.close-detail::after,
-.tab-toggle::after {
+.close-detail::after {
   content: '';
   position: absolute;
   top: 0;
@@ -1043,8 +1041,7 @@ a {
 .btn-outline:hover,
 .detail-nav-btn:hover,
 .send-btn:hover,
-.close-detail:hover,
-.tab-toggle:hover {
+.close-detail:hover {
   background: #ff003c !important;
   color: #fff !important;
   box-shadow: 0 0 20px rgba(255, 0, 60, 0.4);
@@ -1057,8 +1054,7 @@ a {
 .btn-outline:hover::after,
 .detail-nav-btn:hover::after,
 .send-btn:hover::after,
-.close-detail:hover::after,
-.tab-toggle:hover::after {
+.close-detail:hover::after {
   opacity: 0.4;
   background: #fff;
   animation: glitch-slicer-stationary 0.3s steps(2, end) infinite;
@@ -2389,9 +2385,6 @@ canvas {
 }
 
 /* ========================================
-   6. BOTTOM TAB (TERMINAL)
-======================================== */
-/* ========================================
    6. STAT CAPSULE (MORPHED HUD)
 ======================================== */
 .stat-capsule {
@@ -2877,13 +2870,6 @@ canvas {
 /* Smooth Scroll Behavior */
 html {
   scroll-behavior: smooth;
-}
-
-/* Bottom Tab Mobile Hide */
-@media screen and (max-width: 768px) {
-  #bottomTab {
-    display: none;
-  }
 }
 
 /* ========================================

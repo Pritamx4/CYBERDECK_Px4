@@ -7,20 +7,6 @@
 // APP CONFIGURATION
 // ===============================================
 const APP_CONFIG = {
-  // Loading Screen
-  LOADING: {
-    TERMINAL_LINES: [
-      '> Initializing Pritamx4 Digital Archive...',
-      '> Fetching creative modules...',
-      '> Optimizing visual environment...'
-    ],
-    TYPE_SPEED: 25, // ms per character
-    LINE_DELAY: 150, // ms between lines
-    PROGRESS_DURATION: 1200, // ms for progress bar
-    ACCESS_TEXT: '> PREPARING VIEWPORT..',
-    ACCESS_SPEED: 40, // ms per character
-  },
-
   // Audio System
   AUDIO: {
     ENABLED_DEFAULT: true,
@@ -39,12 +25,6 @@ const APP_CONFIG = {
     HOVER_SOUND: true,
   },
 
-  // UI Elements - Bottom Tab
-  BOTTOM_TAB: {
-    AUTO_HIDE_DELAY: 3000, // ms before auto-hiding
-    SHOW_DELAY: 500, // ms before showing stats
-  },
-
   // HUD Cursor
   CURSOR: {
     LOCK_TRANSITION_MS: 200,
@@ -59,21 +39,6 @@ const APP_CONFIG = {
     EMAILJS_PUBLIC_KEY: 'glYVjrgq1NH52F9M2',
     FORM_NAME: 'Portfolio Visitor',
     RECIPIENT_NAME: 'Pritam Singh',
-  },
-
-  // Terminal Stats
-  STATS: {
-    TERMINAL_MESSAGES: [
-      '> INITIALIZING NEURAL INTERFACE...',
-      '> SYNCING WITH GITHUB REPOSITORIES...',
-      '> ANALYZING CODE METRICS...',
-      '> RENDERING SKILL MATRIX...',
-      '> STATUS: ALL SYSTEMS ONLINE'
-    ],
-    TYPE_SPEED: 30, // ms per character
-    MESSAGE_DELAY: 400, // ms between messages
-    CHART_UPDATE_DELAY: 500, // ms before showing chart
-    ANIMATION_DURATION: 1500, // ms for counter animation
   },
 
   // Repository Data (default percentages)
@@ -125,10 +90,6 @@ const APP_CONFIG = {
 // ===============================================
 const DOM_SELECTORS = {
   LOADING_SCREEN: '#loadingScreen',
-  TERMINAL_OUTPUT: '#terminalOutput',
-  PROGRESS_BAR: '#progressBar',
-  PROGRESS_TEXT: '#progressText',
-  PROGRESS_CONTAINER: '.progress-container',
   
   NAVBAR_LOGO: '#navbarLogo',
   NAV_ITEMS: '.nav-item',
@@ -141,12 +102,6 @@ const DOM_SELECTORS = {
   MESSAGE_ERROR: '#messageError',
   TOAST: '#toast',
   TOAST_MESSAGE: '.toast-message',
-  
-  BOTTOM_TAB: '#bottomTab',
-  TAB_TOGGLE: '.tab-toggle',
-  TAB_CONTENT: '.tab-content',
-  TERMINAL_TEXT: '#terminalText',
-  STATS_GRID: '#statsGrid',
   
   SECTIONS: 'section[id]',
   HUD_CURSOR: '#hud-cursor',

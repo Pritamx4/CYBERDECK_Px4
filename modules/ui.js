@@ -1,11 +1,10 @@
 /**
  * UI Module - Navigation, Menus & Interactive Elements
- * Handles navbar, mobile menu, bottom stats tab, and section tracking
+ * Handles navbar, mobile menu, and section tracking
  */
 
 let hideTimeout;
 let hasShownOnce = false;
-let isBottomTabOpen = false;
 
 /**
  * Toggle mobile menu visibility
@@ -90,84 +89,16 @@ function initializeActiveNav() {
 }
 
 /**
- * Toggle bottom stats tab visibility
- */
-function toggleBottomTab() {
-  const cfg = APP_CONFIG.BOTTOM_TAB;
-  const tab = document.getElementById('bottomTab');
-  const toggleButton = document.querySelector('.tab-toggle');
-
-  if (!tab) return;
-
-  clearTimeout(hideTimeout);
-  isBottomTabOpen = !isBottomTabOpen;
-
-  if (toggleButton) {
-    toggleButton.setAttribute('aria-expanded', String(isBottomTabOpen));
-  }
-
-  if (isBottomTabOpen) {
-    tab.classList.add('open');
-    if (toggleButton) {
-      toggleButton.style.transform = 'translateX(-50%) rotate(180deg)';
-    }
-
-    // Start typing effect only on first show
-    if (!hasShownOnce) {
-      setTimeout(() => {
-        typeEffect();
-      }, cfg.SHOW_DELAY);
-      hasShownOnce = true;
-    }
-  } else {
-    tab.classList.remove('open');
-    if (toggleButton) {
-      toggleButton.style.transform = 'translateX(-50%) rotate(0deg)';
-    }
-  }
-}
-
-/**
- * Initialize bottom tab mouse interaction listeners
- */
-function initializeBottomTab() {
-  const cfg = APP_CONFIG.BOTTOM_TAB;
-  const bottomTab = document.getElementById('bottomTab');
-
-  if (!bottomTab) return;
-
-  bottomTab.addEventListener('mouseenter', () => {
-    if (isBottomTabOpen) {
-      clearTimeout(hideTimeout);
-    }
-  });
-
-  bottomTab.addEventListener('mouseleave', () => {
-    if (isBottomTabOpen) {
-      clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(() => {
-        if (isBottomTabOpen) {
-          toggleBottomTab();
-        }
-      }, cfg.AUTO_HIDE_DELAY);
-    }
-  });
-}
-
-/**
  * Initialize all UI features
  */
 function initializeUI() {
   initializeNavigation();
   initializeActiveNav();
-  initializeBottomTab();
 }
 
 window.toggleMenu = toggleMenu;
 window.handleMenuKeydown = handleMenuKeydown;
 window.updateActiveNav = updateActiveNav;
-window.toggleBottomTab = toggleBottomTab;
 window.initializeUI = initializeUI;
 window.initializeNavigation = initializeNavigation;
 window.initializeActiveNav = initializeActiveNav;
-window.initializeBottomTab = initializeBottomTab;

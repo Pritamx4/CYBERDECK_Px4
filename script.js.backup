@@ -407,66 +407,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// ========================================
-// 6. BOTTOM TAB - TERMINAL FUNCTIONALITY
-// ========================================
-
-// Auto-show bottom tab on hover and hide after inactivity
-document.addEventListener('DOMContentLoaded', () => {
-  const bottomTab = document.getElementById('bottomTab');
-  const toggleButton = bottomTab.querySelector('.toggle-btn');
-  const icon = document.getElementById('icon');
-  let hideTimeout;
-
-  bottomTab.addEventListener('mouseenter', () => {
-    clearTimeout(hideTimeout);
-    icon.classList.remove('fa-angle-up');
-    icon.classList.add('fa-angle-down');
-
-    bottomTab.classList.remove('hidden');
-    bottomTab.classList.add('shown');
-  });
-
-  bottomTab.addEventListener('mouseleave', () => {
-    hideTimeout = setTimeout(() => {
-      bottomTab.classList.add('hidden');
-      icon.classList.remove('fa-angle-down');
-      icon.classList.add('fa-angle-up');
-      bottomTab.classList.remove('shown');
-    }, 30);
-  });
-
-  hideTimeout = setTimeout(() => {
-    bottomTab.classList.add('hidden');
-    bottomTab.classList.remove('shown');
-    icon.classList.remove('fa-angle-down');
-    icon.classList.add('fa-angle-up');
-  }, 5000);
-});
-
-// Toggle the bottom tab visibility
-let hideTimeout;
-function toggleBottomTab() {
-  const tab = document.getElementById('bottomTab');
-  const button = tab.querySelector('.toggle-btn');
-  const icon = document.getElementById('icon');
-  const isHidden = tab.classList.contains('hidden');
-
-  if (isHidden) {
-    tab.classList.remove('hidden');
-    tab.classList.add('shown');
-    icon.classList.remove('fa-angle-up');
-    icon.classList.add('fa-angle-down');
-    button.classList.remove('rotate-icon');
-  } else {
-    tab.classList.add('hidden');
-    tab.classList.remove('shown');
-    icon.classList.remove('fa-angle-down');
-    icon.classList.add('fa-angle-up');
-    button.classList.add('rotate-icon');
-  }
-}
-
 // Terminal typing effect and GitHub repo stats
 const terminalElement = document.getElementById('terminal-text');
 const statsContainer = document.getElementById('stats-container');
