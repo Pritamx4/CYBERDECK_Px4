@@ -1,3 +1,20 @@
 .github/
-
+.env
 script.js.backup
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.min.css
+*.min.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
