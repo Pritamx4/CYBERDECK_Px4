@@ -48,6 +48,19 @@ class ProjectSphere3D {
     this.createShards();
     this.createTooltip();
     this.addEventListeners();
+    
+    // Add resize observer for responsive canvas
+    const resizeObserver = new ResizeObserver(() => {
+      const newWidth = this.container.clientWidth;
+      const newHeight = this.container.clientHeight;
+      if (newWidth > 0 && newHeight > 0) {
+        this.renderer.setSize(newWidth, newHeight);
+        this.camera.aspect = newWidth / newHeight;
+        this.camera.updateProjectionMatrix();
+      }
+    });
+    resizeObserver.observe(this.container);
+    
     this.animate();
   }
 

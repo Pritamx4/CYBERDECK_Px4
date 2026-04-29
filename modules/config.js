@@ -34,11 +34,11 @@ const APP_CONFIG = {
   // Contact Form
   CONTACT: {
     MIN_MESSAGE_LENGTH: 5,
-    // NOTE: EmailJS credentials should be stored in environment variables
-    // Add to .env: VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY
-    EMAILJS_SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
-    EMAILJS_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || '',
-    EMAILJS_PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '',
+    EMAILJS_SERVICE_ID: 'Pritamx4',
+    EMAILJS_TEMPLATE_ID: 'Pritamx4',
+    EMAILJS_PUBLIC_KEY: 'glYVjrgq1NH52F9M2',
+    FORM_NAME: 'Portfolio Visitor',
+    RECIPIENT_NAME: 'Pritam Singh',
   },
 
   // Repository Data (default percentages)

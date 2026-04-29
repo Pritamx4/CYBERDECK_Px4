@@ -38,6 +38,13 @@ class HeroLogo3D {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.container.appendChild(this.renderer.domElement);
 
+    // Set initial canvas size
+    const width = this.container.offsetWidth || 300;
+    const height = this.container.offsetHeight || 300;
+    this.renderer.setSize(width, height);
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+
     this.camera.position.z = 1000;
 
     this.setupLighting();

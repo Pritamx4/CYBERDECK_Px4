@@ -128,8 +128,8 @@ async function sendMessage(inputElement, errorElement) {
 
   const templateParams = {
     message: message,
-    from_name: 'Portfolio Visitor',
-    to_name: 'Recipient'
+    from_name: cfg.FORM_NAME,
+    to_name: cfg.RECIPIENT_NAME
   };
 
   try {
